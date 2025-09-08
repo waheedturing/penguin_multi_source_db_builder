@@ -1,0 +1,242 @@
+{
+    "slack": {
+      "enterprises": [
+        {
+          "id_hint": "E001",
+          "name": "Apex Dynamics",
+          "domain_url": "https://apexdynamics.slack.com",
+          "email_domain": "slack.com",
+          "verified": true
+        },
+        {
+          "id_hint": "E002",
+          "name": "QuantumLeap Tech",
+          "domain_url": "https://quantumleaptech.slack.com",
+          "email_domain": "slack.com",
+          "verified": true
+        },
+        {
+          "id_hint": "E003",
+          "name": "Zenith Solutions",
+          "domain_url": "https://zenithsolutions.slack.com",
+          "email_domain": "slack.com",
+          "verified": true
+        },
+        {
+          "id_hint": "E004",
+          "name": "Meridian Data Labs",
+          "domain_url": "https://meridiandatalabs.slack.com",
+          "email_domain": "slack.com",
+          "verified": true
+        },
+        {
+          "id_hint": "E005",
+          "name": "NovaCore Systems",
+          "domain_url": "https://novacoresystems.slack.com",
+          "email_domain": "slack.com",
+          "verified": true
+        },
+        {
+          "id_hint": "E006",
+          "name": "Ironclad Digital",
+          "domain_url": "https://ironcladdigital.slack.com",
+          "email_domain": "slack.com",
+          "verified": true
+        },
+        {
+          "id_hint": "E007",
+          "name": "Silverline Ventures",
+          "domain_url": "https://silverlineventures.slack.com",
+          "email_domain": "slack.com",
+          "verified": true
+        },
+        {
+          "id_hint": "E008",
+          "name": "Catalyst Nexus",
+          "domain_url": "https://catalystnexus.slack.com",
+          "email_domain": "slack.com",
+          "verified": true
+        }
+      ],
+      "team_bases": [
+        "Engineering",
+        "Product",
+        "Data",
+        "Design",
+        "Security",
+        "Support",
+        "Marketing",
+        "Sales",
+        "Operations",
+        "Research"
+      ],
+      "channel_bases": [
+        "general",
+        "random",
+        "dev",
+        "qa",
+        "releases",
+        "infra",
+        "design-review",
+        "customer-support",
+        "ops-alerts",
+        "marketing-campaigns"
+      ],
+      "channel_topics": [
+        "Weekly sync notes and action items for the backend team.",
+        "Discussions on Q3 roadmap planning and feature prioritization.",
+        "Sharing interesting articles and resources about data science.",
+        "Updates on the migration to the new cloud infrastructure.",
+        "Reviewing and providing feedback on new UI/UX mockups.",
+        "Coordination for the upcoming mobile app release v3.2.",
+        "A place to ask general questions and get help.",
+        "Alerts and monitoring for production environment stability.",
+        "Tracking progress on critical security vulnerability patches.",
+        "Brainstorming ideas for the next marketing campaign.",
+        "Discussing enterprise sales leads and closing strategies.",
+        "Celebrating team wins and sharing project successes.",
+        "On-call handoffs and incident management discussions.",
+        "Planning for our annual company offsite event.",
+        "Announcements regarding HR benefits and company policies.",
+        "Casual conversations and sharing fun links or memes.",
+        "Managing customer escalations and support ticket queues.",
+        "Coordinating content for the company's official blog.",
+        "Reviewing performance metrics and key business KPIs.",
+        "Cross-functional alignment on Q4 strategic initiatives.",
+        "All things related to our new brand identity project.",
+        "QA team discussions on test plans and bug reports.",
+        "Important updates for all employees. Please keep chatter low.",
+        "API development and third-party integration discussions."
+      ],
+      "channel_purposes": [
+        "This channel is for coordinating the development of our core platform services.",
+        "To facilitate communication between product managers and the design team on new features.",
+        "A dedicated space for the data analytics team to share findings and dashboards.",
+        "For the frontend team to discuss React components, state management, and build issues.",
+        "Used to triage security alerts and coordinate necessary incident response protocols.",
+        "The primary channel for customer support agents to collaborate on resolving user issues.",
+        "To plan, execute, and measure the performance of our digital marketing campaigns.",
+        "Where the sales team shares updates on their pipeline and discusses deal strategies.",
+        "For the operations team to manage infrastructure provisioning and system maintenance tasks.",
+        "To foster collaboration among our researchers on long-term innovation projects.",
+        "A central place to announce software releases and manage the deployment process.",
+        "For our recruiting team to coordinate interview schedules and share candidate feedback.",
+        "Discussing A/B testing results and iterating on user experience improvements.",
+        "This is for all hands announcements and important company-wide information.",
+        "A place for water-cooler chat, getting to know colleagues, and social planning.",
+        "To manage our cloud computing budget and optimize resource allocation effectively.",
+        "To share feedback and bug reports from our beta testing community program.",
+        "For our legal and compliance teams to discuss contracts and regulatory updates.",
+        "To handle real-time alerts from our production monitoring and observability tools.",
+        "For our content team to collaborate on writing and editing marketing copy.",
+        "To organize volunteer events and other corporate social responsibility initiatives.",
+        "Used for discussing IT support requests and managing employee hardware and software.",
+        "The channel for sharing internal knowledge and technical documentation updates.",
+        "For our finance team to coordinate on monthly closes and expense reporting."
+      ],
+      "message_phrases": [
+        "Does anyone have a moment to hop on a call?",
+        "I've pushed the latest changes to the dev branch.",
+        "Can you send me the link to that Figma file?",
+        "The weekly report is now available on the dashboard.",
+        "Who is the point of contact for this project?",
+        "I'll be out of office tomorrow afternoon.",
+        "Let's circle back on this next week.",
+        "The production deployment was successful.",
+        "Is the staging environment currently stable?",
+        "Just a heads up, the API is responding slowly.",
+        "I'm looking into the issue right now.",
+        "Please review the document when you have a chance.",
+        "What's the status of ticket #5821?",
+        "Great job on the presentation today!",
+        "I've scheduled a meeting to discuss this further.",
+        "Can someone approve my expense report?",
+        "The client has provided their feedback.",
+        "Is there a JIRA ticket for this bug?",
+        "Thanks for the quick turnaround on that.",
+        "I'm adding my notes to the Confluence page.",
+        "Where can I find the latest brand guidelines?",
+        "Let me know if you need any help with that.",
+        "The server is back online now.",
+        "I think we should table this discussion for now.",
+        "Can you grant me access to that repository?",
+        "The Q3 OKRs have been finalized.",
+        "Running a bit late, my previous meeting ran over.",
+        "Did anyone record the all-hands meeting?",
+        "I'm blocked on this task until I get the specs.",
+        "The hotfix has been deployed to production.",
+        "Let's take this conversation to a thread.",
+        "The new marketing assets are in the drive.",
+        "Who handled the last on-call shift?",
+        "The build failed, I'm investigating the logs.",
+        "Just got confirmation from the legal team.",
+        "This looks good to merge.",
+        "I've updated the sprint board with the latest tickets.",
+        "Can we get an ETA for this feature?",
+        "The design system has been updated.",
+        "What are your thoughts on this proposal?"
+      ],
+      "apps": [
+        {
+          "id": "A1000",
+          "name": "AuthBot",
+          "is_app_directory_approved": true
+        },
+        {
+          "id": "A1001",
+          "name": "DeployMaster",
+          "is_app_directory_approved": true
+        },
+        {
+          "id": "A1002",
+          "name": "InsightGen",
+          "is_app_directory_approved": false
+        },
+        {
+          "id": "A1003",
+          "name": "GranitePulse",
+          "is_app_directory_approved": true
+        },
+        {
+          "id": "A1004",
+          "name": "VectorFlow",
+          "is_app_directory_approved": false
+        },
+        {
+          "id": "A1005",
+          "name": "SentryLink",
+          "is_app_directory_approved": true
+        },
+        {
+          "id": "A1006",
+          "name": "CodeScan Pro",
+          "is_app_directory_approved": true
+        },
+        {
+          "id": "A1007",
+          "name": "Onboardly",
+          "is_app_directory_approved": true
+        },
+        {
+          "id": "A1008",
+          "name": "ExpenseBot",
+          "is_app_directory_approved": false
+        },
+        {
+          "id": "A1009",
+          "name": "CalendarSync",
+          "is_app_directory_approved": true
+        },
+        {
+          "id": "A1010",
+          "name": "Project Atlas",
+          "is_app_directory_approved": false
+        },
+        {
+          "id": "A1011",
+          "name": "DataWeaver",
+          "is_app_directory_approved": true
+        }
+      ]
+    }
+  }

@@ -1,0 +1,3695 @@
+{
+  "server_name": "amazon-penguin-only",
+  "complete_schema": {
+    "generated_at": "2025-09-05T17:11:29.890960",
+    "total_tables": 18,
+    "database_type": "SQLite",
+    "sqlalchemy_version": "2.x",
+    "tables": {
+      "listings_items": {
+        "table_name": "listings_items",
+        "model_class": "ListingItem",
+        "description": "Seller listings and product information",
+        "column_count": 12,
+        "columns": {
+          "id": {
+            "name": "id",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "seller_id": {
+            "name": "seller_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "seller_name": {
+            "name": "seller_name",
+            "type": "VARCHAR(200)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "sku": {
+            "name": "sku",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "title": {
+            "name": "title",
+            "type": "VARCHAR(500)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "description": {
+            "name": "description",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "price": {
+            "name": "price",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "quantity": {
+            "name": "quantity",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "status": {
+            "name": "status",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('ACTIVE')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "marketplace_ids": {
+            "name": "marketplace_ids",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4ab9490; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "updated_at": {
+            "name": "updated_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4ab9750; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [
+          {
+            "name": "_seller_sku_uc",
+            "columns": [
+              "seller_id",
+              "sku"
+            ]
+          }
+        ],
+        "indexes": [
+          {
+            "name": "ix_listings_items_seller_id",
+            "columns": [
+              "seller_id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_listings_items_seller_name",
+            "columns": [
+              "seller_name"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_listings_items_sku",
+            "columns": [
+              "sku"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_listings_items_id",
+            "columns": [
+              "id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "Listings"
+      },
+      "orders": {
+        "table_name": "orders",
+        "model_class": "Order",
+        "description": "Amazon orders with buyer and shipping details",
+        "column_count": 29,
+        "columns": {
+          "amazon_order_id": {
+            "name": "amazon_order_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "seller_order_id": {
+            "name": "seller_order_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "purchase_date": {
+            "name": "purchase_date",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4ae1bd0; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "last_update_date": {
+            "name": "last_update_date",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4ae1f90; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "order_status": {
+            "name": "order_status",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('Pending')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "shipment_status": {
+            "name": "shipment_status",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "fulfillment_channel": {
+            "name": "fulfillment_channel",
+            "type": "VARCHAR(10)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('MFN')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "sales_channel": {
+            "name": "sales_channel",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('Amazon.com')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "order_channel": {
+            "name": "order_channel",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('Amazon.com')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "marketplace_id": {
+            "name": "marketplace_id",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "buyer_email": {
+            "name": "buyer_email",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "buyer_name": {
+            "name": "buyer_name",
+            "type": "VARCHAR(200)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "buyer_county": {
+            "name": "buyer_county",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "buyer_tax_info": {
+            "name": "buyer_tax_info",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "shipping_address": {
+            "name": "shipping_address",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "payment_method": {
+            "name": "payment_method",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "order_total": {
+            "name": "order_total",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "number_of_items_shipped": {
+            "name": "number_of_items_shipped",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "number_of_items_unshipped": {
+            "name": "number_of_items_unshipped",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "payment_execution_detail": {
+            "name": "payment_execution_detail",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "is_replacement_order": {
+            "name": "is_replacement_order",
+            "type": "VARCHAR(5)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('false')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "promised_ship_date": {
+            "name": "promised_ship_date",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "is_estimated_ship_date_set": {
+            "name": "is_estimated_ship_date_set",
+            "type": "VARCHAR(5)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('false')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "verification_status": {
+            "name": "verification_status",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "verification_requires_merchant_action": {
+            "name": "verification_requires_merchant_action",
+            "type": "VARCHAR(5)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('false')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "verification_rejection_reason": {
+            "name": "verification_rejection_reason",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "verification_review_date": {
+            "name": "verification_review_date",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "verification_external_reviewer_id": {
+            "name": "verification_external_reviewer_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "regulated_information": {
+            "name": "regulated_information",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "amazon_order_id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_orders_seller_order_id",
+            "columns": [
+              "seller_order_id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_orders_amazon_order_id",
+            "columns": [
+              "amazon_order_id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": false,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "order_items": {
+        "table_name": "order_items",
+        "model_class": "OrderItem",
+        "description": "Individual items within orders",
+        "column_count": 31,
+        "columns": {
+          "order_item_id": {
+            "name": "order_item_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "amazon_order_id": {
+            "name": "amazon_order_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": {
+              "target_table": "orders",
+              "target_column": "amazon_order_id",
+              "constraint_name": null
+            }
+          },
+          "seller_sku": {
+            "name": "seller_sku",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "asin": {
+            "name": "asin",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "order_item_id_key": {
+            "name": "order_item_id_key",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "title": {
+            "name": "title",
+            "type": "VARCHAR(500)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "quantity_ordered": {
+            "name": "quantity_ordered",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "quantity_shipped": {
+            "name": "quantity_shipped",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "product_info": {
+            "name": "product_info",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "points_granted": {
+            "name": "points_granted",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "item_price": {
+            "name": "item_price",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "shipping_price": {
+            "name": "shipping_price",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "item_tax": {
+            "name": "item_tax",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "shipping_tax": {
+            "name": "shipping_tax",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "shipping_discount": {
+            "name": "shipping_discount",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "shipping_discount_tax": {
+            "name": "shipping_discount_tax",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "promotion_discount": {
+            "name": "promotion_discount",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "promotion_discount_tax": {
+            "name": "promotion_discount_tax",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "promotion_ids": {
+            "name": "promotion_ids",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "cod_fee": {
+            "name": "cod_fee",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "cod_fee_discount": {
+            "name": "cod_fee_discount",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "is_gift": {
+            "name": "is_gift",
+            "type": "VARCHAR(5)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('false')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "condition_note": {
+            "name": "condition_note",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "condition_id": {
+            "name": "condition_id",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('New')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "condition_subtype_id": {
+            "name": "condition_subtype_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "scheduled_delivery_start_date": {
+            "name": "scheduled_delivery_start_date",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "scheduled_delivery_end_date": {
+            "name": "scheduled_delivery_end_date",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "price_designation": {
+            "name": "price_designation",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "tax_collection": {
+            "name": "tax_collection",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "serial_number_required": {
+            "name": "serial_number_required",
+            "type": "VARCHAR(5)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('false')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "is_transparency": {
+            "name": "is_transparency",
+            "type": "VARCHAR(5)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('false')",
+            "server_default": null,
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "order_item_id"
+        ],
+        "foreign_keys": [
+          {
+            "column": "amazon_order_id",
+            "target_table": "orders",
+            "target_column": "amazon_order_id",
+            "constraint_name": null
+          }
+        ],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_order_items_seller_sku",
+            "columns": [
+              "seller_sku"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_order_items_order_item_id",
+            "columns": [
+              "order_item_id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": false,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "inventory_summaries": {
+        "table_name": "inventory_summaries",
+        "model_class": "InventorySummary",
+        "description": "FBA inventory summary data",
+        "column_count": 9,
+        "columns": {
+          "id": {
+            "name": "id",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "seller_sku": {
+            "name": "seller_sku",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "fn_sku": {
+            "name": "fn_sku",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "asin": {
+            "name": "asin",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "condition": {
+            "name": "condition",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('NewItem')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "inventory_details": {
+            "name": "inventory_details",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "last_updated_time": {
+            "name": "last_updated_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4b177d0; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "product_name": {
+            "name": "product_name",
+            "type": "VARCHAR(500)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "total_quantity": {
+            "name": "total_quantity",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [
+          {
+            "name": "_sku_condition_uc",
+            "columns": [
+              "seller_sku",
+              "condition"
+            ]
+          }
+        ],
+        "indexes": [
+          {
+            "name": "ix_inventory_summaries_seller_sku",
+            "columns": [
+              "seller_sku"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_inventory_summaries_fn_sku",
+            "columns": [
+              "fn_sku"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_inventory_summaries_asin",
+            "columns": [
+              "asin"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_inventory_summaries_id",
+            "columns": [
+              "id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "inventory_details": {
+        "table_name": "inventory_details",
+        "model_class": "InventoryDetails",
+        "description": "Detailed FBA inventory quantities",
+        "column_count": 10,
+        "columns": {
+          "id": {
+            "name": "id",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "seller_sku": {
+            "name": "seller_sku",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "fulfillable_quantity": {
+            "name": "fulfillable_quantity",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "inbound_working_quantity": {
+            "name": "inbound_working_quantity",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "inbound_shipped_quantity": {
+            "name": "inbound_shipped_quantity",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "inbound_receiving_quantity": {
+            "name": "inbound_receiving_quantity",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "reserved_quantity": {
+            "name": "reserved_quantity",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "unfulfillable_quantity": {
+            "name": "unfulfillable_quantity",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "total_reserved_quantity": {
+            "name": "total_reserved_quantity",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "last_updated_time": {
+            "name": "last_updated_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4b23a50; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_inventory_details_id",
+            "columns": [
+              "id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_inventory_details_seller_sku",
+            "columns": [
+              "seller_sku"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "product_pricing": {
+        "table_name": "product_pricing",
+        "model_class": "ProductPricing",
+        "description": "Product pricing information from SP-API",
+        "column_count": 10,
+        "columns": {
+          "id": {
+            "name": "id",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "seller_sku": {
+            "name": "seller_sku",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "asin": {
+            "name": "asin",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "marketplace_id": {
+            "name": "marketplace_id",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "item_condition": {
+            "name": "item_condition",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('New')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "status": {
+            "name": "status",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('Success')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "identifier": {
+            "name": "identifier",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "summary": {
+            "name": "summary",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "offers": {
+            "name": "offers",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "last_updated": {
+            "name": "last_updated",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4b335d0; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [
+          {
+            "name": "_pricing_uc",
+            "columns": [
+              "seller_sku",
+              "marketplace_id",
+              "item_condition"
+            ]
+          }
+        ],
+        "indexes": [
+          {
+            "name": "ix_product_pricing_seller_sku",
+            "columns": [
+              "seller_sku"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_product_pricing_id",
+            "columns": [
+              "id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_product_pricing_asin",
+            "columns": [
+              "asin"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": false,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "competitive_pricing": {
+        "table_name": "competitive_pricing",
+        "model_class": "CompetitivePricing",
+        "description": "Competitive pricing data and thresholds",
+        "column_count": 9,
+        "columns": {
+          "id": {
+            "name": "id",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "seller_sku": {
+            "name": "seller_sku",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "asin": {
+            "name": "asin",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "marketplace_id": {
+            "name": "marketplace_id",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "competitive_price_threshold": {
+            "name": "competitive_price_threshold",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "competitive_prices": {
+            "name": "competitive_prices",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "number_of_offer_listings": {
+            "name": "number_of_offer_listings",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "trade_in_value": {
+            "name": "trade_in_value",
+            "type": "DECIMAL(10, 2)",
+            "python_type": "Decimal",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "last_updated": {
+            "name": "last_updated",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4b3b4d0; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [
+          {
+            "name": "_competitive_pricing_uc",
+            "columns": [
+              "seller_sku",
+              "marketplace_id"
+            ]
+          }
+        ],
+        "indexes": [
+          {
+            "name": "ix_competitive_pricing_id",
+            "columns": [
+              "id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_competitive_pricing_asin",
+            "columns": [
+              "asin"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_competitive_pricing_seller_sku",
+            "columns": [
+              "seller_sku"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": false,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "catalog_items": {
+        "table_name": "catalog_items",
+        "model_class": "CatalogItem",
+        "description": "Amazon catalog item details and attributes",
+        "column_count": 23,
+        "columns": {
+          "id": {
+            "name": "id",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "asin": {
+            "name": "asin",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": true,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "marketplace_id": {
+            "name": "marketplace_id",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "product_type": {
+            "name": "product_type",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "brand": {
+            "name": "brand",
+            "type": "VARCHAR(200)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "color": {
+            "name": "color",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "size": {
+            "name": "size",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "item_name": {
+            "name": "item_name",
+            "type": "VARCHAR(500)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "manufacturer": {
+            "name": "manufacturer",
+            "type": "VARCHAR(200)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "part_number": {
+            "name": "part_number",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "model": {
+            "name": "model",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "attributes": {
+            "name": "attributes",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "dimensions": {
+            "name": "dimensions",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "identifiers": {
+            "name": "identifiers",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "images": {
+            "name": "images",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "product_types": {
+            "name": "product_types",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "relationships": {
+            "name": "relationships",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "sales_ranks": {
+            "name": "sales_ranks",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "summaries": {
+            "name": "summaries",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "variations": {
+            "name": "variations",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "vendor_details": {
+            "name": "vendor_details",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4b47950; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "updated_at": {
+            "name": "updated_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4b47bd0; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [
+          {
+            "name": "_catalog_asin_marketplace_uc",
+            "columns": [
+              "asin",
+              "marketplace_id"
+            ]
+          }
+        ],
+        "indexes": [
+          {
+            "name": "ix_catalog_items_id",
+            "columns": [
+              "id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_catalog_items_marketplace_id",
+            "columns": [
+              "marketplace_id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_catalog_items_asin",
+            "columns": [
+              "asin"
+            ],
+            "unique": true
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "catalog_item_searches": {
+        "table_name": "catalog_item_searches",
+        "model_class": "CatalogItemSearch",
+        "description": "Catalog search queries and results",
+        "column_count": 13,
+        "columns": {
+          "id": {
+            "name": "id",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "search_query": {
+            "name": "search_query",
+            "type": "VARCHAR(500)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "marketplace_id": {
+            "name": "marketplace_id",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "brand_names": {
+            "name": "brand_names",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "classification_ids": {
+            "name": "classification_ids",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "page_size": {
+            "name": "page_size",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(10)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "page_token": {
+            "name": "page_token",
+            "type": "VARCHAR(500)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "keywords": {
+            "name": "keywords",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "locale": {
+            "name": "locale",
+            "type": "VARCHAR(10)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('en_US')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "seller_id": {
+            "name": "seller_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "results": {
+            "name": "results",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "total_results": {
+            "name": "total_results",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault(0)",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df496e0d0; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_catalog_item_searches_id",
+            "columns": [
+              "id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "reports": {
+        "table_name": "reports",
+        "model_class": "Report",
+        "description": "SP-API report generation and status",
+        "column_count": 16,
+        "columns": {
+          "report_id": {
+            "name": "report_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "report_type": {
+            "name": "report_type",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "marketplace_ids": {
+            "name": "marketplace_ids",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "data_start_time": {
+            "name": "data_start_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "data_end_time": {
+            "name": "data_end_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "report_schedule_id": {
+            "name": "report_schedule_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_time": {
+            "name": "created_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4979d90; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "processing_start_time": {
+            "name": "processing_start_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "processing_end_time": {
+            "name": "processing_end_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "processing_status": {
+            "name": "processing_status",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('IN_QUEUE')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "report_document_id": {
+            "name": "report_document_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "report_document_url": {
+            "name": "report_document_url",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "compression_algorithm": {
+            "name": "compression_algorithm",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "encryption_details": {
+            "name": "encryption_details",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df497a490; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "updated_at": {
+            "name": "updated_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df497a710; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "report_id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_reports_report_document_id",
+            "columns": [
+              "report_document_id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_reports_report_id",
+            "columns": [
+              "report_id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_reports_report_type",
+            "columns": [
+              "report_type"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_reports_report_schedule_id",
+            "columns": [
+              "report_schedule_id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "report_schedules": {
+        "table_name": "report_schedules",
+        "model_class": "ReportSchedule",
+        "description": "Scheduled report configurations",
+        "column_count": 8,
+        "columns": {
+          "report_schedule_id": {
+            "name": "report_schedule_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "report_type": {
+            "name": "report_type",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "marketplace_ids": {
+            "name": "marketplace_ids",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "report_options": {
+            "name": "report_options",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "period": {
+            "name": "period",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "next_report_creation_time": {
+            "name": "next_report_creation_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df49833d0; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "updated_at": {
+            "name": "updated_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4983610; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "report_schedule_id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_report_schedules_report_schedule_id",
+            "columns": [
+              "report_schedule_id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "report_documents": {
+        "table_name": "report_documents",
+        "model_class": "ReportDocument",
+        "description": "Report document content and metadata",
+        "column_count": 7,
+        "columns": {
+          "report_document_id": {
+            "name": "report_document_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "url": {
+            "name": "url",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "encryption_details": {
+            "name": "encryption_details",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "compression_algorithm": {
+            "name": "compression_algorithm",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "content": {
+            "name": "content",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "content_type": {
+            "name": "content_type",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('text/tab-separated-values')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df498a650; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "report_document_id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_report_documents_report_document_id",
+            "columns": [
+              "report_document_id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "notification_subscriptions": {
+        "table_name": "notification_subscriptions",
+        "model_class": "NotificationSubscription",
+        "description": "Notification subscription configurations",
+        "column_count": 7,
+        "columns": {
+          "subscription_id": {
+            "name": "subscription_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "notification_type": {
+            "name": "notification_type",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "payload_version": {
+            "name": "payload_version",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('1.0')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "destination_id": {
+            "name": "destination_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "processing_directive": {
+            "name": "processing_directive",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df49991d0; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "updated_at": {
+            "name": "updated_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df4999450; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "subscription_id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [
+          {
+            "name": "_notification_type_destination_uc",
+            "columns": [
+              "notification_type",
+              "destination_id"
+            ]
+          }
+        ],
+        "indexes": [
+          {
+            "name": "ix_notification_subscriptions_notification_type",
+            "columns": [
+              "notification_type"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_notification_subscriptions_subscription_id",
+            "columns": [
+              "subscription_id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_notification_subscriptions_destination_id",
+            "columns": [
+              "destination_id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "notification_destinations": {
+        "table_name": "notification_destinations",
+        "model_class": "NotificationDestination",
+        "description": "SQS destinations for notifications",
+        "column_count": 5,
+        "columns": {
+          "destination_id": {
+            "name": "destination_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "name": {
+            "name": "name",
+            "type": "VARCHAR(200)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "resource": {
+            "name": "resource",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df49a8610; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "updated_at": {
+            "name": "updated_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df49a8890; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "destination_id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_notification_destinations_destination_id",
+            "columns": [
+              "destination_id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "notification_events": {
+        "table_name": "notification_events",
+        "model_class": "NotificationEvent",
+        "description": "Notification events and payloads",
+        "column_count": 10,
+        "columns": {
+          "id": {
+            "name": "id",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "notification_type": {
+            "name": "notification_type",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "payload_version": {
+            "name": "payload_version",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('1.0')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "event_time": {
+            "name": "event_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df49aad90; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "notification_metadata": {
+            "name": "notification_metadata",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "notification_payload": {
+            "name": "notification_payload",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "marketplace_id": {
+            "name": "marketplace_id",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "seller_id": {
+            "name": "seller_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "processed": {
+            "name": "processed",
+            "type": "VARCHAR(5)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('false')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df49ab390; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_notification_events_id",
+            "columns": [
+              "id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_notification_events_notification_type",
+            "columns": [
+              "notification_type"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_notification_events_seller_id",
+            "columns": [
+              "seller_id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_notification_events_marketplace_id",
+            "columns": [
+              "marketplace_id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "feeds": {
+        "table_name": "feeds",
+        "model_class": "Feed",
+        "description": "SP-API feed submissions and processing",
+        "column_count": 12,
+        "columns": {
+          "feed_id": {
+            "name": "feed_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "feed_type": {
+            "name": "feed_type",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "marketplace_ids": {
+            "name": "marketplace_ids",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "input_feed_document_id": {
+            "name": "input_feed_document_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "feed_options": {
+            "name": "feed_options",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "processing_status": {
+            "name": "processing_status",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('IN_QUEUE')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "processing_start_time": {
+            "name": "processing_start_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "processing_end_time": {
+            "name": "processing_end_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "result_feed_document_id": {
+            "name": "result_feed_document_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_time": {
+            "name": "created_time",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df49b3110; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df49b3350; now>, for_update=False)",
+            "foreign_key": null
+          },
+          "updated_at": {
+            "name": "updated_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df49b3590; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "feed_id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_feeds_feed_type",
+            "columns": [
+              "feed_type"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_feeds_result_feed_document_id",
+            "columns": [
+              "result_feed_document_id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_feeds_input_feed_document_id",
+            "columns": [
+              "input_feed_document_id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_feeds_feed_id",
+            "columns": [
+              "feed_id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "feed_documents": {
+        "table_name": "feed_documents",
+        "model_class": "FeedDocument",
+        "description": "Feed document content and metadata",
+        "column_count": 8,
+        "columns": {
+          "feed_document_id": {
+            "name": "feed_document_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "url": {
+            "name": "url",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "encryption_details": {
+            "name": "encryption_details",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "compression_algorithm": {
+            "name": "compression_algorithm",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "content": {
+            "name": "content",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "content_type": {
+            "name": "content_type",
+            "type": "VARCHAR(100)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('text/xml')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "document_type": {
+            "name": "document_type",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": "ScalarElementColumnDefault('INPUT')",
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df49c3810; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "feed_document_id"
+        ],
+        "foreign_keys": [],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_feed_documents_feed_document_id",
+            "columns": [
+              "feed_document_id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      },
+      "feed_results": {
+        "table_name": "feed_results",
+        "model_class": "FeedResult",
+        "description": "Feed processing results and errors",
+        "column_count": 8,
+        "columns": {
+          "id": {
+            "name": "id",
+            "type": "INTEGER",
+            "python_type": "int",
+            "nullable": false,
+            "primary_key": true,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "feed_id": {
+            "name": "feed_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": false,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": {
+              "target_table": "feeds",
+              "target_column": "feed_id",
+              "constraint_name": null
+            }
+          },
+          "message_id": {
+            "name": "message_id",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": true,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "result_code": {
+            "name": "result_code",
+            "type": "VARCHAR(20)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "result_message_code": {
+            "name": "result_message_code",
+            "type": "VARCHAR(50)",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "result_description": {
+            "name": "result_description",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "additional_info": {
+            "name": "additional_info",
+            "type": "TEXT",
+            "python_type": "str",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": null,
+            "foreign_key": null
+          },
+          "created_at": {
+            "name": "created_at",
+            "type": "TIMESTAMP",
+            "python_type": "datetime",
+            "nullable": true,
+            "primary_key": false,
+            "autoincrement": "auto",
+            "index": null,
+            "unique": null,
+            "default": null,
+            "server_default": "DefaultClause(<sqlalchemy.sql.functions.now at 0x7c1df49d2990; now>, for_update=False)",
+            "foreign_key": null
+          }
+        },
+        "primary_keys": [
+          "id"
+        ],
+        "foreign_keys": [
+          {
+            "column": "feed_id",
+            "target_table": "feeds",
+            "target_column": "feed_id",
+            "constraint_name": null
+          }
+        ],
+        "unique_constraints": [],
+        "indexes": [
+          {
+            "name": "ix_feed_results_id",
+            "columns": [
+              "id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_feed_results_feed_id",
+            "columns": [
+              "feed_id"
+            ],
+            "unique": false
+          },
+          {
+            "name": "ix_feed_results_message_id",
+            "columns": [
+              "message_id"
+            ],
+            "unique": false
+          }
+        ],
+        "has_timestamps": true,
+        "has_json_fields": false,
+        "module": "SP-API"
+      }
+    },
+    "summary": {
+      "total_tables": 18,
+      "total_columns": 227,
+      "tables_with_timestamps": 14,
+      "tables_with_json": 0,
+      "total_primary_keys": 18,
+      "total_foreign_keys": 2,
+      "total_unique_constraints": 6,
+      "total_indexes": 46,
+      "modules": {
+        "SP-API": 17,
+        "Listings": 1
+      }
+    }
+  },
+  "has_schema": false,
+  "timestamp": "2025-09-05T17:11:29.905021"
+}

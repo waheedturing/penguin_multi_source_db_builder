@@ -1,0 +1,5858 @@
+{
+  "server_name": "jira-penguin-only",
+  "complete_schema": {
+    "success": true,
+    "message": "Database schema retrieved successfully from models",
+    "database_id": "default",
+    "schema": {
+      "user": {
+        "columns": [
+          {
+            "name": "account_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "display_name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "email_address",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "email",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "username",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "account_type",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": "atlassian",
+            "unique": null
+          },
+          {
+            "name": "avatar_urls",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "time_zone",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "locale",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "active",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "deleted",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "password_hash",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "last_login",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "access_token",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "refresh_token",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "token_expires_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_user_email_address",
+          "ix_user_email",
+          "ix_user_username",
+          "ix_user_account_id",
+          "ix_user_id"
+        ],
+        "constraints": []
+      },
+      "user_group": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "group_id",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_user_group_name",
+          "ix_user_group_id"
+        ],
+        "constraints": []
+      },
+      "user_group_membership": {
+        "columns": [
+          {
+            "name": "user_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "group_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user_group",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "role",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_user_group_membership_id"
+        ],
+        "constraints": []
+      },
+      "user_property": {
+        "columns": [
+          {
+            "name": "user_account_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "account_id"
+              }
+            ]
+          },
+          {
+            "name": "property_key",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "property_value",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_user_property_property_key",
+          "ix_user_property_user_account_id",
+          "ix_user_property_id"
+        ],
+        "constraints": [
+          "uq_user_property"
+        ]
+      },
+      "project_category": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_project_category_id"
+        ],
+        "constraints": []
+      },
+      "project": {
+        "columns": [
+          {
+            "name": "key",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "url",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "project_type_key",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": "software",
+            "unique": null
+          },
+          {
+            "name": "simplified",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "style",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": "classic",
+            "unique": null
+          },
+          {
+            "name": "archived",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "deleted",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "is_private",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "email",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "uuid",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function Project.<lambda> at 0x7891b44efa60>",
+            "unique": true
+          },
+          {
+            "name": "archived_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "deleted_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "retention_till_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "archived_by_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "deleted_by_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "assignee_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": "UNASSIGNED",
+            "unique": null
+          },
+          {
+            "name": "avatar_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "issue_security_scheme",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "permission_scheme",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "notification_scheme",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "lead_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "default_assignee_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "category_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "project_category",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "issue_type_scheme_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue_type_scheme",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "workflow_scheme_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "workflow_scheme",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_project_key",
+          "ix_project_id"
+        ],
+        "constraints": []
+      },
+      "project_component": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "assignee_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": "PROJECT_DEFAULT",
+            "unique": null
+          },
+          {
+            "name": "real_assignee_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "is_assignee_type_valid",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "project_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "project",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "lead_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "real_assignee_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_project_component_id"
+        ],
+        "constraints": []
+      },
+      "project_version": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "archived",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "released",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "overdue",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "start_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "release_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "user_start_date",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "user_release_date",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "issues_fixed_count",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "issues_affected_count",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "project_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "project",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_project_version_id"
+        ],
+        "constraints": []
+      },
+      "project_role": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "role_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "selected_by_default",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "scoped",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "translatable_name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "project_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "project",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_project_role_id"
+        ],
+        "constraints": []
+      },
+      "project_role_actor": {
+        "columns": [
+          {
+            "name": "actor_type",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "display_name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "actor_user_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "actor_group_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user_group",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "role_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "project_role",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_project_role_actor_id"
+        ],
+        "constraints": []
+      },
+      "project_property": {
+        "columns": [
+          {
+            "name": "project_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "project",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "key",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "value",
+            "type": "TEXT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_project_property_id"
+        ],
+        "constraints": []
+      },
+      "issue_component_association": {
+        "columns": [
+          {
+            "name": "issue_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "component_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "project_component",
+                "column": "id"
+              }
+            ]
+          }
+        ],
+        "indexes": [],
+        "constraints": []
+      },
+      "issue_fix_version_association": {
+        "columns": [
+          {
+            "name": "issue_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "version_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "project_version",
+                "column": "id"
+              }
+            ]
+          }
+        ],
+        "indexes": [],
+        "constraints": []
+      },
+      "issue_affects_version_association": {
+        "columns": [
+          {
+            "name": "issue_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "version_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "project_version",
+                "column": "id"
+              }
+            ]
+          }
+        ],
+        "indexes": [],
+        "constraints": []
+      },
+      "issue_label_association": {
+        "columns": [
+          {
+            "name": "issue_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "label_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue_label",
+                "column": "id"
+              }
+            ]
+          }
+        ],
+        "indexes": [],
+        "constraints": []
+      },
+      "issue_type": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "icon_url",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "avatar_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "subtask",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "hierarchy_level",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_issue_type_id"
+        ],
+        "constraints": []
+      },
+      "issue_status": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "icon_url",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "status_color",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "status_category_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "status_category_key",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "status_category_name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "status_category_color_name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_issue_status_id"
+        ],
+        "constraints": []
+      },
+      "issue_priority": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "icon_url",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "status_color",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "avatar_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "is_default",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "order_index",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_issue_priority_id"
+        ],
+        "constraints": []
+      },
+      "issue_resolution": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_issue_resolution_id"
+        ],
+        "constraints": []
+      },
+      "issue": {
+        "columns": [
+          {
+            "name": "key",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "summary",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "environment",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "original_estimate",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "remaining_estimate",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "time_spent",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "progress",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "votes",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "watches",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "due_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "resolution_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "last_viewed",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "security_level_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "project_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "project",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "issue_type_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue_type",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "status_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue_status",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "priority_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue_priority",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "resolution_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue_resolution",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "reporter_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "assignee_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "creator_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "parent_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_issue_id",
+          "ix_issue_key"
+        ],
+        "constraints": []
+      },
+      "issue_link": {
+        "columns": [
+          {
+            "name": "inward_issue_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "outward_issue_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "link_type_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue_link_type",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_issue_link_id"
+        ],
+        "constraints": []
+      },
+      "issue_link_type": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "inward",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "outward",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_issue_link_type_id"
+        ],
+        "constraints": []
+      },
+      "field": {
+        "columns": [
+          {
+            "name": "field_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "field_type",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "schema_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "searchable",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "navigable",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "orderable",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "custom",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "system",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "key",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "tabs",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_field_field_id",
+          "ix_field_id"
+        ],
+        "constraints": []
+      },
+      "custom_field": {
+        "columns": [
+          {
+            "name": "field_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true,
+            "foreign_keys": [
+              {
+                "table": "field",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "custom_field_type",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "searcher_key",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "configuration_schemes",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_custom_field_id"
+        ],
+        "constraints": []
+      },
+      "field_configuration": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "field_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "field",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "is_hidden",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "is_required",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_field_configuration_id"
+        ],
+        "constraints": []
+      },
+      "workflow": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "is_default",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "has_draft_workflow",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "is_editable",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "operations",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "idx_workflow_name",
+          "idx_workflow_default",
+          "ix_workflow_id",
+          "idx_workflow_editable"
+        ],
+        "constraints": []
+      },
+      "workflow_status": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "status_reference",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "status_category_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "status_category",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "workflow_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "workflow",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_workflow_status_id",
+          "idx_workflow_status_category",
+          "idx_workflow_status_workflow"
+        ],
+        "constraints": [
+          "uq_workflow_status_name"
+        ]
+      },
+      "workflow_transition": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": "global",
+            "unique": null
+          },
+          {
+            "name": "view",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "is_global",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "is_initial",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "is_available",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "has_screen",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "is_conditional",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "rules",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "conditions",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "validators",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "post_functions",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "properties",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "triggers",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "screen_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "field_configuration",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "workflow_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "workflow",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "from_status_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "workflow_status",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "to_status_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "workflow_status",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "idx_workflow_transition_from_status",
+          "idx_workflow_transition_to_status",
+          "idx_workflow_transition_type",
+          "ix_workflow_transition_id",
+          "idx_workflow_transition_workflow"
+        ],
+        "constraints": [
+          "uq_workflow_transition_name"
+        ]
+      },
+      "workflow_scheme": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "is_default",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "draft",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "original_scheme_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "workflow_scheme",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "default_workflow_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "workflow",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "idx_workflow_scheme_draft",
+          "idx_workflow_scheme_default",
+          "idx_workflow_scheme_name",
+          "idx_workflow_scheme_original",
+          "ix_workflow_scheme_id"
+        ],
+        "constraints": []
+      },
+      "workflow_scheme_issue_type": {
+        "columns": [
+          {
+            "name": "workflow_scheme_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "workflow_scheme",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "issue_type_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue_type",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "workflow_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "workflow",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "idx_workflow_scheme_issue_type_workflow",
+          "idx_workflow_scheme_issue_type_scheme",
+          "ix_workflow_scheme_issue_type_id",
+          "idx_workflow_scheme_issue_type_issue"
+        ],
+        "constraints": [
+          "uq_workflow_scheme_issue_type"
+        ]
+      },
+      "workflow_scheme_draft": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "original_scheme_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "workflow_scheme",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "default_workflow_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "workflow",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "last_modified_user",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "last_modified_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_workflow_scheme_draft_id",
+          "idx_workflow_scheme_draft_original",
+          "idx_workflow_scheme_draft_name"
+        ],
+        "constraints": []
+      },
+      "permission": {
+        "columns": [
+          {
+            "name": "key",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "type",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_permission_key",
+          "ix_permission_id"
+        ],
+        "constraints": []
+      },
+      "permission_scheme": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "expand",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_permission_scheme_id"
+        ],
+        "constraints": []
+      },
+      "permission_grant": {
+        "columns": [
+          {
+            "name": "holder_type",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "parameter",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "permission_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "permission",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "permission_scheme_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "permission_scheme",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "holder_user_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "holder_group_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user_group",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "holder_project_role_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "project_role",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_permission_grant_id"
+        ],
+        "constraints": []
+      },
+      "issue_security_scheme": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "default_security_level_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_issue_security_scheme_id"
+        ],
+        "constraints": []
+      },
+      "issue_security_level": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "scheme_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue_security_scheme",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_issue_security_level_id"
+        ],
+        "constraints": []
+      },
+      "dashboard": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "is_favourite",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "is_writable",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "popularity",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "rank",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "automatic_refresh_ms",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "owner_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "layout",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": "AA",
+            "unique": null
+          },
+          {
+            "name": "properties",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_dashboard_id"
+        ],
+        "constraints": []
+      },
+      "dashboard_gadget": {
+        "columns": [
+          {
+            "name": "title",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "gadget_type",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "uri",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "color",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": "blue",
+            "unique": null
+          },
+          {
+            "name": "position_row",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "position_column",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "properties",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "dashboard_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "dashboard",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_dashboard_gadget_id"
+        ],
+        "constraints": []
+      },
+      "dashboard_item_property": {
+        "columns": [
+          {
+            "name": "property_key",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "property_value",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "dashboard_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "dashboard",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "gadget_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "dashboard_gadget",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "property_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": "string",
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_dashboard_item_property_id"
+        ],
+        "constraints": []
+      },
+      "filter": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "jql",
+            "type": "TEXT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "is_favourite",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "view_url",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "search_url",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "owner_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "approximate_last_used",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_filter_id"
+        ],
+        "constraints": []
+      },
+      "filter_subscription": {
+        "columns": [
+          {
+            "name": "filter_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "filter",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "user_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "group_name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_filter_subscription_id"
+        ],
+        "constraints": []
+      },
+      "webhook": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "url",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "events",
+            "type": "JSON",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function list at 0x7891b421a520>",
+            "unique": null
+          },
+          {
+            "name": "enabled",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "secret",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_webhook_id"
+        ],
+        "constraints": []
+      },
+      "application_property": {
+        "columns": [
+          {
+            "name": "key",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "value",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "property_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": "string",
+            "unique": null
+          },
+          {
+            "name": "default_value",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "is_system",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "is_readonly",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "is_encrypted",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_application_property_key",
+          "ix_application_property_id",
+          "ix_application_property_key_type",
+          "ix_application_property_system"
+        ],
+        "constraints": []
+      },
+      "avatar": {
+        "columns": [
+          {
+            "name": "owner_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "owner_type",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "is_system_avatar",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "is_selected",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "is_deletable",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "filename",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "content_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "file_size",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "image_data",
+            "type": "BLOB",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "file_path",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "url_16x16",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "url_24x24",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "url_32x32",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "url_48x48",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "crop_x",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "crop_y",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "crop_width",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "crop_height",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_avatar_id",
+          "ix_avatar_system",
+          "ix_avatar_owner",
+          "ix_avatar_selected"
+        ],
+        "constraints": []
+      },
+      "screen": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "scope",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": "GLOBAL",
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_screen_id"
+        ],
+        "constraints": []
+      },
+      "screen_tab": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "position",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "screen_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "screen",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_screen_tab_id"
+        ],
+        "constraints": []
+      },
+      "screen_tab_field": {
+        "columns": [
+          {
+            "name": "position",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": "0",
+            "unique": null
+          },
+          {
+            "name": "tab_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "screen_tab",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "field_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "field",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_screen_tab_field_id"
+        ],
+        "constraints": []
+      },
+      "screen_scheme": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": true
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_screen_scheme_id"
+        ],
+        "constraints": []
+      },
+      "audit_record": {
+        "columns": [
+          {
+            "name": "category",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "event_source",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "summary",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "remote_address",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "author_key",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "author_account_id",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "object_item",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "changed_values",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "associated_items",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "event_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "author_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_audit_record_id"
+        ],
+        "constraints": []
+      },
+      "application_role": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "data",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b41a3d80>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b41a3e20>",
+            "unique": null
+          }
+        ],
+        "indexes": [],
+        "constraints": []
+      },
+      "comment": {
+        "columns": [
+          {
+            "name": "body",
+            "type": "TEXT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "visibility_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "visibility_value",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "visibility_identifier",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "rendition_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": "storage",
+            "unique": null
+          },
+          {
+            "name": "issue_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "author_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "update_author_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_comment_id"
+        ],
+        "constraints": []
+      },
+      "worklog": {
+        "columns": [
+          {
+            "name": "time_spent",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "time_spent_seconds",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "started",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "comment",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "visibility_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "visibility_value",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "visibility_identifier",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "issue_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "author_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "update_author_id",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_worklog_id"
+        ],
+        "constraints": []
+      },
+      "attachment": {
+        "columns": [
+          {
+            "name": "filename",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "content",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "mime_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "size",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "file_path",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "thumbnail",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "human_readable_size",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "issue_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "issue",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "author_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null,
+            "foreign_keys": [
+              {
+                "table": "user",
+                "column": "id"
+              }
+            ]
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c360>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b473c400>",
+            "unique": null
+          }
+        ],
+        "indexes": [
+          "ix_attachment_id"
+        ],
+        "constraints": []
+      },
+      "role": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "translated_name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "admin",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "False",
+            "unique": null
+          },
+          {
+            "name": "default",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "role_configurable",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": "True",
+            "unique": null
+          },
+          {
+            "name": "data",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b36f3600>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b36f36a0>",
+            "unique": null
+          }
+        ],
+        "indexes": [],
+        "constraints": []
+      },
+      "label": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "data",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b1464b80>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b1464c20>",
+            "unique": null
+          }
+        ],
+        "indexes": [],
+        "constraints": []
+      },
+      "status_categories": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "data",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null,
+            "unique": null
+          },
+          {
+            "name": "created",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b1326020>",
+            "unique": null
+          },
+          {
+            "name": "updated",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "<function datetime.utcnow at 0x7891b13260c0>",
+            "unique": null
+          }
+        ],
+        "indexes": [],
+        "constraints": []
+      }
+    },
+    "metadata": {
+      "table_count": 56,
+      "source": "sqlalchemy_models",
+      "validation": {
+        "consistent": true,
+        "model_count": 140,
+        "issues": [
+          "Table user_group_association has no corresponding model",
+          "Table issue_component_association has no corresponding model",
+          "Table issue_fix_version_association has no corresponding model",
+          "Table issue_affects_version_association has no corresponding model",
+          "Table issue_label_association has no corresponding model"
+        ]
+      }
+    }
+  },
+  "has_schema": false,
+  "timestamp": "2025-09-06T13:12:57.224051"
+}

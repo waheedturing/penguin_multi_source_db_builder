@@ -1,0 +1,4724 @@
+{
+  "server_name": "paypal-penguin-only",
+  "complete_schema": {
+    "success": true,
+    "message": "Database schema retrieved successfully",
+    "database_id": "default",
+    "schema": {
+      "authorization_captures": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "authorization_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_currency_code",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_value",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(30)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "final_capture",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "disbursement_mode",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "note_to_payer",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "raw_response",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE authorization_captures (\n\tid VARCHAR(50) NOT NULL, \n\tauthorization_id VARCHAR(50) NOT NULL, \n\tamount_currency_code VARCHAR(3) NOT NULL, \n\tamount_value VARCHAR(20) NOT NULL, \n\tstatus VARCHAR(30) NOT NULL, \n\tfinal_capture BOOLEAN NOT NULL, \n\tcreate_time DATETIME NOT NULL, \n\tupdate_time DATETIME NOT NULL, \n\tdisbursement_mode VARCHAR(20), \n\tinvoice_id VARCHAR(127), \n\tnote_to_payer TEXT, \n\traw_response JSON, \n\tPRIMARY KEY (id)\n)"
+      },
+      "balance_snapshots": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "account_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "currency",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "total_balance",
+            "type": "NUMERIC(19, 2)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "available_balance",
+            "type": "NUMERIC(19, 2)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "withheld_balance",
+            "type": "NUMERIC(19, 2)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "snapshot_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE balance_snapshots (\n\tid INTEGER NOT NULL, \n\tmerchant_id VARCHAR(255) NOT NULL, \n\taccount_id VARCHAR(50) NOT NULL, \n\tcurrency VARCHAR(3) NOT NULL, \n\ttotal_balance NUMERIC(19, 2) NOT NULL, \n\tavailable_balance NUMERIC(19, 2) NOT NULL, \n\twithheld_balance NUMERIC(19, 2) NOT NULL, \n\tsnapshot_time DATETIME NOT NULL, \n\tcreated_at DATETIME, \n\tPRIMARY KEY (id)\n)"
+      },
+      "billing_plans": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "product_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR(127)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "description",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(8)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "billing_cycles",
+            "type": "JSON",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_preferences",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "taxes",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "quantity_supported",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tenant_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE billing_plans (\n\tid VARCHAR(50) NOT NULL, \n\tproduct_id VARCHAR(50) NOT NULL, \n\tname VARCHAR(127) NOT NULL, \n\tdescription VARCHAR(127), \n\tstatus VARCHAR(8) NOT NULL, \n\tbilling_cycles JSON NOT NULL, \n\tpayment_preferences JSON, \n\ttaxes JSON, \n\tquantity_supported BOOLEAN, \n\tcreate_time DATETIME NOT NULL, \n\tupdate_time DATETIME NOT NULL, \n\ttenant_id VARCHAR(50), \n\tPRIMARY KEY (id)\n)"
+      },
+      "billing_subscriptions": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "tenant_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "plan_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status_update_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "plan_overridden",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "start_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "CURRENT_TIMESTAMP"
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "quantity",
+            "type": "VARCHAR(32)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "custom_id",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "shipping_amount",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "subscriber",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "billing_info",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "application_context",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "plan_details",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "merchant_inventory",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "extra_data",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE billing_subscriptions (\n\tid VARCHAR(50) NOT NULL, \n\ttenant_id VARCHAR(255) NOT NULL, \n\tplan_id VARCHAR(50) NOT NULL, \n\tstatus VARCHAR(50) NOT NULL, \n\tstatus_update_time DATETIME, \n\tplan_overridden BOOLEAN, \n\tstart_time DATETIME, \n\tcreate_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, \n\tupdate_time DATETIME, \n\tquantity VARCHAR(32), \n\tcustom_id VARCHAR(127), \n\tshipping_amount JSON, \n\tsubscriber JSON, \n\tbilling_info JSON, \n\tapplication_context JSON, \n\tplan_details JSON, \n\tmerchant_inventory JSON, \n\textra_data JSON, \n\tPRIMARY KEY (id)\n)"
+      },
+      "capture_refunds": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "capture_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_currency_code",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_value",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(30)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "note_to_payer",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "raw_response",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE capture_refunds (\n\tid VARCHAR(50) NOT NULL, \n\tcapture_id VARCHAR(50) NOT NULL, \n\tamount_currency_code VARCHAR(3) NOT NULL, \n\tamount_value VARCHAR(20) NOT NULL, \n\tstatus VARCHAR(30) NOT NULL, \n\tinvoice_id VARCHAR(127), \n\tnote_to_payer VARCHAR(255), \n\tcreate_time DATETIME NOT NULL, \n\tupdate_time DATETIME NOT NULL, \n\traw_response JSON, \n\tPRIMARY KEY (id)\n)"
+      },
+      "catalog_products": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR(127)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "description",
+            "type": "VARCHAR(256)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "type",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "category",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "image_url",
+            "type": "VARCHAR(2000)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "home_url",
+            "type": "VARCHAR(2000)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "is_active",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "client_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "user_id",
+            "type": "VARCHAR(36)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE catalog_products (\n\tid VARCHAR(50) NOT NULL, \n\tname VARCHAR(127) NOT NULL, \n\tdescription VARCHAR(256), \n\ttype VARCHAR(20) NOT NULL, \n\tcategory VARCHAR(50), \n\timage_url VARCHAR(2000), \n\thome_url VARCHAR(2000), \n\tcreate_time DATETIME NOT NULL, \n\tupdate_time DATETIME NOT NULL, \n\tis_active BOOLEAN NOT NULL, \n\tclient_id VARCHAR(255) NOT NULL, \n\tuser_id VARCHAR(36), \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(client_id) REFERENCES oauth_clients (client_id), \n\tFOREIGN KEY(user_id) REFERENCES users (id)\n)"
+      },
+      "checkout_orders": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(21)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "intent",
+            "type": "VARCHAR(9)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payer_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payer_email",
+            "type": "VARCHAR(254)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payer_name",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payer_address",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_source",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "application_context",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "processing_instruction",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE checkout_orders (\n\tid VARCHAR(50) NOT NULL, \n\tstatus VARCHAR(21) NOT NULL, \n\tintent VARCHAR(9) NOT NULL, \n\tpayer_id VARCHAR(50), \n\tpayer_email VARCHAR(254), \n\tpayer_name JSON, \n\tpayer_address JSON, \n\tpayment_source JSON, \n\tapplication_context JSON, \n\tprocessing_instruction VARCHAR(50), \n\tcreate_time DATETIME, \n\tupdate_time DATETIME, \n\tPRIMARY KEY (id)\n)"
+      },
+      "customer_disputes": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "dispute_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "disputed_transaction_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "reason",
+            "type": "VARCHAR(39)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(27)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "dispute_state",
+            "type": "VARCHAR(27)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "dispute_life_cycle_stage",
+            "type": "VARCHAR(15)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "dispute_channel",
+            "type": "VARCHAR(24)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "dispute_amount_value",
+            "type": "NUMERIC(10, 2)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "dispute_amount_currency",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "buyer_email",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "seller_email",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "buyer_name",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "seller_name",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "buyer_message",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "seller_response",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "evidence_documents",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "dispute_outcome",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "resolution_reason",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "seller_response_due_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "buyer_response_due_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "resolved_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "external_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "notes",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE customer_disputes (\n\tid VARCHAR(50) NOT NULL, \n\tmerchant_id VARCHAR(100) NOT NULL, \n\tdispute_id VARCHAR(50) NOT NULL, \n\tdisputed_transaction_id VARCHAR(100), \n\treason VARCHAR(39) NOT NULL, \n\tstatus VARCHAR(27) NOT NULL, \n\tdispute_state VARCHAR(27), \n\tdispute_life_cycle_stage VARCHAR(15) NOT NULL, \n\tdispute_channel VARCHAR(24) NOT NULL, \n\tdispute_amount_value NUMERIC(10, 2) NOT NULL, \n\tdispute_amount_currency VARCHAR(3) NOT NULL, \n\tbuyer_email VARCHAR(255), \n\tseller_email VARCHAR(255), \n\tbuyer_name VARCHAR(255), \n\tseller_name VARCHAR(255), \n\tbuyer_message TEXT, \n\tseller_response TEXT, \n\tevidence_documents TEXT, \n\tdispute_outcome TEXT, \n\tresolution_reason VARCHAR(100), \n\tcreate_time DATETIME NOT NULL, \n\tupdate_time DATETIME NOT NULL, \n\tseller_response_due_date DATETIME, \n\tbuyer_response_due_date DATETIME, \n\tresolved_time DATETIME, \n\texternal_id VARCHAR(100), \n\tnotes TEXT, \n\tPRIMARY KEY (id)\n)"
+      },
+      "generated_invoice_numbers": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "invoice_number",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "sequence_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "generated_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "generated_by",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "request_type",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "is_used",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "used_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "extra_metadata",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE generated_invoice_numbers (\n\tid INTEGER NOT NULL, \n\tinvoice_number VARCHAR(100) NOT NULL, \n\tmerchant_id VARCHAR(100) NOT NULL, \n\tsequence_id INTEGER NOT NULL, \n\tgenerated_at DATETIME NOT NULL, \n\tgenerated_by VARCHAR(100), \n\trequest_type VARCHAR(20) NOT NULL, \n\tis_used BOOLEAN NOT NULL, \n\tused_at DATETIME, \n\tinvoice_id VARCHAR(100), \n\textra_metadata JSON, \n\tPRIMARY KEY (id)\n)"
+      },
+      "invoice_activities": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "activity_type",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "old_status",
+            "type": "VARCHAR(30)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "new_status",
+            "type": "VARCHAR(30)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "activity_date",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "performed_by",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "details",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE invoice_activities (\n\tid INTEGER NOT NULL, \n\tinvoice_id VARCHAR(50) NOT NULL, \n\tactivity_type VARCHAR(50) NOT NULL, \n\told_status VARCHAR(30), \n\tnew_status VARCHAR(30), \n\tactivity_date DATETIME NOT NULL, \n\tperformed_by VARCHAR(100), \n\tdetails JSON, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(invoice_id) REFERENCES invoices (id) ON DELETE CASCADE\n)"
+      },
+      "invoice_items": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR(200)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "description",
+            "type": "VARCHAR(1000)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "quantity",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "unit_amount_value",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "unit_amount_currency",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tax_name",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tax_percent",
+            "type": "VARCHAR(10)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tax_amount_value",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tax_amount_currency",
+            "type": "VARCHAR(3)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "discount_percent",
+            "type": "VARCHAR(10)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "discount_amount_value",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "discount_amount_currency",
+            "type": "VARCHAR(3)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "item_date",
+            "type": "VARCHAR(10)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "unit_of_measure",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "line_total",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "position",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE invoice_items (\n\tid INTEGER NOT NULL, \n\tinvoice_id VARCHAR(50) NOT NULL, \n\tname VARCHAR(200) NOT NULL, \n\tdescription VARCHAR(1000), \n\tquantity VARCHAR(20) NOT NULL, \n\tunit_amount_value VARCHAR(20) NOT NULL, \n\tunit_amount_currency VARCHAR(3) NOT NULL, \n\ttax_name VARCHAR(20), \n\ttax_percent VARCHAR(10), \n\ttax_amount_value VARCHAR(20), \n\ttax_amount_currency VARCHAR(3), \n\tdiscount_percent VARCHAR(10), \n\tdiscount_amount_value VARCHAR(20), \n\tdiscount_amount_currency VARCHAR(3), \n\titem_date VARCHAR(10), \n\tunit_of_measure VARCHAR(100), \n\tline_total VARCHAR(20), \n\tposition INTEGER NOT NULL, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(invoice_id) REFERENCES invoices (id) ON DELETE CASCADE\n)"
+      },
+      "invoice_number_sequences": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "prefix",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "current_number",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "suffix_pattern",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "is_active",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "padding_zeros",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "reset_yearly",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "reset_monthly",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "last_reset_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE invoice_number_sequences (\n\tid INTEGER NOT NULL, \n\tmerchant_id VARCHAR(100) NOT NULL, \n\tprefix VARCHAR(50) NOT NULL, \n\tcurrent_number INTEGER NOT NULL, \n\tsuffix_pattern VARCHAR(50), \n\tcreated_at DATETIME NOT NULL, \n\tupdated_at DATETIME NOT NULL, \n\tis_active BOOLEAN NOT NULL, \n\tpadding_zeros INTEGER NOT NULL, \n\treset_yearly BOOLEAN NOT NULL, \n\treset_monthly BOOLEAN NOT NULL, \n\tlast_reset_date DATETIME, \n\tPRIMARY KEY (id)\n)"
+      },
+      "invoice_payments": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_type",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_method",
+            "type": "VARCHAR(30)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_date",
+            "type": "VARCHAR(10)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_value",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_currency",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "note",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "shipping_info",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "is_partial",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "remaining_balance",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE invoice_payments (\n\tid VARCHAR(50) NOT NULL, \n\tinvoice_id VARCHAR(50) NOT NULL, \n\tpayment_type VARCHAR(20) NOT NULL, \n\tpayment_method VARCHAR(30) NOT NULL, \n\tpayment_date VARCHAR(10) NOT NULL, \n\tamount_value VARCHAR(20) NOT NULL, \n\tamount_currency VARCHAR(3) NOT NULL, \n\ttransaction_id VARCHAR(100), \n\tnote TEXT, \n\tshipping_info JSON, \n\tcreated_at DATETIME NOT NULL, \n\tcreated_by VARCHAR(100), \n\tmerchant_id VARCHAR(100) NOT NULL, \n\tis_partial BOOLEAN NOT NULL, \n\tremaining_balance VARCHAR(20), \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(invoice_id) REFERENCES invoices (id) ON DELETE CASCADE\n)"
+      },
+      "invoice_templates": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(30)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR(500)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "default_template",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "standard_template",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "unit_of_measure",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "template_info",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "settings",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "updated_by",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "deleted",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "deleted_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE invoice_templates (\n\tid VARCHAR(30) NOT NULL, \n\tname VARCHAR(500) NOT NULL, \n\tmerchant_id VARCHAR(255) NOT NULL, \n\tdefault_template BOOLEAN, \n\tstandard_template BOOLEAN, \n\tunit_of_measure VARCHAR(20), \n\ttemplate_info JSON, \n\tsettings JSON, \n\tcreated_at DATETIME NOT NULL, \n\tcreated_by VARCHAR(255), \n\tupdated_at DATETIME NOT NULL, \n\tupdated_by VARCHAR(255), \n\tdeleted BOOLEAN, \n\tdeleted_at DATETIME, \n\tPRIMARY KEY (id)\n)"
+      },
+      "invoices": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "invoice_number",
+            "type": "VARCHAR(25)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(30)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "reference",
+            "type": "VARCHAR(120)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "invoice_date",
+            "type": "VARCHAR(10)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "currency_code",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "note",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "term",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "memo",
+            "type": "VARCHAR(500)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_term_type",
+            "type": "VARCHAR(30)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "due_date",
+            "type": "VARCHAR(10)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "invoicer",
+            "type": "JSON",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "primary_recipients",
+            "type": "JSON",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "configuration",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "subtotal",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "total_amount",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "total_currency",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "due_amount",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_breakdown",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "sent_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "scheduled_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "paid_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "cancelled_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_by",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "last_modified_by",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "links",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "notification_settings",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE invoices (\n\tid VARCHAR(50) NOT NULL, \n\tinvoice_number VARCHAR(25), \n\tstatus VARCHAR(30) NOT NULL, \n\treference VARCHAR(120), \n\tinvoice_date VARCHAR(10) NOT NULL, \n\tcurrency_code VARCHAR(3) NOT NULL, \n\tnote TEXT, \n\tterm TEXT, \n\tmemo VARCHAR(500), \n\tpayment_term_type VARCHAR(30), \n\tdue_date VARCHAR(10), \n\tinvoicer JSON NOT NULL, \n\tprimary_recipients JSON NOT NULL, \n\tconfiguration JSON, \n\tsubtotal VARCHAR(20), \n\ttotal_amount VARCHAR(20) NOT NULL, \n\ttotal_currency VARCHAR(3) NOT NULL, \n\tdue_amount VARCHAR(20), \n\tamount_breakdown JSON, \n\tcreated_at DATETIME NOT NULL, \n\tupdated_at DATETIME NOT NULL, \n\tsent_at DATETIME, \n\tscheduled_at DATETIME, \n\tpaid_at DATETIME, \n\tcancelled_at DATETIME, \n\tmerchant_id VARCHAR(100) NOT NULL, \n\tcreated_by VARCHAR(100), \n\tlast_modified_by VARCHAR(100), \n\tlinks JSON, \n\tnotification_settings JSON, \n\tPRIMARY KEY (id)\n)"
+      },
+      "oauth_access_tokens": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "token",
+            "type": "VARCHAR(500)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "client_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "scopes",
+            "type": "TEXT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "expires_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "nonce",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "is_revoked",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE oauth_access_tokens (\n\tid VARCHAR(255) NOT NULL, \n\ttoken VARCHAR(500) NOT NULL, \n\tclient_id VARCHAR(255) NOT NULL, \n\tscopes TEXT NOT NULL, \n\texpires_at DATETIME NOT NULL, \n\tnonce VARCHAR(255) NOT NULL, \n\tis_revoked BOOLEAN, \n\tcreated_at DATETIME, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(client_id) REFERENCES oauth_clients (client_id)\n)"
+      },
+      "oauth_clients": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "client_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "client_secret",
+            "type": "VARCHAR(500)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "app_name",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "app_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "is_active",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "scopes",
+            "type": "TEXT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE oauth_clients (\n\tid VARCHAR(255) NOT NULL, \n\tclient_id VARCHAR(255) NOT NULL, \n\tclient_secret VARCHAR(500) NOT NULL, \n\tapp_name VARCHAR(255) NOT NULL, \n\tapp_id VARCHAR(255) NOT NULL, \n\tis_active BOOLEAN, \n\tscopes TEXT NOT NULL, \n\tcreated_at DATETIME, \n\tupdated_at DATETIME, \n\tPRIMARY KEY (id), \n\tUNIQUE (app_id)\n)"
+      },
+      "oauth_refresh_tokens": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "token",
+            "type": "VARCHAR(500)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "access_token_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "client_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "expires_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "is_revoked",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE oauth_refresh_tokens (\n\tid VARCHAR(255) NOT NULL, \n\ttoken VARCHAR(500) NOT NULL, \n\taccess_token_id VARCHAR(255) NOT NULL, \n\tclient_id VARCHAR(255) NOT NULL, \n\texpires_at DATETIME NOT NULL, \n\tis_revoked BOOLEAN, \n\tcreated_at DATETIME, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(access_token_id) REFERENCES oauth_access_tokens (id), \n\tFOREIGN KEY(client_id) REFERENCES oauth_clients (client_id)\n)"
+      },
+      "order_authorizations": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "order_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "purchase_unit_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_currency_code",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_value",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "custom_id",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "seller_protection",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "processor_response",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "expiration_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE order_authorizations (\n\tid VARCHAR(50) NOT NULL, \n\torder_id VARCHAR(50) NOT NULL, \n\tpurchase_unit_id INTEGER NOT NULL, \n\tstatus VARCHAR(50) NOT NULL, \n\tamount_currency_code VARCHAR(3) NOT NULL, \n\tamount_value VARCHAR(20) NOT NULL, \n\tinvoice_id VARCHAR(127), \n\tcustom_id VARCHAR(127), \n\tseller_protection JSON, \n\tprocessor_response JSON, \n\tcreate_time DATETIME, \n\tupdate_time DATETIME, \n\texpiration_time DATETIME, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(order_id) REFERENCES checkout_orders (id), \n\tFOREIGN KEY(purchase_unit_id) REFERENCES order_purchase_units (id)\n)"
+      },
+      "order_captures": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "order_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "purchase_unit_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_currency_code",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_value",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "custom_id",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "final_capture",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "seller_protection",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "seller_receivable_breakdown",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "processor_response",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "network_transaction_reference",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE order_captures (\n\tid VARCHAR(50) NOT NULL, \n\torder_id VARCHAR(50) NOT NULL, \n\tpurchase_unit_id INTEGER NOT NULL, \n\tstatus VARCHAR(50) NOT NULL, \n\tamount_currency_code VARCHAR(3) NOT NULL, \n\tamount_value VARCHAR(20) NOT NULL, \n\tinvoice_id VARCHAR(127), \n\tcustom_id VARCHAR(127), \n\tfinal_capture INTEGER, \n\tseller_protection JSON, \n\tseller_receivable_breakdown JSON, \n\tprocessor_response JSON, \n\tnetwork_transaction_reference JSON, \n\tcreate_time DATETIME, \n\tupdate_time DATETIME, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(order_id) REFERENCES checkout_orders (id), \n\tFOREIGN KEY(purchase_unit_id) REFERENCES order_purchase_units (id)\n)"
+      },
+      "order_items": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "purchase_unit_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR(127)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "quantity",
+            "type": "VARCHAR(10)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "unit_currency_code",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "unit_value",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tax_currency_code",
+            "type": "VARCHAR(3)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tax_value",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "description",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "sku",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "category",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE order_items (\n\tid INTEGER NOT NULL, \n\tpurchase_unit_id INTEGER NOT NULL, \n\tname VARCHAR(127) NOT NULL, \n\tquantity VARCHAR(10) NOT NULL, \n\tunit_currency_code VARCHAR(3) NOT NULL, \n\tunit_value VARCHAR(20) NOT NULL, \n\ttax_currency_code VARCHAR(3), \n\ttax_value VARCHAR(20), \n\tdescription VARCHAR(127), \n\tsku VARCHAR(127), \n\tcategory VARCHAR(20), \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(purchase_unit_id) REFERENCES order_purchase_units (id)\n)"
+      },
+      "order_purchase_units": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "order_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "reference_id",
+            "type": "VARCHAR(256)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "currency_code",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "value",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_breakdown",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payee_email",
+            "type": "VARCHAR(254)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payee_merchant_id",
+            "type": "VARCHAR(13)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "description",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "custom_id",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "soft_descriptor",
+            "type": "VARCHAR(22)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_instruction",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "shipping",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE order_purchase_units (\n\tid INTEGER NOT NULL, \n\torder_id VARCHAR(50) NOT NULL, \n\treference_id VARCHAR(256), \n\tcurrency_code VARCHAR(3) NOT NULL, \n\tvalue VARCHAR(20) NOT NULL, \n\tamount_breakdown JSON, \n\tpayee_email VARCHAR(254), \n\tpayee_merchant_id VARCHAR(13), \n\tdescription VARCHAR(127), \n\tcustom_id VARCHAR(127), \n\tinvoice_id VARCHAR(127), \n\tsoft_descriptor VARCHAR(22), \n\tpayment_instruction JSON, \n\tshipping JSON, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(order_id) REFERENCES checkout_orders (id)\n)"
+      },
+      "order_tracking": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "order_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "capture_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tracking_number",
+            "type": "VARCHAR(64)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "carrier",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "notify_payer",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "items",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE order_tracking (\n\tid INTEGER NOT NULL, \n\torder_id VARCHAR(50) NOT NULL, \n\tcapture_id VARCHAR(50) NOT NULL, \n\ttracking_number VARCHAR(64) NOT NULL, \n\tcarrier VARCHAR(50) NOT NULL, \n\tstatus VARCHAR(50) NOT NULL, \n\tnotify_payer INTEGER, \n\titems JSON, \n\tcreate_time DATETIME, \n\tupdate_time DATETIME, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(order_id) REFERENCES checkout_orders (id)\n)"
+      },
+      "partner_referrals": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "partner_id",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tracking_id",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "customer_email",
+            "type": "VARCHAR(254)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "preferred_language",
+            "type": "VARCHAR(10)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "legal_country_code",
+            "type": "VARCHAR(2)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "business_entity",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "individual_owners",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "operations",
+            "type": "JSON",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "products",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "capabilities",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "legal_consents",
+            "type": "JSON",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "partner_config",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(11)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "action_url",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "action_url_expiry",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "return_url",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "CURRENT_TIMESTAMP"
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "CURRENT_TIMESTAMP"
+          }
+        ],
+        "sql": "CREATE TABLE partner_referrals (\n\tid VARCHAR(50) NOT NULL, \n\tpartner_id VARCHAR(100) NOT NULL, \n\ttracking_id VARCHAR(127), \n\tcustomer_email VARCHAR(254), \n\tpreferred_language VARCHAR(10), \n\tlegal_country_code VARCHAR(2), \n\tbusiness_entity JSON, \n\tindividual_owners JSON, \n\toperations JSON NOT NULL, \n\tproducts JSON, \n\tcapabilities JSON, \n\tlegal_consents JSON NOT NULL, \n\tpartner_config JSON, \n\tstatus VARCHAR(11) NOT NULL, \n\taction_url TEXT, \n\taction_url_expiry DATETIME, \n\treturn_url TEXT, \n\tcreated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, \n\tupdated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, \n\tPRIMARY KEY (id)\n)"
+      },
+      "payment_authorizations": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(30)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_currency_code",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount_value",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "type": "VARCHAR(127)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "custom_id",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "reason_code",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "seller_protection_status",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "seller_protection_dispute_categories",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "processor_avs_code",
+            "type": "VARCHAR(10)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "processor_cvv_code",
+            "type": "VARCHAR(10)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "processor_response_code",
+            "type": "VARCHAR(10)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "expiration_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "order_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payer_email",
+            "type": "VARCHAR(254)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payer_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "raw_response",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE payment_authorizations (\n\tid VARCHAR(50) NOT NULL, \n\tstatus VARCHAR(30) NOT NULL, \n\tamount_currency_code VARCHAR(3) NOT NULL, \n\tamount_value VARCHAR(20) NOT NULL, \n\tinvoice_id VARCHAR(127), \n\tcustom_id VARCHAR(255), \n\treason_code VARCHAR(50), \n\tseller_protection_status VARCHAR(50), \n\tseller_protection_dispute_categories JSON, \n\tprocessor_avs_code VARCHAR(10), \n\tprocessor_cvv_code VARCHAR(10), \n\tprocessor_response_code VARCHAR(10), \n\tcreate_time DATETIME NOT NULL, \n\tupdate_time DATETIME NOT NULL, \n\texpiration_time DATETIME, \n\torder_id VARCHAR(50), \n\tpayer_email VARCHAR(254), \n\tpayer_id VARCHAR(50), \n\tmerchant_id VARCHAR(50), \n\traw_response JSON, \n\tPRIMARY KEY (id)\n)"
+      },
+      "payout_batches": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "tenant_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "sender_batch_id",
+            "type": "VARCHAR(256)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payout_batch_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "recipient_type",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "email_subject",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "email_message",
+            "type": "VARCHAR(1000)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "note",
+            "type": "VARCHAR(165)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "batch_status",
+            "type": "VARCHAR(10)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "total_amount",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "total_fee",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "currency",
+            "type": "VARCHAR(3)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "total_items",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "processed_items",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "errors_count",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "time_created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "CURRENT_TIMESTAMP"
+          },
+          {
+            "name": "time_completed",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "time_updated",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "sender_info",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "batch_metadata",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE payout_batches (\n\tid VARCHAR(50) NOT NULL, \n\ttenant_id VARCHAR(100), \n\tsender_batch_id VARCHAR(256) NOT NULL, \n\tpayout_batch_id VARCHAR(50) NOT NULL, \n\trecipient_type VARCHAR(20), \n\temail_subject VARCHAR(255), \n\temail_message VARCHAR(1000), \n\tnote VARCHAR(165), \n\tbatch_status VARCHAR(10) NOT NULL, \n\ttotal_amount FLOAT, \n\ttotal_fee FLOAT, \n\tcurrency VARCHAR(3), \n\ttotal_items INTEGER, \n\tprocessed_items INTEGER, \n\terrors_count INTEGER, \n\ttime_created DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, \n\ttime_completed DATETIME, \n\ttime_updated DATETIME, \n\tsender_info JSON, \n\tbatch_metadata JSON, \n\tPRIMARY KEY (id), \n\tUNIQUE (payout_batch_id)\n)"
+      },
+      "payout_items": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "payout_batch_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tenant_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payout_item_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "sender_item_id",
+            "type": "VARCHAR(256)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "activity_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "recipient_type",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "receiver",
+            "type": "VARCHAR(127)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "recipient_wallet",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount",
+            "type": "FLOAT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "currency",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "fee_amount",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "fee_currency",
+            "type": "VARCHAR(3)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_status",
+            "type": "VARCHAR(9)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "note",
+            "type": "VARCHAR(165)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "notification_language",
+            "type": "VARCHAR(10)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "alternate_notification",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "application_context",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "currency_conversion",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "errors",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "time_processed",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "CURRENT_TIMESTAMP"
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE payout_items (\n\tid VARCHAR(50) NOT NULL, \n\tpayout_batch_id VARCHAR(50) NOT NULL, \n\ttenant_id VARCHAR(100), \n\tpayout_item_id VARCHAR(50) NOT NULL, \n\tsender_item_id VARCHAR(256), \n\ttransaction_id VARCHAR(50), \n\tactivity_id VARCHAR(50), \n\trecipient_type VARCHAR(20), \n\treceiver VARCHAR(127) NOT NULL, \n\trecipient_wallet VARCHAR(20), \n\tamount FLOAT NOT NULL, \n\tcurrency VARCHAR(3) NOT NULL, \n\tfee_amount FLOAT, \n\tfee_currency VARCHAR(3), \n\ttransaction_status VARCHAR(9) NOT NULL, \n\tnote VARCHAR(165), \n\tnotification_language VARCHAR(10), \n\talternate_notification JSON, \n\tapplication_context JSON, \n\tcurrency_conversion JSON, \n\terrors JSON, \n\ttime_processed DATETIME, \n\tcreated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, \n\tupdated_at DATETIME, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(payout_batch_id) REFERENCES payout_batches (id), \n\tUNIQUE (payout_item_id)\n)"
+      },
+      "referenced_payout_batches": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "tenant_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "batch_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "sender_batch_id",
+            "type": "VARCHAR(256)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "batch_status",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "total_items",
+            "type": "FLOAT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "processed_items",
+            "type": "FLOAT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "success_items",
+            "type": "FLOAT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "failed_items",
+            "type": "FLOAT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "total_amount",
+            "type": "FLOAT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "currency",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "total_fee",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "time_created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "time_completed",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "batch_metadata",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE referenced_payout_batches (\n\tid VARCHAR(50) NOT NULL, \n\ttenant_id VARCHAR(100), \n\tbatch_id VARCHAR(50) NOT NULL, \n\tsender_batch_id VARCHAR(256), \n\tbatch_status VARCHAR(20) NOT NULL, \n\ttotal_items FLOAT NOT NULL, \n\tprocessed_items FLOAT NOT NULL, \n\tsuccess_items FLOAT NOT NULL, \n\tfailed_items FLOAT NOT NULL, \n\ttotal_amount FLOAT NOT NULL, \n\tcurrency VARCHAR(3) NOT NULL, \n\ttotal_fee FLOAT, \n\ttime_created DATETIME NOT NULL, \n\ttime_completed DATETIME, \n\tbatch_metadata JSON, \n\tPRIMARY KEY (id), \n\tUNIQUE (batch_id)\n)"
+      },
+      "referenced_payout_items": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "tenant_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payout_item_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payout_batch_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "reference_id",
+            "type": "VARCHAR(256)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "reference_type",
+            "type": "VARCHAR(14)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "processing_state",
+            "type": "VARCHAR(10)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "sender_item_id",
+            "type": "VARCHAR(256)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "recipient_type",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "receiver",
+            "type": "VARCHAR(127)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "recipient_wallet",
+            "type": "VARCHAR(10)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "amount",
+            "type": "FLOAT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "currency",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "fee_amount",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "fee_currency",
+            "type": "VARCHAR(3)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "note",
+            "type": "VARCHAR(165)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "activity_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "time_created",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "time_completed",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "time_processed",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "errors",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "item_metadata",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE referenced_payout_items (\n\tid VARCHAR(50) NOT NULL, \n\ttenant_id VARCHAR(100), \n\tpayout_item_id VARCHAR(50) NOT NULL, \n\tpayout_batch_id VARCHAR(50), \n\treference_id VARCHAR(256) NOT NULL, \n\treference_type VARCHAR(14) NOT NULL, \n\tprocessing_state VARCHAR(10) NOT NULL, \n\tsender_item_id VARCHAR(256), \n\trecipient_type VARCHAR(20) NOT NULL, \n\treceiver VARCHAR(127) NOT NULL, \n\trecipient_wallet VARCHAR(10) NOT NULL, \n\tamount FLOAT NOT NULL, \n\tcurrency VARCHAR(3) NOT NULL, \n\tfee_amount FLOAT, \n\tfee_currency VARCHAR(3), \n\tnote VARCHAR(165), \n\ttransaction_id VARCHAR(50), \n\tactivity_id VARCHAR(50), \n\ttime_created DATETIME NOT NULL, \n\ttime_completed DATETIME, \n\ttime_processed DATETIME, \n\terrors JSON, \n\titem_metadata JSON, \n\tPRIMARY KEY (id), \n\tUNIQUE (payout_item_id)\n)"
+      },
+      "referral_events": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "referral_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "event_type",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "event_data",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "event_timestamp",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": "CURRENT_TIMESTAMP"
+          },
+          {
+            "name": "actor_type",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "actor_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE referral_events (\n\tid VARCHAR(50) NOT NULL, \n\treferral_id VARCHAR(50) NOT NULL, \n\tevent_type VARCHAR(50) NOT NULL, \n\tevent_data JSON, \n\tevent_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, \n\tactor_type VARCHAR(50), \n\tactor_id VARCHAR(100), \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(referral_id) REFERENCES partner_referrals (id)\n)"
+      },
+      "reporting_balances": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "account_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "currency",
+            "type": "VARCHAR(3)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "is_primary",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "total_balance",
+            "type": "NUMERIC(19, 2)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "available_balance",
+            "type": "NUMERIC(19, 2)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "withheld_balance",
+            "type": "NUMERIC(19, 2)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "pending_balance",
+            "type": "NUMERIC(19, 2)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "reserve_balance",
+            "type": "NUMERIC(19, 2)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "instant_balance",
+            "type": "NUMERIC(19, 2)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "as_of_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "last_refresh_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "deleted",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE reporting_balances (\n\tid INTEGER NOT NULL, \n\tmerchant_id VARCHAR(255) NOT NULL, \n\taccount_id VARCHAR(50) NOT NULL, \n\tcurrency VARCHAR(3) NOT NULL, \n\tis_primary BOOLEAN, \n\ttotal_balance NUMERIC(19, 2) NOT NULL, \n\tavailable_balance NUMERIC(19, 2) NOT NULL, \n\twithheld_balance NUMERIC(19, 2) NOT NULL, \n\tpending_balance NUMERIC(19, 2) NOT NULL, \n\treserve_balance NUMERIC(19, 2) NOT NULL, \n\tinstant_balance NUMERIC(19, 2) NOT NULL, \n\tas_of_time DATETIME NOT NULL, \n\tlast_refresh_time DATETIME NOT NULL, \n\tcreated_at DATETIME, \n\tupdated_at DATETIME, \n\tdeleted BOOLEAN, \n\tPRIMARY KEY (id)\n)"
+      },
+      "reporting_transactions": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "transaction_id",
+            "type": "VARCHAR(19)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "paypal_account_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_event_code",
+            "type": "VARCHAR(10)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_type",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_status",
+            "type": "VARCHAR(1)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_subject",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_note",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "custom_field",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "protection_eligibility",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "credit_term",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_method_type",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "instrument_type",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "instrument_sub_type",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "bank_reference_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "credit_transaction_reference",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_initiation_date",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_updated_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_amount",
+            "type": "NUMERIC(19, 2)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_currency",
+            "type": "VARCHAR(3)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "fee_amount",
+            "type": "NUMERIC(19, 2)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "fee_currency",
+            "type": "VARCHAR(3)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "insurance_amount",
+            "type": "NUMERIC(19, 2)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "shipping_amount",
+            "type": "NUMERIC(19, 2)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "shipping_discount_amount",
+            "type": "NUMERIC(19, 2)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "ending_balance",
+            "type": "NUMERIC(19, 2)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "available_balance",
+            "type": "NUMERIC(19, 2)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "balance_affecting",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "deleted",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payer_info",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "shipping_info",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "cart_info",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "store_info",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "auction_info",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "incentive_info",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE reporting_transactions (\n\tid VARCHAR(50) NOT NULL, \n\ttransaction_id VARCHAR(19) NOT NULL, \n\tmerchant_id VARCHAR(255) NOT NULL, \n\tpaypal_account_id VARCHAR(50), \n\ttransaction_event_code VARCHAR(10), \n\ttransaction_type VARCHAR(50), \n\ttransaction_status VARCHAR(1), \n\ttransaction_subject VARCHAR(255), \n\ttransaction_note VARCHAR(255), \n\tinvoice_id VARCHAR(50), \n\tcustom_field VARCHAR(255), \n\tprotection_eligibility VARCHAR(50), \n\tcredit_term VARCHAR(50), \n\tpayment_method_type VARCHAR(50), \n\tinstrument_type VARCHAR(50), \n\tinstrument_sub_type VARCHAR(50), \n\tbank_reference_id VARCHAR(100), \n\tcredit_transaction_reference VARCHAR(100), \n\ttransaction_initiation_date DATETIME NOT NULL, \n\ttransaction_updated_date DATETIME, \n\tcreated_at DATETIME, \n\tupdated_at DATETIME, \n\ttransaction_amount NUMERIC(19, 2), \n\ttransaction_currency VARCHAR(3), \n\tfee_amount NUMERIC(19, 2), \n\tfee_currency VARCHAR(3), \n\tinsurance_amount NUMERIC(19, 2), \n\tshipping_amount NUMERIC(19, 2), \n\tshipping_discount_amount NUMERIC(19, 2), \n\tending_balance NUMERIC(19, 2), \n\tavailable_balance NUMERIC(19, 2), \n\tbalance_affecting BOOLEAN, \n\tdeleted BOOLEAN, \n\tpayer_info JSON, \n\tshipping_info JSON, \n\tcart_info JSON, \n\tstore_info JSON, \n\tauction_info JSON, \n\tincentive_info JSON, \n\tPRIMARY KEY (id)\n)"
+      },
+      "shipping_trackers": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tracking_number",
+            "type": "VARCHAR(64)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tracking_number_type",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "shipment_date",
+            "type": "DATE",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "last_updated_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "carrier",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "carrier_name_other",
+            "type": "VARCHAR(64)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "postage_payment_id",
+            "type": "VARCHAR(64)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "notify_buyer",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "quantity",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tracking_number_validated",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "deleted",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "additional_info",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE shipping_trackers (\n\tid INTEGER NOT NULL, \n\tmerchant_id VARCHAR(255) NOT NULL, \n\ttransaction_id VARCHAR(50) NOT NULL, \n\ttracking_number VARCHAR(64), \n\ttracking_number_type VARCHAR(50), \n\tstatus VARCHAR(50) NOT NULL, \n\tshipment_date DATE, \n\tlast_updated_time DATETIME, \n\tcarrier VARCHAR(50), \n\tcarrier_name_other VARCHAR(64), \n\tpostage_payment_id VARCHAR(64), \n\tnotify_buyer BOOLEAN, \n\tquantity INTEGER, \n\ttracking_number_validated BOOLEAN, \n\tcreated_at DATETIME, \n\tupdated_at DATETIME, \n\tdeleted BOOLEAN, \n\tadditional_info JSON, \n\tPRIMARY KEY (id)\n)"
+      },
+      "tracking_events": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tracker_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "transaction_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "event_type",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "old_value",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "new_value",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "event_description",
+            "type": "VARCHAR(500)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "event_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "triggered_by",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "event_data",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE tracking_events (\n\tid INTEGER NOT NULL, \n\tmerchant_id VARCHAR(255) NOT NULL, \n\ttracker_id INTEGER NOT NULL, \n\ttransaction_id VARCHAR(50) NOT NULL, \n\tevent_type VARCHAR(50) NOT NULL, \n\told_value VARCHAR(255), \n\tnew_value VARCHAR(255), \n\tevent_description VARCHAR(500), \n\tevent_time DATETIME, \n\ttriggered_by VARCHAR(255), \n\tevent_data JSON, \n\tPRIMARY KEY (id)\n)"
+      },
+      "user_access_tokens": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "user_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "access_token_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE user_access_tokens (\n\tid INTEGER NOT NULL, \n\tuser_id VARCHAR(255) NOT NULL, \n\taccess_token_id VARCHAR(255) NOT NULL, \n\tcreated_at DATETIME, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(user_id) REFERENCES users (id), \n\tFOREIGN KEY(access_token_id) REFERENCES oauth_access_tokens (id)\n)"
+      },
+      "users": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "payer_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "email",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "email_verified",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "username",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "given_name",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "family_name",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "middle_name",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "picture",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "gender",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "birthdate",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "zoneinfo",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "locale",
+            "type": "VARCHAR(10)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "phone_number",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "phone_number_verified",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "address",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "account_type",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "verified_account",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "age_range",
+            "type": "VARCHAR(20)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "account_status",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "account_creation_date",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "last_login_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE users (\n\tid VARCHAR(255) NOT NULL, \n\tpayer_id VARCHAR(255) NOT NULL, \n\temail VARCHAR(255) NOT NULL, \n\temail_verified BOOLEAN, \n\tusername VARCHAR(255), \n\tname VARCHAR(255), \n\tgiven_name VARCHAR(255), \n\tfamily_name VARCHAR(255), \n\tmiddle_name VARCHAR(255), \n\tpicture TEXT, \n\tgender VARCHAR(50), \n\tbirthdate VARCHAR(50), \n\tzoneinfo VARCHAR(100), \n\tlocale VARCHAR(10), \n\tphone_number VARCHAR(50), \n\tphone_number_verified BOOLEAN, \n\taddress TEXT, \n\taccount_type VARCHAR(50), \n\tverified_account BOOLEAN, \n\tage_range VARCHAR(20), \n\taccount_status VARCHAR(50), \n\taccount_creation_date DATETIME, \n\tupdated_at DATETIME, \n\tlast_login_at DATETIME, \n\tPRIMARY KEY (id), \n\tUNIQUE (username)\n)"
+      },
+      "vault_payment_tokens": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "setup_token_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "customer_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "merchant_customer_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_source_type",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_source_data",
+            "type": "JSON",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tenant_id",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "client_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "metadata_json",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "is_active",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "is_primary",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "last_used_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "usage_count",
+            "type": "VARCHAR(10)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE vault_payment_tokens (\n\tid VARCHAR(50) NOT NULL, \n\tsetup_token_id VARCHAR(50) NOT NULL, \n\tcustomer_id VARCHAR(100), \n\tmerchant_customer_id VARCHAR(100), \n\tpayment_source_type VARCHAR(20) NOT NULL, \n\tpayment_source_data JSON NOT NULL, \n\ttenant_id VARCHAR(100) NOT NULL, \n\tclient_id VARCHAR(100), \n\tcreated_at DATETIME NOT NULL, \n\tmetadata_json JSON, \n\tis_active BOOLEAN NOT NULL, \n\tis_primary BOOLEAN NOT NULL, \n\tlast_used_at DATETIME, \n\tusage_count VARCHAR(10) NOT NULL, \n\tPRIMARY KEY (id)\n)"
+      },
+      "vault_setup_tokens": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "customer_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "merchant_customer_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_source_type",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_source_data",
+            "type": "JSON",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(30)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "approval_url",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "approved_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "request_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "tenant_id",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "client_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "expires_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "experience_context",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "additional_data",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "verification_status",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "verification_method",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "converted_to_payment_token",
+            "type": "BOOLEAN",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payment_token_id",
+            "type": "VARCHAR(50)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE vault_setup_tokens (\n\tid VARCHAR(50) NOT NULL, \n\tcustomer_id VARCHAR(100), \n\tmerchant_customer_id VARCHAR(100), \n\tpayment_source_type VARCHAR(20) NOT NULL, \n\tpayment_source_data JSON NOT NULL, \n\tstatus VARCHAR(30) NOT NULL, \n\tapproval_url TEXT, \n\tapproved_at DATETIME, \n\trequest_id VARCHAR(100), \n\ttenant_id VARCHAR(100) NOT NULL, \n\tclient_id VARCHAR(100), \n\tcreated_at DATETIME NOT NULL, \n\tupdated_at DATETIME NOT NULL, \n\texpires_at DATETIME, \n\texperience_context JSON, \n\tadditional_data JSON, \n\tverification_status VARCHAR(50), \n\tverification_method VARCHAR(50), \n\tconverted_to_payment_token BOOLEAN NOT NULL, \n\tpayment_token_id VARCHAR(50), \n\tPRIMARY KEY (id)\n)"
+      },
+      "vaulted_credit_cards": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "card_number_hash",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "card_number_masked",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "card_number_last4",
+            "type": "VARCHAR(4)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "card_type",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "expire_month",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "expire_year",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "first_name",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "last_name",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "billing_address",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "payer_id",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "external_customer_id",
+            "type": "VARCHAR(256)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "external_card_id",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "state",
+            "type": "VARCHAR(20)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "is_active",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "valid_until",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "user_id",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "client_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE vaulted_credit_cards (\n\tid VARCHAR(255) NOT NULL, \n\tcard_number_hash VARCHAR(255) NOT NULL, \n\tcard_number_masked VARCHAR(20) NOT NULL, \n\tcard_number_last4 VARCHAR(4) NOT NULL, \n\tcard_type VARCHAR(20) NOT NULL, \n\texpire_month INTEGER NOT NULL, \n\texpire_year INTEGER NOT NULL, \n\tfirst_name VARCHAR(100) NOT NULL, \n\tlast_name VARCHAR(100) NOT NULL, \n\tbilling_address JSON, \n\tpayer_id VARCHAR(255), \n\texternal_customer_id VARCHAR(256), \n\texternal_card_id VARCHAR(255), \n\tmerchant_id VARCHAR(255), \n\tstate VARCHAR(20) NOT NULL, \n\tis_active BOOLEAN, \n\tvalid_until DATETIME, \n\tcreate_time DATETIME, \n\tupdate_time DATETIME, \n\tuser_id VARCHAR(255), \n\tclient_id VARCHAR(255) NOT NULL, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(user_id) REFERENCES users (id) ON DELETE CASCADE, \n\tFOREIGN KEY(client_id) REFERENCES oauth_clients (client_id)\n)"
+      },
+      "web_profiles": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(22)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "temporary",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "flow_config",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "input_fields",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "presentation",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "CURRENT_TIMESTAMP"
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "expires_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE web_profiles (\n\tid VARCHAR(22) NOT NULL, \n\tmerchant_id VARCHAR(50) NOT NULL, \n\tname VARCHAR(50) NOT NULL, \n\t\"temporary\" BOOLEAN, \n\tflow_config JSON, \n\tinput_fields JSON, \n\tpresentation JSON, \n\tcreated_at DATETIME DEFAULT CURRENT_TIMESTAMP, \n\tupdated_at DATETIME, \n\texpires_at DATETIME, \n\tPRIMARY KEY (id)\n)"
+      },
+      "webhook_event_subscriptions": {
+        "columns": [
+          {
+            "name": "webhook_id",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "event_type_id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE webhook_event_subscriptions (\n\twebhook_id VARCHAR(100) NOT NULL, \n\tevent_type_id INTEGER NOT NULL, \n\tPRIMARY KEY (webhook_id, event_type_id), \n\tFOREIGN KEY(webhook_id) REFERENCES webhooks (id), \n\tFOREIGN KEY(event_type_id) REFERENCES webhook_event_types (id)\n)"
+      },
+      "webhook_event_types": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "name",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "resource_versions",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "category",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "CURRENT_TIMESTAMP"
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "CURRENT_TIMESTAMP"
+          }
+        ],
+        "sql": "CREATE TABLE webhook_event_types (\n\tid INTEGER NOT NULL, \n\tname VARCHAR(255) NOT NULL, \n\tdescription TEXT NOT NULL, \n\tstatus VARCHAR(50) NOT NULL, \n\tresource_versions JSON, \n\tcategory VARCHAR(100), \n\tcreated_at DATETIME DEFAULT CURRENT_TIMESTAMP, \n\tupdated_at DATETIME DEFAULT CURRENT_TIMESTAMP, \n\tPRIMARY KEY (id)\n)"
+      },
+      "webhook_lookup_event_types": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(36)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "webhook_id",
+            "type": "VARCHAR(17)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "event_name",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "resource_versions",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE webhook_lookup_event_types (\n\tid VARCHAR(36) NOT NULL, \n\twebhook_id VARCHAR(17) NOT NULL, \n\tevent_name VARCHAR(255) NOT NULL, \n\tdescription TEXT, \n\tstatus VARCHAR(50) NOT NULL, \n\tresource_versions JSON, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(webhook_id) REFERENCES webhook_lookups (id) ON DELETE CASCADE\n)"
+      },
+      "webhook_lookups": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(17)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "tenant_id",
+            "type": "VARCHAR(255)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "url",
+            "type": "TEXT",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "app_id",
+            "type": "VARCHAR(255)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "create_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "update_time",
+            "type": "DATETIME",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          }
+        ],
+        "sql": "CREATE TABLE webhook_lookups (\n\tid VARCHAR(17) NOT NULL, \n\ttenant_id VARCHAR(255) NOT NULL, \n\turl TEXT NOT NULL, \n\tapp_id VARCHAR(255), \n\tstatus VARCHAR(50) NOT NULL, \n\tcreate_time DATETIME NOT NULL, \n\tupdate_time DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)"
+      },
+      "webhooks": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "VARCHAR(100)",
+            "nullable": false,
+            "primary_key": true,
+            "default": null
+          },
+          {
+            "name": "url",
+            "type": "VARCHAR(2048)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "merchant_id",
+            "type": "VARCHAR(100)",
+            "nullable": true,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR(50)",
+            "nullable": false,
+            "primary_key": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "CURRENT_TIMESTAMP"
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false,
+            "default": "CURRENT_TIMESTAMP"
+          }
+        ],
+        "sql": "CREATE TABLE webhooks (\n\tid VARCHAR(100) NOT NULL, \n\turl VARCHAR(2048) NOT NULL, \n\tmerchant_id VARCHAR(100), \n\tstatus VARCHAR(50) NOT NULL, \n\tcreated_at DATETIME DEFAULT CURRENT_TIMESTAMP, \n\tupdated_at DATETIME DEFAULT CURRENT_TIMESTAMP, \n\tPRIMARY KEY (id)\n)"
+      }
+    }
+  },
+  "has_schema": false,
+  "timestamp": "2025-09-06T13:27:35.448737"
+}
