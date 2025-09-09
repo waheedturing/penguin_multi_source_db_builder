@@ -5,11 +5,13 @@ Schema-aware Slack Seed Data Generator (SQLite)
 - Uses users from catalog (which came from synthetic_users.csv)
 - Fills current-year timestamps and no NULLs
 - Never writes "column-name" as a value; generates realistic text instead
-- Maps channel_id, user_id, app_id, enterprise_id, team_id, created_by, updated_by, creator even if FKs are missing
+- Maps channel_id, user_id, app_id, api_app_id, enterprise_id, team_id, created_by, updated_by, creator,
+  bot_id and many other ID fields even when FKs are missing
 - Derives enterprise_name consistently from linked enterprise/team when that column exists
 - Ensures any *url*/*uri* field is a valid https URL
 - Ensures any *email*/*emails* field contains realistic personal email(s)
 - Explicitly normalizes slack_shared_invites records and fills missing attributes
+- Backfills many table-specific fields called out in QA (see bottom of file)
 
 USAGE:
   python build_slack_from_central.py \
@@ -24,7 +26,7 @@ import json
 import random
 import argparse
 import datetime as dt
-from typing import Optional
+from typing import Optional, List, Dict, Any
 from decimal import Decimal
 from collections import defaultdict, deque
 
@@ -115,6 +117,9 @@ def slack_id(prefix: str, k: int = 11) -> str:
 
 def username_from_name(name: str) -> str:
     return re.sub(r'[^a-z0-9]+', '.', name.strip().lower()).strip('.') or "user"
+
+def random_ipv4() -> str:
+    return ".".join(str(random.randint(1, 254)) for _ in range(4))
 
 # -------- URL & Email utilities --------
 EMAIL_PROVIDERS = ["gmail.com", "outlook.com", "yahoo.com", "icloud.com", "proton.me"]
@@ -247,6 +252,7 @@ DEV_TYPES = ["internal", "public", "partner"]
 HTTP_METHODS = ["GET", "POST", "PUT", "DELETE", "PATCH"]
 STATUSES = ["active", "inactive", "pending", "enabled", "disabled"]
 TRIGGERS = ["event", "schedule", "shortcut", "webhook", "link", "form"]
+TOKEN_TYPES = ["bot", "user", "app", "workspace"]
 
 def _hosts_from_enterprises():
     ents = ROWS.get('slack_enterprises', [])
@@ -607,7 +613,7 @@ def gen_generic(t: Table, n: int):
             row[cname] = default_value_for(cname, cmeta.get('type', 'TEXT'), t.name)
         add_row(t, row)
 
-# -------- Driver --------
+# -------- Driver main generators --------
 def generate_data(tables: dict):
     order = topo_order(tables)
     counts = {name: ROW_HINTS.get(name, 40) for name in order}
@@ -631,6 +637,7 @@ def generate_data(tables: dict):
             gen_generic(t, counts[name])
     return order
 
+# -------- Backfills --------
 def backfill_foreign_keys(tables: dict):
     for name, t in tables.items():
         if not t.fks or not ROWS[name]:
@@ -648,10 +655,20 @@ def backfill_foreign_keys(tables: dict):
                     if parents:
                         row[col] = parents[0].get(parent_col) or parents[0].get('id') or "X"
 
+def get_ids_for(table: str, prefer_cols: Optional[List[str]] = None) -> List[str]:
+    prefer_cols = prefer_cols or ["id"]
+    rows = ROWS.get(table, [])
+    ids = []
+    for r in rows:
+        for c in prefer_cols:
+            if c in r and r.get(c):
+                ids.append(r[c]); break
+    return [x for x in ids if isinstance(x, str) and x]
+
 def map_common_id_columns(tables: dict) -> None:
     """
-    Map app_id, enterprise_id, team_id (ANY column containing 'team_id'), user/channel IDs,
-    and enterprise_name even when schema omitted explicit FKs. Also normalize email/url-ish columns.
+    Map app_id, api_app_id, enterprise_id, team_id (ANY column containing 'team_id'), user/channel IDs,
+    bot_id, and enterprise_name even when schema omitted explicit FKs. Also normalize email/url-ish columns.
     """
     ent_rows = ROWS.get("slack_enterprises", [])
     team_rows = ROWS.get("slack_teams", [])
@@ -659,6 +676,7 @@ def map_common_id_columns(tables: dict) -> None:
     chan_rows = ROWS.get("slack_channels", [])
     app_rows  = ROWS.get("slack_apps", [])
     ug_rows   = ROWS.get("slack_user_groups", [])
+    bot_rows  = ROWS.get("slack_bots", [])
 
     ent_ids = [r["id"] for r in ent_rows if r.get("id")]
     team_ids = [r["id"] for r in team_rows if r.get("id")]
@@ -676,6 +694,15 @@ def map_common_id_columns(tables: dict) -> None:
 
     ug_ids = [r["id"] for r in ug_rows if r.get("id")]
     ug_names_by_id = {r["id"]: r.get("name", "") for r in ug_rows if r.get("id")}
+
+    # bot ids: prefer slack_bots table; else derive a pool based on apps or create synthetic
+    bot_ids_pool = []
+    if bot_rows:
+        bot_ids_pool = [r.get("bot_id") or r.get("id") for r in bot_rows if r.get("bot_id") or r.get("id")]
+    if not bot_ids_pool:
+        # one bot per approved app (deterministic-ish via SEED)
+        for _ in (app_ids_approved or range(12)):
+            bot_ids_pool.append(slack_id("B"))
 
     for tname, table in tables.items():
         rows = ROWS.get(tname, [])
@@ -714,12 +741,17 @@ def map_common_id_columns(tables: dict) -> None:
                 cur = row.get("app_id")
                 if not cur or cur not in app_ids_all:
                     row["app_id"] = app_ids_approved[i % len(app_ids_approved)]
+            if "api_app_id" in table.columns and app_ids_all:
+                cur = row.get("api_app_id")
+                if not cur or cur not in app_ids_all:
+                    row["api_app_id"] = app_ids_all[i % len(app_ids_all)]
 
             # users (generic)
             for user_col in ("user_id","user","created_by","updated_by","deleted_by","creator",
                              "owner_id","requested_by","approved_by","invited_by",
                              "actor_user_id","requester_user_id","source_user_id","target_user_id",
-                             "inviter_id","approver_user_id","installer_user_id"):
+                             "inviter_id","approver_user_id","installer_user_id","creator_id",
+                             "last_resolved_by_actor_id"):
                 if user_col in table.columns and user_ids:
                     cur = row.get(user_col)
                     if not cur or cur not in user_ids:
@@ -732,20 +764,24 @@ def map_common_id_columns(tables: dict) -> None:
                     if not cur or cur not in chan_ids:
                         row[ch_col] = chan_ids[(hash(tname + ch_col) + i) % len(chan_ids)]
 
-            # usergroup primary/name
+            # usergroups (generic primary + explicit usergroup_id & group_id)
             if "primary_usergroup_id" in table.columns and ug_ids:
                 cur = row.get("primary_usergroup_id")
                 pid = cur if cur in ug_ids else ug_ids[i % len(ug_ids)]
                 row["primary_usergroup_id"] = pid
                 if "primary_usergroup_name" in table.columns:
                     row["primary_usergroup_name"] = ug_names_by_id.get(pid, "usergroup")
+            for ug_col in ("usergroup_id","group_id"):
+                if ug_col in table.columns and ug_ids:
+                    cur = row.get(ug_col)
+                    if not cur or cur not in ug_ids:
+                        row[ug_col] = ug_ids[(hash(tname + ug_col) + i) % len(ug_ids)]
 
-            # arrays of usergroups
-            if "barriered_from_usergroup_ids" in table.columns:
-                picks = random.sample(ug_ids, min(2, len(ug_ids))) if ug_ids else []
-                row["barriered_from_usergroup_ids"] = picks
-                if "barriered_from_usergroup_names" in table.columns:
-                    row["barriered_from_usergroup_names"] = [ug_names_by_id.get(x, "") for x in picks]
+            # bot_id
+            if "bot_id" in table.columns and bot_ids_pool:
+                cur = row.get("bot_id")
+                if not cur:
+                    row["bot_id"] = bot_ids_pool[(hash(tname) + i) % len(bot_ids_pool)]
 
             # Normalize email/url fields post-hoc (handles JSON vs TEXT & singular vs plural)
             for col in table.columns:
@@ -767,7 +803,7 @@ def map_common_id_columns(tables: dict) -> None:
                                 row[col] = {"value": random_personal_email()}
                         else:
                             if not isinstance(val, str) or "@" not in val:
-                                # try to pick from related user if present
+                                # try user-profile email if present
                                 possible = None
                                 if "user" in row and isinstance(row.get("user"), str):
                                     u = next((uu for uu in ROWS.get("slack_users", []) if uu.get("id")==row["user"]), None)
@@ -808,9 +844,8 @@ def normalize_shared_invites(tables: dict) -> None:
 
     for i, row in enumerate(rows):
         # invite_id (or id)
-        if "invite_id" in table.columns:
-            if not row.get("invite_id"):
-                row["invite_id"] = slack_id("I")
+        if "invite_id" in table.columns and not row.get("invite_id"):
+            row["invite_id"] = slack_id("I")
         if "id" in table.columns and not row.get("id"):
             row["id"] = slack_id("I")
 
@@ -825,7 +860,7 @@ def normalize_shared_invites(tables: dict) -> None:
                 if not row.get(ucol) or row[ucol] not in user_ids:
                     row[ucol] = user_ids[(hash(ucol) + i) % len(user_ids)]
 
-        # team mapping: any *team_id* column
+        # team mapping: any *team_id* column (covers target_team_id, etc.)
         for col in table.columns:
             cn = col.lower()
             if "team_id" in cn and team_ids:
@@ -842,7 +877,6 @@ def normalize_shared_invites(tables: dict) -> None:
         if "invitee_email" in table.columns:
             v = row.get("invitee_email")
             if not isinstance(v, str) or "@" not in v:
-                # use the email of the inviter if we can
                 inv_id = row.get("inviter_id")
                 chosen = None
                 if inv_id:
@@ -867,7 +901,7 @@ def normalize_shared_invites(tables: dict) -> None:
             if ucol in table.columns:
                 cur = row.get(ucol)
                 if not isinstance(cur, str) or not cur.startswith("http"):
-                    row[ucol] = make_url(path=f"join/{slack_id('')}".lower())
+                    row[ucol] = make_url(path=f"join/{slack_id('')}")
 
         # timestamps and flags
         now = dt.datetime.now()
@@ -892,6 +926,293 @@ def normalize_shared_invites(tables: dict) -> None:
             if ncol in table.columns and not isinstance(row.get(ncol), int):
                 row[ncol] = random.randint(1, 50)
 
+# -------- Additional table-specific cleanups --------
+def fill_special_cases(tables: dict) -> None:
+    """Address specific fields reported as empty/invalid across several tables."""
+    user_ids = get_ids_for("slack_users")
+    chan_ids = get_ids_for("slack_channels")
+    team_ids = get_ids_for("slack_teams")
+    ent_ids  = get_ids_for("slack_enterprises")
+    app_ids  = get_ids_for("slack_apps")
+    ug_ids   = get_ids_for("slack_user_groups")
+    role_ids = get_ids_for("slack_roles", ["role_id","id"])
+    invite_ids = get_ids_for("slack_invites", ["invite_id","id"])
+    invite_request_ids = get_ids_for("slack_invite_requests", ["invite_request_id","id"])
+    function_ids = get_ids_for("slack_functions", ["function_id","id"])
+    workflow_ids = get_ids_for("slack_workflows", ["workflow_id","id"])
+
+    # slack_users: bot_id, api_app_id
+    if "slack_users" in tables:
+        rows = ROWS.get("slack_users", [])
+        for i, r in enumerate(rows):
+            if "api_app_id" in tables["slack_users"].columns and app_ids:
+                if not r.get("api_app_id") or r["api_app_id"] not in app_ids:
+                    r["api_app_id"] = app_ids[i % len(app_ids)]
+            if "bot_id" in tables["slack_users"].columns:
+                if not r.get("bot_id"):
+                    r["bot_id"] = slack_id("B")
+
+    # slack_user_groups: user_ids array should not be empty
+    if "slack_user_groups" in tables:
+        t = tables["slack_user_groups"]
+        rows = ROWS.get("slack_user_groups", [])
+        for i, r in enumerate(rows):
+            if "user_ids" in t.columns:
+                val = r.get("user_ids")
+                # JSON array expected; fill with 3–8 users
+                if not isinstance(val, list) or len(val) == 0 or any(not isinstance(x, str) for x in val):
+                    k = min(len(user_ids), max(3, random.randint(3, 8)))
+                    r["user_ids"] = random.sample(user_ids, k) if user_ids else []
+
+    # slack_messages: bot_id must not be empty (also app_id is filled earlier)
+    if "slack_messages" in tables:
+        rows = ROWS.get("slack_messages", [])
+        for i, r in enumerate(rows):
+            if not r.get("bot_id"):
+                r["bot_id"] = slack_id("B")
+
+    # slack_barriers: barrier_id readable
+    if "slack_barriers" in tables:
+        rows = ROWS.get("slack_barriers", [])
+        for r in rows:
+            if not r.get("barrier_id") or r.get("barrier_id") == "barrier_id":
+                r["barrier_id"] = f"BAR-{slack_id('')}"
+
+    # slack_audit_anomaly_events: event_id
+    if "slack_audit_anomaly_events" in tables:
+        rows = ROWS.get("slack_audit_anomaly_events", [])
+        for r in rows:
+            if not r.get("event_id"):
+                r["event_id"] = f"AE-{slack_id('')}"
+
+    # slack_usergroup_channels: usergroup_id
+    if "slack_usergroup_channels" in tables:
+        t = tables["slack_usergroup_channels"]
+        rows = ROWS.get("slack_usergroup_channels", [])
+        for i, r in enumerate(rows):
+            if "usergroup_id" in t.columns and ug_ids:
+                if not r.get("usergroup_id") or r["usergroup_id"] not in ug_ids:
+                    r["usergroup_id"] = ug_ids[i % len(ug_ids)]
+
+    # slack_shared_invites handled by normalize_shared_invites()
+
+    # slack_audit_logs: event_id, target_id, ip_address format
+    if "slack_audit_logs" in tables:
+        rows = ROWS.get("slack_audit_logs", [])
+        for i, r in enumerate(rows):
+            if not r.get("event_id"):
+                r["event_id"] = f"EVT-{slack_id('')}"
+            if not r.get("target_id"):
+                # prefer channel/user/team ids
+                pool = (chan_ids or []) + (user_ids or []) + (team_ids or [])
+                r["target_id"] = pool[(i % len(pool))] if pool else slack_id("X")
+            if "ip_address" in tables["slack_audit_logs"].columns:
+                v = r.get("ip_address")
+                if not isinstance(v, str) or not re.match(r"^\d{1,3}(\.\d{1,3}){3}$", v):
+                    r["ip_address"] = random_ipv4()
+
+    # slack_functions: triggers, permissions
+    if "slack_functions" in tables:
+        t = tables["slack_functions"]
+        rows = ROWS.get("slack_functions", [])
+        for i, r in enumerate(rows):
+            if "triggers" in t.columns:
+                v = r.get("triggers")
+                if not isinstance(v, list) or len(v) == 0:
+                    # store simple trigger types
+                    r["triggers"] = random.sample(TRIGGERS, k=min(3, len(TRIGGERS)))
+            if "permissions" in t.columns:
+                v = r.get("permissions")
+                if not isinstance(v, dict) or not v:
+                    # permit by usergroups/teams if available
+                    r["permissions"] = {
+                        "allowed_usergroups": random.sample(ug_ids, k=min(2, len(ug_ids))) if ug_ids else [],
+                        "allowed_teams": random.sample(team_ids, k=min(2, len(team_ids))) if team_ids else []
+                    }
+
+    # slack_audit_compliance: requirement_id
+    if "slack_audit_compliance" in tables:
+        rows = ROWS.get("slack_audit_compliance", [])
+        for r in rows:
+            if not r.get("requirement_id"):
+                r["requirement_id"] = f"REQ-{slack_id('')}"
+
+    # slack_usergroup_teams: usergroup_id
+    if "slack_usergroup_teams" in tables:
+        t = tables["slack_usergroup_teams"]
+        rows = ROWS.get("slack_usergroup_teams", [])
+        for i, r in enumerate(rows):
+            if "usergroup_id" in t.columns and ug_ids:
+                if not r.get("usergroup_id") or r["usergroup_id"] not in ug_ids:
+                    r["usergroup_id"] = ug_ids[i % len(ug_ids)]
+
+    # slack_channel_restrictions: channel_id, group_id
+    if "slack_channel_restrictions" in tables:
+        t = tables["slack_channel_restrictions"]
+        rows = ROWS.get("slack_channel_restrictions", [])
+        for i, r in enumerate(rows):
+            if "channel_id" in t.columns and chan_ids:
+                if not r.get("channel_id") or r["channel_id"] not in chan_ids:
+                    r["channel_id"] = chan_ids[i % len(chan_ids)]
+            if "group_id" in t.columns and ug_ids:
+                if not r.get("group_id") or r["group_id"] not in ug_ids:
+                    r["group_id"] = ug_ids[i % len(ug_ids)]
+
+    # slack_app_scopes: token_type sane values
+    if "slack_app_scopes" in tables:
+        t = tables["slack_app_scopes"]
+        rows = ROWS.get("slack_app_scopes", [])
+        for i, r in enumerate(rows):
+            if "token_type" in t.columns:
+                cur = str(r.get("token_type","")).lower()
+                if cur not in TOKEN_TYPES:
+                    r["token_type"] = TOKEN_TYPES[i % len(TOKEN_TYPES)]
+
+    # slack_approved_apps / slack_restricted_apps: last_resolved_by_actor_id
+    for tname in ("slack_approved_apps","slack_restricted_apps"):
+        if tname in tables:
+            t = tables[tname]
+            rows = ROWS.get(tname, [])
+            for i, r in enumerate(rows):
+                col = "last_resolved_by_actor_id"
+                if col in t.columns and user_ids:
+                    if not r.get(col) or r[col] not in user_ids:
+                        r[col] = user_ids[i % len(user_ids)]
+
+    # slack_invites: inviter_id, invite_request_id
+    if "slack_invites" in tables:
+        t = tables["slack_invites"]
+        rows = ROWS.get("slack_invites", [])
+        for i, r in enumerate(rows):
+            if "inviter_id" in t.columns and user_ids:
+                if not r.get("inviter_id") or r["inviter_id"] not in user_ids:
+                    r["inviter_id"] = user_ids[i % len(user_ids)]
+            if "invite_request_id" in t.columns:
+                if invite_request_ids:
+                    if not r.get("invite_request_id") or r["invite_request_id"] not in invite_request_ids:
+                        r["invite_request_id"] = invite_request_ids[i % len(invite_request_ids)]
+                else:
+                    if not r.get("invite_request_id"):
+                        r["invite_request_id"] = f"IR-{slack_id('')}"
+
+    # slack_invite_request_channels: invite_request_id
+    if "slack_invite_request_channels" in tables:
+        t = tables["slack_invite_request_channels"]
+        rows = ROWS.get("slack_invite_request_channels", [])
+        for i, r in enumerate(rows):
+            if "invite_request_id" in t.columns:
+                if invite_request_ids:
+                    if not r.get("invite_request_id") or r["invite_request_id"] not in invite_request_ids:
+                        r["invite_request_id"] = invite_request_ids[i % len(invite_request_ids)]
+                else:
+                    r["invite_request_id"] = f"IR-{slack_id('')}"
+            if "channel_id" in t.columns and chan_ids:
+                if not r.get("channel_id") or r["channel_id"] not in chan_ids:
+                    r["channel_id"] = chan_ids[i % len(chan_ids)]
+
+    # slack_function_permissions: function_id
+    if "slack_function_permissions" in tables:
+        t = tables["slack_function_permissions"]
+        rows = ROWS.get("slack_function_permissions", [])
+        for i, r in enumerate(rows):
+            if "function_id" in t.columns:
+                if function_ids:
+                    if not r.get("function_id") or r["function_id"] not in function_ids:
+                        r["function_id"] = function_ids[i % len(function_ids)]
+                else:
+                    r["function_id"] = f"FN-{slack_id('')}"
+
+    # slack_function_executions: function_id, execution_id
+    if "slack_function_executions" in tables:
+        t = tables["slack_function_executions"]
+        rows = ROWS.get("slack_function_executions", [])
+        for i, r in enumerate(rows):
+            if "function_id" in t.columns:
+                if function_ids:
+                    if not r.get("function_id") or r["function_id"] not in function_ids:
+                        r["function_id"] = function_ids[i % len(function_ids)]
+                else:
+                    r["function_id"] = f"FN-{slack_id('')}"
+            for e_col in ("execution_id","id"):
+                if e_col in t.columns and not r.get(e_col):
+                    r[e_col] = f"EXE-{slack_id('')}"
+
+    # slack_function_grants: function_id
+    if "slack_function_grants" in tables:
+        t = tables["slack_function_grants"]
+        rows = ROWS.get("slack_function_grants", [])
+        for i, r in enumerate(rows):
+            if "function_id" in t.columns:
+                if function_ids:
+                    if not r.get("function_id") or r["function_id"] not in function_ids:
+                        r["function_id"] = function_ids[i % len(function_ids)]
+                else:
+                    r["function_id"] = f"FN-{slack_id('')}"
+
+    # slack_role_assignments: role_id, entity_id
+    if "slack_role_assignments" in tables:
+        t = tables["slack_role_assignments"]
+        rows = ROWS.get("slack_role_assignments", [])
+        entity_pool = (user_ids or []) + (chan_ids or []) + (team_ids or []) + (ug_ids or [])
+        for i, r in enumerate(rows):
+            if "role_id" in t.columns:
+                if role_ids:
+                    if not r.get("role_id") or r["role_id"] not in role_ids:
+                        r["role_id"] = role_ids[i % len(role_ids)]
+                else:
+                    r["role_id"] = f"R-{slack_id('')}"
+            if "entity_id" in t.columns and entity_pool:
+                if not r.get("entity_id") or r["entity_id"] not in entity_pool:
+                    r["entity_id"] = entity_pool[i % len(entity_pool)]
+
+    # slack_invite_channels: invite_id
+    if "slack_invite_channels" in tables:
+        t = tables["slack_invite_channels"]
+        rows = ROWS.get("slack_invite_channels", [])
+        for i, r in enumerate(rows):
+            if "invite_id" in t.columns:
+                pool = invite_ids or get_ids_for("slack_invites", ["id","invite_id"])
+                if pool:
+                    if not r.get("invite_id") or r["invite_id"] not in pool:
+                        r["invite_id"] = pool[i % len(pool)]
+                else:
+                    r["invite_id"] = f"I-{slack_id('')}"
+            if "channel_id" in t.columns and chan_ids:
+                if not r.get("channel_id") or r["channel_id"] not in chan_ids:
+                    r["channel_id"] = chan_ids[i % len(chan_ids)]
+
+    # slack_user_sessions: session_id
+    if "slack_user_sessions" in tables:
+        t = tables["slack_user_sessions"]
+        rows = ROWS.get("slack_user_sessions", [])
+        for i, r in enumerate(rows):
+            if "session_id" in t.columns and not r.get("session_id"):
+                r["session_id"] = f"SESS-{slack_id('')}"
+
+    # slack_workflows: creator_id
+    if "slack_workflows" in tables:
+        t = tables["slack_workflows"]
+        rows = ROWS.get("slack_workflows", [])
+        for i, r in enumerate(rows):
+            if "creator_id" in t.columns and user_ids:
+                if not r.get("creator_id") or r["creator_id"] not in user_ids:
+                    r["creator_id"] = user_ids[i % len(user_ids)]
+
+    # slack_workflow_triggers & slack_workflow_collaborators: workflow_id
+    for tname in ("slack_workflow_triggers","slack_workflow_collaborators"):
+        if tname in tables:
+            t = tables[tname]
+            rows = ROWS.get(tname, [])
+            for i, r in enumerate(rows):
+                if "workflow_id" in t.columns:
+                    pool = workflow_ids or get_ids_for("slack_workflows", ["id","workflow_id"])
+                    if pool:
+                        if not r.get("workflow_id") or r["workflow_id"] not in pool:
+                            r["workflow_id"] = pool[i % len(pool)]
+                    else:
+                        r["workflow_id"] = f"WF-{slack_id('')}"
+
+# -------- Writer --------
 def write_sql(tables: dict, order: list, out_path: str):
     d = os.path.dirname(out_path)
     if d:
@@ -939,7 +1260,8 @@ def main():
     generate_data(tables)
     backfill_foreign_keys(tables)
     map_common_id_columns(tables)
-    normalize_shared_invites(tables)  # explicit pass for slack_shared_invites
+    normalize_shared_invites(tables)   # explicit pass for slack_shared_invites
+    fill_special_cases(tables)         # table-specific fixes requested
     write_sql(tables, order, args.out)
 
     total = sum(len(ROWS[n]) for n in order)
