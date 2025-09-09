@@ -5,18 +5,17 @@ Schema-aware Slack Seed Data Generator (SQLite)
 - Uses users from catalog (which came from synthetic_users.csv)
 - Fills current-year timestamps and no NULLs
 - Never writes "column-name" as a value; generates realistic text instead
-- Maps app_id, enterprise_id, team_id, created_by, updated_by, creator even if FKs are missing
+- Maps channel_id, user_id, app_id, enterprise_id, team_id, created_by, updated_by, creator even if FKs are missing
 - Derives enterprise_name consistently from linked enterprise/team when that column exists
+- Ensures any *url*/*uri* field is a valid https URL
+- Ensures any *email*/*emails* field contains realistic personal email(s)
+- Explicitly normalizes slack_shared_invites records and fills missing attributes
 
 USAGE:
   python build_slack_from_central.py \
     --schema ./schemas/slack-penguin-only-schema.json \
     --catalog ./central_data.json \
-    --out ./dbs_output/slack_penguin-comprehensive_data.sql 
-
-ENV:
-  OPENAI_API_KEY=...       # optional; only used if --llm is passed
-  OPENAI_MODEL=gpt-4o-mini # optional
+    --out ./dbs_output/slack_penguin-comprehensive_data.sql
 """
 
 import os
@@ -25,6 +24,7 @@ import json
 import random
 import argparse
 import datetime as dt
+from typing import Optional
 from decimal import Decimal
 from collections import defaultdict, deque
 
@@ -32,7 +32,7 @@ SQL_DIALECT = 'sqlite'
 SEED = int(os.getenv("SEED", "200"))
 random.seed(SEED)
 
-# -------- Optional OpenAI --------
+# -------- Optional OpenAI (disabled by default) --------
 AI_ENABLED = False
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 try:
@@ -44,7 +44,7 @@ except Exception:
     client = None
     AI_ENABLED = False
 
-LLM_FLAG = False  # set by --llm
+LLM_FLAG = False  # set by --llm if you add that flag later
 
 def ai_text(prompt: str, max_tokens: int = 60, fallback: str = "") -> str:
     if not (LLM_FLAG and AI_ENABLED):
@@ -116,6 +116,43 @@ def slack_id(prefix: str, k: int = 11) -> str:
 def username_from_name(name: str) -> str:
     return re.sub(r'[^a-z0-9]+', '.', name.strip().lower()).strip('.') or "user"
 
+# -------- URL & Email utilities --------
+EMAIL_PROVIDERS = ["gmail.com", "outlook.com", "yahoo.com", "icloud.com", "proton.me"]
+
+def make_url(host: Optional[str] = None, path: Optional[str] = None) -> str:
+    """Return a valid https URL using a known Slack-like host when possible."""
+    h = host or random.choice(_hosts_from_enterprises())
+    h = h.replace("https://", "").replace("http://", "")
+    if not path:
+        slug = ''.join(random.choices('abcdefghijklmnopqrstuvwxyz0123456789', k=8))
+        path = random.choice(["help", "privacy", "docs", "home", "about", "status", "asset", "file"]) + "/" + slug
+    return f"https://{h}/{path}"
+
+def random_personal_email(name: Optional[str] = None) -> str:
+    base = username_from_name(name) if name else ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=10))
+    return f"{base}@{random.choice(EMAIL_PROVIDERS)}"
+
+def get_catalog_emails() -> list:
+    """Deduped pool of realistic personal emails from the catalog and any generated user profiles."""
+    pool, seen = [], set()
+    for u in CATALOG.get("users", []):
+        e = (u or {}).get("email")
+        if e and e not in seen:
+            pool.append(e); seen.add(e)
+    for r in ROWS.get("slack_users", []):
+        e = ((r or {}).get("profile_data") or {}).get("email")
+        if e and e not in seen:
+            pool.append(e); seen.add(e)
+    return pool
+
+def emails_for_field(n: int = 2) -> list:
+    """Return N realistic personal emails, favoring catalog emails when available."""
+    pool = get_catalog_emails()
+    if pool:
+        k = min(n, len(pool))
+        return random.sample(pool, k)
+    return [random_personal_email() for _ in range(n)]
+
 # -------- Schema --------
 class Table:
     def __init__(self, name, meta):
@@ -174,18 +211,17 @@ def load_catalog(path: str):
     with open(path, "r", encoding="utf-8") as f:
         CATALOG = json.load(f)
 
-def cat_enterprises(): return CATALOG.get("slack.enterprises", [])
-def cat_team_bases(): return CATALOG.get("slack.team_bases", []) or ["Engineering","Product","Data","Design"]
-def cat_channel_bases(): return CATALOG.get("slack.channel_bases", []) or ["general","random","dev","qa"]
-def cat_apps(): return CATALOG.get("apps", []) or [{"id":"A01","name":"DeployNotifier","is_app_directory_approved":True}]
-def cat_channel_topics(): return CATALOG.get("slack.channel_topics", []) or ["Team updates and planning"]
-def cat_channel_purposes(): return CATALOG.get("slack.channel_purposes", []) or ["Coordinate work and share status"]
-def cat_messages(): return CATALOG.get("slack.message_phrases", []) or ["All set. Thanks!"]
+def cat_slack() -> dict: return CATALOG.get("slack", {}) or {}
+def cat_enterprises(): return cat_slack().get("enterprises", [])
+def cat_team_bases(): return cat_slack().get("team_bases", []) or ["Engineering","Product","Data","Design","Security","Support","Marketing","Sales","Ops","Research"]
+def cat_channel_bases(): return cat_slack().get("channel_bases", []) or ["general","random","dev","qa","release","infra","design","support","ops","marketing"]
+def cat_apps(): return cat_slack().get("apps", []) or [{"id":"A1000","name":"DeployNotifier","is_app_directory_approved":True}]
+def cat_channel_topics(): return cat_slack().get("channel_topics", []) or ["Team updates and planning"]*24
+def cat_channel_purposes(): return cat_slack().get("channel_purposes", []) or ["Coordinate work and share status"]*24
+def cat_messages(): return cat_slack().get("message_phrases", []) or ["All set. Thanks!"]*40
 def cat_users():
-    # merge users and shared_users to a single pool (avoid duplicates by email)
     users = CATALOG.get("users", [])
-    seen = set()
-    merged = []
+    seen = set(); merged = []
     for u in users:
         key = (u.get("email") or u.get("name"))
         if key in seen:
@@ -235,10 +271,30 @@ def string_value_for(table_name: str, col: str) -> str:
     host = random.choice(_hosts_from_enterprises())
     company = random.choice(_company_names())
 
-    # Column-specific heuristics
-    if col_l.endswith("_url") or col_l.endswith("_uri"):
-        path = random.choice(["help", "privacy", "docs", "home", "about", "status"])
-        return f"https://{host}/{path}"
+    # URL fields (anywhere in the name)
+    if "url" in col_l or "uri" in col_l:
+        return make_url(host)
+
+    # Emails (TEXT): single vs. plural (comma-separated) when schema type isn't known here
+    if col_l.endswith("_email") or col_l == "email":
+        pool = get_catalog_emails()
+        return (random.choice(pool) if pool else random_personal_email())
+    if col_l.endswith("_emails") or "emails" in col_l:
+        return ", ".join(emails_for_field(random.randint(2, 3)))
+
+    # Phone-like
+    if col_l.endswith("_phone") or col_l == "phone":
+        return f"+1-415-{random.randint(200,999)}-{random.randint(1000,9999)}"
+
+    # Names/titles
+    if col_l in ("name","title"):
+        if "app" in table_name:
+            apps = cat_apps()
+            if apps:
+                return random.choice([a.get("name") for a in apps if a.get("name")]) or _random_words()
+        return f"{random.choice(ADJ)} {random.choice(NOUN)}"
+
+    # Developer/flags/enums
     if col_l in ("developer_type",):
         return random.choice(DEV_TYPES)
     if col_l in ("discoverability",):
@@ -251,24 +307,11 @@ def string_value_for(table_name: str, col: str) -> str:
         return random.choice(TRIGGERS)
     if col_l in ("locale","language"):
         return random.choice(["en-US","en-GB","fr-FR","de-DE"])
-    if col_l.endswith("_email") or col_l == "email":
-        user = re.sub(r'[^a-z0-9]+', '.', company.lower())
-        return f"{user}@{host}"
-    if col_l.endswith("_phone") or col_l == "phone":
-        return f"+1-415-{random.randint(200,999)}-{random.randint(1000,9999)}"
 
-    # Names/titles
-    if col_l in ("name","title"):
-        if "app" in table_name:
-            apps = cat_apps()
-            if apps:
-                return random.choice([a.get("name") for a in apps if a.get("name")]) or _random_words()
-        return f"{random.choice(ADJ)} {random.choice(NOUN)}"
-
-    # Descriptions and other free text
+    # Descriptions and free text (never echo the column name)
     if "description" in col_l or col_l in ("notes","summary","reason","additional_info","help_text"):
         base = (
-            f"{company} {random.choice(['uses','runs','manages'])} a Slack workspace for "
+            f"{company} uses a Slack workspace for "
             f"{random.choice(['engineering','product','support','ops'])}. "
             f"This {col.replace('_',' ')} covers internal workflows, notifications, and access policy."
         )
@@ -279,7 +322,7 @@ def string_value_for(table_name: str, col: str) -> str:
             fallback=base
         )
 
-    # Everything else: varied but neutral text (never the column name)
+    # Neutral fallback text
     token = random.choice([
         f"{company} workspace",
         f"{_random_words()}",
@@ -291,13 +334,34 @@ def string_value_for(table_name: str, col: str) -> str:
 
 def default_value_for(col_name: str, col_type: str, table_name: str):
     t = (col_type or '').upper()
+    cn = (col_name or '').lower()
+
+    # Email-aware defaults
+    if "email" in cn:
+        if t == "JSON":
+            if "emails" in cn or cn.endswith("_emails"):
+                return emails_for_field(random.randint(2, 3))
+            return {"value": random_personal_email()}
+        if "emails" in cn or cn.endswith("_emails"):
+            return ", ".join(emails_for_field(random.randint(2, 3)))
+        return random_personal_email()
+
+    # URL-aware defaults for JSON arrays too
+    if ("url" in cn or "uri" in cn) and t == "JSON":
+        return [make_url() for _ in range(random.randint(1, 3))]
+
     if col_name == 'id' and t.startswith('VAR'):
         return slack_id(col_name[:1].upper() or 'X')
-    if t in ('INTEGER','BIGINT'): return random.randint(100, 9_999_999)
-    if t in ('BOOLEAN',): return bool(random.randint(0,1))
-    if t in ('DATETIME','TIMESTAMP'): return sql_datetime_current_year()
-    if t in ('DATE',): return sql_date_current_year()
-    if t == 'JSON': return {}
+    if t in ('INTEGER','BIGINT'):
+        return random.randint(100, 9_999_999)
+    if t in ('BOOLEAN',):
+        return bool(random.randint(0,1))
+    if t in ('DATETIME','TIMESTAMP'):
+        return sql_datetime_current_year()
+    if t in ('DATE',):
+        return sql_date_current_year()
+    if t == 'JSON':
+        return {}
     return string_value_for(table_name, col_name)
 
 def fit_row_for_table(row: dict, t: Table) -> dict:
@@ -354,7 +418,6 @@ def gen_teams(t: Table, n: int):
             'email_domain': 'slack.com',
             'icon': {'image_32': f"https://avatars.slack-edge.com/teams/T{i:03d}_32.png"},
             'enterprise_id': ent['id'],
-            # ensure this exists if the schema has the column
             'enterprise_name': ent.get('name', 'Enterprise'),
             'is_over_storage_limit': bool(random.random() < 0.2),
             'created_at': sql_datetime_current_year(),
@@ -369,9 +432,9 @@ def gen_users(t: Table, n: int):
         for i, u in enumerate(users):
             team = teams[i % len(teams)] if teams else None
             uname = u.get("username") or username_from_name(u.get("name","User"))
-            mail_host = f"{team['domain']}.slack.com" if team else "slack.com"
-            email = u.get("email") or f"{uname}@{mail_host}"
-            tz = u.get("timezone") or random.choice(['America/New_York','Europe/London','Asia/Tokyo','Asia/Karachi'])
+            # personal email providers (NOT Slack domain)
+            email = u.get("email") or f"{uname}@{random.choice(EMAIL_PROVIDERS)}"
+            tz = u.get("timezone") or random.choice(['America/New_York','America/Chicago','America/Denver','America/Los_Angeles'])
             row = {
                 'id': slack_id('U'),
                 'name': uname,
@@ -384,7 +447,7 @@ def gen_users(t: Table, n: int):
                 'is_email_confirmed': True,
                 'tz': tz,
                 'tz_label': tz,
-                'tz_offset': 0,  # keep simple; schema accepts int
+                'tz_offset': 0,
                 'is_admin': i < 5,
                 'is_owner': i < 2,
                 'is_primary_owner': i == 0,
@@ -431,7 +494,7 @@ def gen_users(t: Table, n: int):
                 'display_name': f"U{i:04d}",
                 'title': random.choice(['Software Engineer','Product Manager','Designer','DevOps Engineer']),
                 'phone': f"+1-415-{random.randint(200,999)}-{random.randint(1000,9999)}",
-                'email': f"{uname}@{(team['domain']+'.slack.com' if team else 'slack.com')}",
+                'email': f"{uname}@{random.choice(EMAIL_PROVIDERS)}",
                 'location': "San Francisco, CA"
             },
             'created_at': sql_datetime_current_year(),
@@ -587,18 +650,20 @@ def backfill_foreign_keys(tables: dict):
 
 def map_common_id_columns(tables: dict) -> None:
     """
-    Map app_id, enterprise_id, team_id, user-like columns, and enterprise_name
-    even when schema omitted explicit FKs.
+    Map app_id, enterprise_id, team_id (ANY column containing 'team_id'), user/channel IDs,
+    and enterprise_name even when schema omitted explicit FKs. Also normalize email/url-ish columns.
     """
     ent_rows = ROWS.get("slack_enterprises", [])
     team_rows = ROWS.get("slack_teams", [])
     user_rows = ROWS.get("slack_users", [])
+    chan_rows = ROWS.get("slack_channels", [])
     app_rows  = ROWS.get("slack_apps", [])
     ug_rows   = ROWS.get("slack_user_groups", [])
 
     ent_ids = [r["id"] for r in ent_rows if r.get("id")]
     team_ids = [r["id"] for r in team_rows if r.get("id")]
     user_ids = [r["id"] for r in user_rows if r.get("id")]
+    chan_ids = [r["id"] for r in chan_rows if r.get("id")]
 
     ent_name_map = {r["id"]: r.get("name", "Enterprise") for r in ent_rows if r.get("id")}
     team_ent_map = {r["id"]: r.get("enterprise_id") for r in team_rows if r.get("id")}
@@ -616,23 +681,31 @@ def map_common_id_columns(tables: dict) -> None:
         rows = ROWS.get(tname, [])
         if not rows:
             continue
+        coltypes = {c: (table.columns[c].get("type","TEXT")).upper() for c in table.columns}
+
         for i, row in enumerate(rows):
-            # enterprise/team IDs
+            # Any team_id-like fields
+            for col in table.columns:
+                cn = col.lower()
+                if "team_id" in cn and team_ids:
+                    cur = row.get(col)
+                    if not cur or cur not in team_ids:
+                        row[col] = team_ids[(hash(tname + col) + i) % len(team_ids)]
+                # Also plain 'team'
+                if cn == "team" and team_ids:
+                    cur = row.get(col)
+                    if not cur or cur not in team_ids:
+                        row[col] = team_ids[(hash(tname + col) + i) % len(team_ids)]
+
+            # primary enterprise_id and enterprise_name derive
             if "enterprise_id" in table.columns and ent_ids:
                 cur = row.get("enterprise_id")
                 if not cur or cur not in ent_ids:
                     row["enterprise_id"] = ent_ids[i % len(ent_ids)]
-
-            if "team_id" in table.columns and team_ids and tname != "slack_teams":
-                cur = row.get("team_id")
-                if not cur or cur not in team_ids:
-                    row["team_id"] = team_ids[i % len(team_ids)]
-
-            # enterprise_name (derive)
             if "enterprise_name" in table.columns:
                 if not row.get("enterprise_name"):
                     eid = row.get("enterprise_id")
-                    if (not eid) and ("team_id" in row) and row.get("team_id"):
+                    if (not eid) and row.get("team_id"):
                         eid = team_ent_map.get(row["team_id"])
                     row["enterprise_name"] = ent_name_map.get(eid, "Enterprise")
 
@@ -642,13 +715,22 @@ def map_common_id_columns(tables: dict) -> None:
                 if not cur or cur not in app_ids_all:
                     row["app_id"] = app_ids_approved[i % len(app_ids_approved)]
 
-            # user-like columns
-            for user_col in ("created_by","updated_by","deleted_by","creator","owner_id",
-                             "requested_by","approved_by","invited_by"):
+            # users (generic)
+            for user_col in ("user_id","user","created_by","updated_by","deleted_by","creator",
+                             "owner_id","requested_by","approved_by","invited_by",
+                             "actor_user_id","requester_user_id","source_user_id","target_user_id",
+                             "inviter_id","approver_user_id","installer_user_id"):
                 if user_col in table.columns and user_ids:
                     cur = row.get(user_col)
                     if not cur or cur not in user_ids:
-                        row[user_col] = user_ids[(hash(tname) + i) % len(user_ids)]
+                        row[user_col] = user_ids[(hash(tname + user_col) + i) % len(user_ids)]
+
+            # channels (generic)
+            for ch_col in ("channel_id","channel","source_channel_id","target_channel_id","parent_channel_id"):
+                if ch_col in table.columns and chan_ids:
+                    cur = row.get(ch_col)
+                    if not cur or cur not in chan_ids:
+                        row[ch_col] = chan_ids[(hash(tname + ch_col) + i) % len(chan_ids)]
 
             # usergroup primary/name
             if "primary_usergroup_id" in table.columns and ug_ids:
@@ -665,11 +747,150 @@ def map_common_id_columns(tables: dict) -> None:
                 if "barriered_from_usergroup_names" in table.columns:
                     row["barriered_from_usergroup_names"] = [ug_names_by_id.get(x, "") for x in picks]
 
-            # readable barrier_id
-            if tname == "slack_barriers" and "barrier_id" in table.columns:
-                cur = row.get("barrier_id")
-                if not cur or cur == "barrier_id":
-                    row["barrier_id"] = f"BAR-{slack_id('')}"
+            # Normalize email/url fields post-hoc (handles JSON vs TEXT & singular vs plural)
+            for col in table.columns:
+                cn = col.lower()
+                t = coltypes.get(col, "TEXT")
+                val = row.get(col)
+
+                if "email" in cn:
+                    if "emails" in cn or cn.endswith("_emails"):
+                        if t == "JSON":
+                            if not isinstance(val, list) or not val or any("@" not in str(x) for x in val):
+                                row[col] = emails_for_field(random.randint(2, 3))
+                        else:
+                            if not isinstance(val, str) or "@" not in val:
+                                row[col] = ", ".join(emails_for_field(random.randint(2, 3)))
+                    else:
+                        if t == "JSON":
+                            if not isinstance(val, dict) or "@" not in str((val or {}).get("value","")):
+                                row[col] = {"value": random_personal_email()}
+                        else:
+                            if not isinstance(val, str) or "@" not in val:
+                                # try to pick from related user if present
+                                possible = None
+                                if "user" in row and isinstance(row.get("user"), str):
+                                    u = next((uu for uu in ROWS.get("slack_users", []) if uu.get("id")==row["user"]), None)
+                                    if u:
+                                        possible = ((u.get("profile_data") or {}).get("email"))
+                                row[col] = possible or random_personal_email()
+
+                if ("url" in cn or "uri" in cn):
+                    if t == "JSON":
+                        if not isinstance(val, list) or not val or any(not str(x).startswith("http") for x in val):
+                            row[col] = [make_url() for _ in range(random.randint(1, 3))]
+                    else:
+                        if not isinstance(val, str) or not val.startswith("http"):
+                            row[col] = make_url()
+
+def normalize_shared_invites(tables: dict) -> None:
+    """
+    Dedicated pass for slack_shared_invites to ensure all key IDs and attributes are mapped.
+    - Maps invite_id, channel_id, inviter_id, invitee_email, link_url
+    - Fills team_id-like fields (source/target/installer/etc.) with valid team IDs
+    - Populates domain_restrictions_emails appropriately (JSON list or comma TEXT)
+    - Backfills created_at/expires_at and usage counters
+    """
+    tname = "slack_shared_invites"
+    if tname not in tables:
+        return
+    table = tables[tname]
+    rows = ROWS.get(tname, [])
+    if not rows:
+        return
+
+    team_ids = [r["id"] for r in ROWS.get("slack_teams", []) if r.get("id")]
+    user_ids = [r["id"] for r in ROWS.get("slack_users", []) if r.get("id")]
+    chan_ids = [r["id"] for r in ROWS.get("slack_channels", []) if r.get("id")]
+    ent_ids  = [r["id"] for r in ROWS.get("slack_enterprises", []) if r.get("id")]
+
+    coltypes = {c: (table.columns[c].get("type","TEXT")).upper() for c in table.columns}
+
+    for i, row in enumerate(rows):
+        # invite_id (or id)
+        if "invite_id" in table.columns:
+            if not row.get("invite_id"):
+                row["invite_id"] = slack_id("I")
+        if "id" in table.columns and not row.get("id"):
+            row["id"] = slack_id("I")
+
+        # channel mapping
+        if "channel_id" in table.columns and chan_ids:
+            if not row.get("channel_id") or row["channel_id"] not in chan_ids:
+                row["channel_id"] = chan_ids[i % len(chan_ids)]
+
+        # user mapping: inviter/requester
+        for ucol in ("inviter_id","requester_user_id","created_by","updated_by"):
+            if ucol in table.columns and user_ids:
+                if not row.get(ucol) or row[ucol] not in user_ids:
+                    row[ucol] = user_ids[(hash(ucol) + i) % len(user_ids)]
+
+        # team mapping: any *team_id* column
+        for col in table.columns:
+            cn = col.lower()
+            if "team_id" in cn and team_ids:
+                if not row.get(col) or row[col] not in team_ids:
+                    row[col] = team_ids[(hash(cn) + i) % len(team_ids)]
+
+        # enterprise mapping: common variations
+        for ecol in ("enterprise_id","source_enterprise_id","target_enterprise_id"):
+            if ecol in table.columns and ent_ids:
+                if not row.get(ecol) or row[ecol] not in ent_ids:
+                    row[ecol] = ent_ids[(hash(ecol) + i) % len(ent_ids)]
+
+        # invitee email and domain restrictions
+        if "invitee_email" in table.columns:
+            v = row.get("invitee_email")
+            if not isinstance(v, str) or "@" not in v:
+                # use the email of the inviter if we can
+                inv_id = row.get("inviter_id")
+                chosen = None
+                if inv_id:
+                    u = next((uu for uu in ROWS.get("slack_users", []) if uu.get("id")==inv_id), None)
+                    chosen = ((u or {}).get("profile_data") or {}).get("email")
+                row["invitee_email"] = chosen or random_personal_email()
+
+        # domain_restrictions_emails: JSON list or TEXT csv
+        for dcol in ("domain_restrictions_emails","allowed_emails","allowed_domains_emails"):
+            if dcol in table.columns:
+                t = coltypes.get(dcol, "TEXT")
+                cur = row.get(dcol)
+                if t == "JSON":
+                    if not isinstance(cur, list) or not cur or any("@" not in str(x) for x in cur):
+                        row[dcol] = emails_for_field(random.randint(2, 3))
+                else:
+                    if not isinstance(cur, str) or "@" not in cur:
+                        row[dcol] = ", ".join(emails_for_field(random.randint(2, 3)))
+
+        # link_url or invite_url
+        for ucol in ("link_url","invite_url","shared_invite_url"):
+            if ucol in table.columns:
+                cur = row.get(ucol)
+                if not isinstance(cur, str) or not cur.startswith("http"):
+                    row[ucol] = make_url(path=f"join/{slack_id('')}".lower())
+
+        # timestamps and flags
+        now = dt.datetime.now()
+        created = now - dt.timedelta(days=random.randint(0, 60))
+        expires = created + dt.timedelta(days=random.randint(1, 30))
+        if "created_at" in table.columns and not row.get("created_at"):
+            row["created_at"] = created.strftime('%Y-%m-%d %H:%M:%S')
+        if "updated_at" in table.columns and not row.get("updated_at"):
+            row["updated_at"] = sql_datetime_current_year()
+        for tscol in ("expires_at","expiration_at","expiration_ts"):
+            if tscol in table.columns and not row.get(tscol):
+                if tscol.endswith("_ts"):
+                    row[tscol] = int(expires.timestamp())
+                else:
+                    row[tscol] = expires.strftime('%Y-%m-%d %H:%M:%S')
+
+        for bcol in ("is_private","is_restricted","is_ultra_restricted","is_revoked","is_legacy_shared"):
+            if bcol in table.columns and not isinstance(row.get(bcol), (bool, int)):
+                row[bcol] = bool(random.getrandbits(1))
+
+        for ncol in ("max_uses","remaining_uses","max_uses_count"):
+            if ncol in table.columns and not isinstance(row.get(ncol), int):
+                row[ncol] = random.randint(1, 50)
 
 def write_sql(tables: dict, order: list, out_path: str):
     d = os.path.dirname(out_path)
@@ -718,6 +939,7 @@ def main():
     generate_data(tables)
     backfill_foreign_keys(tables)
     map_common_id_columns(tables)
+    normalize_shared_invites(tables)  # explicit pass for slack_shared_invites
     write_sql(tables, order, args.out)
 
     total = sum(len(ROWS[n]) for n in order)
