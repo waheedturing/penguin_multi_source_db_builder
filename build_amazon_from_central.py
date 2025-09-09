@@ -602,7 +602,7 @@ class AmazonComprehensiveDataGenerator:
         
         return order_status, shipment_status
     
-    def _generate_realistic_order_status(self, total_items, purchase_date):
+    def _generate_realistic_order_status(self, total_items, purchase_date=None):
         """Generate realistic order status with proper quantity and status relationships"""
         # Define realistic order status probabilities
         status_probabilities = {
@@ -651,22 +651,8 @@ class AmazonComprehensiveDataGenerator:
         elif order_status == "Shipped":
             shipped_items = total_items
             unshipped_items = 0
-            # Determine shipment status based on time since purchase
-            # Convert purchase_date string to datetime object if needed
-            if isinstance(purchase_date, str):
-                purchase_datetime = datetime.strptime(purchase_date, "%Y-%m-%d %H:%M:%S")
-            else:
-                purchase_datetime = purchase_date
-            
-            days_since_purchase = (datetime.now() - purchase_datetime).days
-            if days_since_purchase < 1:
-                shipment_status = "Shipped"
-            elif days_since_purchase < 3:
-                shipment_status = random.choice(["Shipped", "In Transit"])
-            elif days_since_purchase < 7:
-                shipment_status = random.choice(["In Transit", "Out for Delivery"])
-            else:
-                shipment_status = random.choice(["Out for Delivery", "Delivered"])
+            # For shipped orders, randomly assign shipment status
+            shipment_status = random.choice(["Shipped", "In Transit", "Out for Delivery", "Delivered"])
                 
         elif order_status == "Canceled":
             shipped_items = 0
@@ -764,16 +750,41 @@ class AmazonComprehensiveDataGenerator:
                 buyer_name = f"Customer{random.randint(1, 9999)}"
                 buyer_email = f"customer{random.randint(1, 9999)}@example.com"
             
-            # Generate order data with proper date validation
-            purchase_date = self.generate_random_date()
-            # last_update_date must be after purchase_date
-            last_update_date = self.generate_random_date(purchase_date)
-            
             # Generate item counts first
             total_items = random.randint(1, 10)
             
             # Generate realistic order status and quantities with proper logic
-            order_status, shipment_status, shipped_items, unshipped_items = self._generate_realistic_order_status(total_items, purchase_date)
+            order_status, shipment_status, shipped_items, unshipped_items = self._generate_realistic_order_status(total_items, None)
+            
+            # Generate dates based on order status
+            purchase_date = self.generate_random_date()
+            
+            # Date logic based on status
+            if order_status == "Shipped" and shipment_status in ["Shipped", "In Transit", "Out for Delivery", "Delivered"]:
+                # For fully Shipped orders, dates can be up to 10 days apart
+                max_days_diff = 10
+            elif order_status == "Canceled" and shipment_status == "Cancelled":
+                # For Cancelled orders, dates can be up to 10 days apart
+                max_days_diff = 10
+            else:
+                # For other statuses (Unshipped, PartiallyShipped), dates should be within 10-15 days
+                max_days_diff = random.randint(10, 15)
+            
+            # Generate last_update_date within the allowed range
+            from datetime import datetime, timedelta
+            purchase_dt = datetime.strptime(purchase_date, '%Y-%m-%d %H:%M:%S')
+            days_diff = random.randint(1, max_days_diff)
+            
+            # Add random hours and minutes to make times different
+            hours_diff = random.randint(1, 23)  # 1-23 hours difference
+            minutes_diff = random.randint(1, 59)  # 1-59 minutes difference
+            
+            last_update_dt = purchase_dt + timedelta(
+                days=days_diff, 
+                hours=hours_diff, 
+                minutes=minutes_diff
+            )
+            last_update_date = last_update_dt.strftime('%Y-%m-%d %H:%M:%S')
             
             # Store order details for later use in order_items generation
             if not hasattr(self, 'order_details'):
@@ -1038,35 +1049,68 @@ class AmazonComprehensiveDataGenerator:
             summaries.append(summary)
             summary_id += 1
         
+        # Store the summaries data for use in inventory_details generation
+        self.inventory_summaries_data = summaries
+        
         return summaries
     
     def generate_inventory_details(self, count=350):
-        """Generate inventory_details data"""
+        """Generate inventory_details data that matches inventory_summaries data"""
         details = []
-        for i in range(1, count + 1):
-            sku = random.choice(list(self.product_skus))
-            
-            fulfillable_quantity = random.randint(0, 500)
-            inbound_working_quantity = random.randint(0, 100)
-            inbound_shipped_quantity = random.randint(0, 50)
-            inbound_receiving_quantity = random.randint(0, 25)
-            reserved_quantity = random.randint(0, 50)
-            unfulfillable_quantity = random.randint(0, 20)
-            total_reserved_quantity = reserved_quantity + random.randint(0, 25)
-            
-            detail = {
-                "id": i,
-                "seller_sku": sku,
-                "fulfillable_quantity": fulfillable_quantity,
-                "inbound_working_quantity": inbound_working_quantity,
-                "inbound_shipped_quantity": inbound_shipped_quantity,
-                "inbound_receiving_quantity": inbound_receiving_quantity,
-                "reserved_quantity": reserved_quantity,
-                "unfulfillable_quantity": unfulfillable_quantity,
-                "total_reserved_quantity": total_reserved_quantity,
-                "last_updated_time": self.generate_random_date()
-            }
-            details.append(detail)
+        
+        # Use the same SKUs and data from inventory_summaries
+        if hasattr(self, 'inventory_summaries_data'):
+            # Generate details for each inventory summary
+            for i, summary in enumerate(self.inventory_summaries_data, 1):
+                sku = summary['seller_sku']
+                inventory_details_json = summary['inventory_details']
+                
+                # Parse the JSON data from inventory_summaries
+                if isinstance(inventory_details_json, str):
+                    import json
+                    inventory_data = json.loads(inventory_details_json)
+                else:
+                    inventory_data = inventory_details_json
+                
+                detail = {
+                    "id": i,
+                    "seller_sku": sku,
+                    "fulfillable_quantity": inventory_data.get("fulfillable_quantity", 0),
+                    "inbound_working_quantity": inventory_data.get("inbound_working_quantity", 0),
+                    "inbound_shipped_quantity": inventory_data.get("inbound_shipped_quantity", 0),
+                    "inbound_receiving_quantity": inventory_data.get("inbound_receiving_quantity", 0),
+                    "reserved_quantity": inventory_data.get("reserved_quantity", 0),
+                    "unfulfillable_quantity": inventory_data.get("unfulfillable_quantity", 0),
+                    "total_reserved_quantity": inventory_data.get("reserved_quantity", 0) + random.randint(0, 25),
+                    "last_updated_time": summary['last_updated_time']
+                }
+                details.append(detail)
+        else:
+            # Fallback: generate random data if inventory_summaries not available
+            for i in range(1, count + 1):
+                sku = random.choice(list(self.product_skus))
+                
+                fulfillable_quantity = random.randint(0, 500)
+                inbound_working_quantity = random.randint(0, 100)
+                inbound_shipped_quantity = random.randint(0, 50)
+                inbound_receiving_quantity = random.randint(0, 25)
+                reserved_quantity = random.randint(0, 50)
+                unfulfillable_quantity = random.randint(0, 20)
+                total_reserved_quantity = reserved_quantity + random.randint(0, 25)
+                
+                detail = {
+                    "id": i,
+                    "seller_sku": sku,
+                    "fulfillable_quantity": fulfillable_quantity,
+                    "inbound_working_quantity": inbound_working_quantity,
+                    "inbound_shipped_quantity": inbound_shipped_quantity,
+                    "inbound_receiving_quantity": inbound_receiving_quantity,
+                    "reserved_quantity": reserved_quantity,
+                    "unfulfillable_quantity": unfulfillable_quantity,
+                    "total_reserved_quantity": total_reserved_quantity,
+                    "last_updated_time": self.generate_random_date()
+                }
+                details.append(detail)
         
         return details
     
@@ -1743,7 +1787,7 @@ class AmazonComprehensiveDataGenerator:
         return classification_ids
     
     def generate_reports(self, count=350):
-        """Generate reports data"""
+        """Generate reports data with realistic status based on age"""
         reports = []
         for i in range(1, count + 1):
             report_id = self.generate_report_id()
@@ -1754,11 +1798,45 @@ class AmazonComprehensiveDataGenerator:
             data_start_time = self.generate_random_date()
             data_end_time = self.generate_random_date(data_start_time, days_ahead=random.randint(1, 30))
             
-            created_time = self.generate_random_date()
-            processing_start_time = self.generate_random_date(created_time, days_ahead=random.randint(0, 1))
-            processing_end_time = self.generate_random_date(processing_start_time, days_ahead=random.randint(0, 1))
+            # Generate created_time with mix of recent and old dates
+            # 30% recent reports (within 1 day), 70% old reports (more than 1 day)
+            if random.random() < 0.3:  # 30% chance for recent report
+                # Generate recent date (within last 24 hours)
+                from datetime import datetime, timedelta
+                now = datetime.now()
+                hours_ago = random.randint(0, 23)
+                created_dt = now - timedelta(hours=hours_ago)
+                created_time = created_dt.strftime('%Y-%m-%d %H:%M:%S')
+                is_recent = True
+            else:  # 70% chance for old report
+                # Generate old date (more than 1 day ago)
+                created_time = self.generate_random_date()
+                is_recent = False
             
-            processing_status = random.choice(["IN_QUEUE", "IN_PROGRESS", "DONE", "CANCELLED", "FATAL"])
+            # Generate status based on whether report is recent or old
+            if is_recent:  # Recent report (within 1 day)
+                processing_status = random.choice(["IN_QUEUE", "IN_PROGRESS", "CANCELLED"])
+            else:  # Older report (more than 1 day old)
+                processing_status = random.choice(["DONE", "FATAL", "CANCELLED"])
+            
+            # Generate processing times based on status
+            if processing_status == "IN_QUEUE":
+                # No processing times for queued reports
+                processing_start_time = None
+                processing_end_time = None
+            elif processing_status == "IN_PROGRESS":
+                # Has start time but no end time
+                processing_start_time = self.generate_random_date(created_time, days_ahead=random.randint(0, 1))
+                processing_end_time = None
+            elif processing_status in ["DONE", "FATAL", "CANCELLED"]:
+                # Has both start and end times
+                processing_start_time = self.generate_random_date(created_time, days_ahead=random.randint(0, 1))
+                # Processing should complete within 1 day of start
+                processing_end_time = self.generate_random_date(processing_start_time, days_ahead=random.randint(0, 1))
+            else:
+                # Fallback
+                processing_start_time = self.generate_random_date(created_time, days_ahead=random.randint(0, 1))
+                processing_end_time = self.generate_random_date(processing_start_time, days_ahead=random.randint(0, 1))
             
             report_document_id = self.generate_report_document_id()
             report_document_url = f"https://d34o8swod1owfl.cloudfront.net/reports/{report_document_id}.tsv"
@@ -1771,8 +1849,8 @@ class AmazonComprehensiveDataGenerator:
                 "data_end_time": data_end_time,
                 "report_schedule_id": self.generate_report_schedule_id(),
                 "created_time": created_time,
-                "processing_start_time": processing_start_time,
-                "processing_end_time": processing_end_time,
+                "processing_start_time": processing_start_time if processing_start_time else None,
+                "processing_end_time": processing_end_time if processing_end_time else None,
                 "processing_status": processing_status,
                 "report_document_id": report_document_id,
                 "report_document_url": report_document_url,
