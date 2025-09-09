@@ -63,6 +63,8 @@ class AmazonComprehensiveDataGenerator:
         self.order_item_ids = set()
         self.asins = set()
         self.report_ids = set()
+        self.report_schedule_ids = set()
+        self.report_document_ids = set()
         self.feed_ids = set()
         self.subscription_ids = set()
         self.destination_ids = set()
@@ -217,6 +219,22 @@ class AmazonComprehensiveDataGenerator:
             if report_id not in self.report_ids:
                 self.report_ids.add(report_id)
                 return report_id
+    
+    def generate_report_schedule_id(self):
+        """Generate realistic report schedule ID"""
+        while True:
+            schedule_id = f"SCHED-{random.randint(100000, 999999)}"
+            if schedule_id not in self.report_schedule_ids:
+                self.report_schedule_ids.add(schedule_id)
+                return schedule_id
+    
+    def generate_report_document_id(self):
+        """Generate realistic report document ID"""
+        while True:
+            doc_id = f"DOC-{random.randint(100000, 999999)}"
+            if doc_id not in self.report_document_ids:
+                self.report_document_ids.add(doc_id)
+                return doc_id
     
     def generate_feed_id(self):
         """Generate realistic feed ID"""
@@ -468,6 +486,151 @@ class AmazonComprehensiveDataGenerator:
         shipment_status = random.choice(valid_combinations[order_status])
         
         return order_status, shipment_status
+    
+    def _generate_realistic_order_status(self, total_items, purchase_date):
+        """Generate realistic order status with proper quantity and status relationships"""
+        # Define realistic order status probabilities
+        status_probabilities = {
+            "Unshipped": 0.15,      # 15% - New orders not yet processed
+            "PartiallyShipped": 0.10, # 10% - Some items shipped, some pending
+            "Shipped": 0.60,        # 60% - All items shipped
+            "Canceled": 0.05,       # 5% - Orders cancelled
+            "Unfulfillable": 0.05,  # 5% - Cannot be fulfilled
+            "InvoiceUnconfirmed": 0.05 # 5% - Payment issues
+        }
+        
+        # Select order status based on probabilities
+        rand = random.random()
+        cumulative = 0
+        order_status = "Shipped"  # Default
+        
+        for status, prob in status_probabilities.items():
+            cumulative += prob
+            if rand <= cumulative:
+                order_status = status
+                break
+        
+        # Generate quantities and shipment status based on order status
+        if order_status == "Unshipped":
+            shipped_items = 0
+            unshipped_items = total_items
+            shipment_status = "Pending"
+            
+        elif order_status == "PartiallyShipped":
+            # Only partially shipped if more than 1 item
+            if total_items > 1:
+                shipped_items = random.randint(1, total_items - 1)
+                unshipped_items = total_items - shipped_items
+                # Shipment status depends on how many items are shipped
+                if shipped_items > unshipped_items:
+                    shipment_status = random.choice(["Shipped", "In Transit"])
+                else:
+                    shipment_status = "Pending"
+            else:
+                # Single item orders can't be partially shipped
+                shipped_items = 0
+                unshipped_items = total_items
+                order_status = "Unshipped"
+                shipment_status = "Pending"
+                
+        elif order_status == "Shipped":
+            shipped_items = total_items
+            unshipped_items = 0
+            # Determine shipment status based on time since purchase
+            # Convert purchase_date string to datetime object if needed
+            if isinstance(purchase_date, str):
+                purchase_datetime = datetime.strptime(purchase_date, "%Y-%m-%d %H:%M:%S")
+            else:
+                purchase_datetime = purchase_date
+            
+            days_since_purchase = (datetime.now() - purchase_datetime).days
+            if days_since_purchase < 1:
+                shipment_status = "Shipped"
+            elif days_since_purchase < 3:
+                shipment_status = random.choice(["Shipped", "In Transit"])
+            elif days_since_purchase < 7:
+                shipment_status = random.choice(["In Transit", "Out for Delivery"])
+            else:
+                shipment_status = random.choice(["Out for Delivery", "Delivered"])
+                
+        elif order_status == "Canceled":
+            shipped_items = 0
+            unshipped_items = total_items
+            shipment_status = "Cancelled"
+            
+        elif order_status == "Unfulfillable":
+            shipped_items = 0
+            unshipped_items = total_items
+            shipment_status = "Cancelled"
+            
+        elif order_status == "InvoiceUnconfirmed":
+            shipped_items = 0
+            unshipped_items = total_items
+            shipment_status = "Pending"
+        
+        return order_status, shipment_status, shipped_items, unshipped_items
+    
+    def _generate_item_quantity_shipped(self, quantity_ordered, order_details):
+        """Generate realistic quantity_shipped based on order status"""
+        if not order_details:
+            # Fallback if no order details available
+            return random.randint(0, quantity_ordered)
+        
+        order_status = order_details.get('order_status', 'Shipped')
+        order_shipped_items = order_details.get('shipped_items', 0)
+        order_unshipped_items = order_details.get('unshipped_items', 0)
+        
+        if order_status == "Unshipped":
+            return 0
+        elif order_status == "Canceled" or order_status == "Unfulfillable":
+            return 0
+        elif order_status == "InvoiceUnconfirmed":
+            return 0
+        elif order_status == "Shipped":
+            return quantity_ordered
+        elif order_status == "PartiallyShipped":
+            # For partially shipped orders, some items are shipped, some aren't
+            if order_shipped_items > 0 and order_unshipped_items > 0:
+                # Randomly decide if this item is shipped or not
+                if random.random() < (order_shipped_items / (order_shipped_items + order_unshipped_items)):
+                    return quantity_ordered
+                else:
+                    return 0
+            else:
+                return random.randint(0, quantity_ordered)
+        else:
+            return random.randint(0, quantity_ordered)
+    
+    def _generate_item_status(self, quantity_ordered, quantity_shipped, order_details):
+        """Generate item-level status based on quantities and order status"""
+        if not order_details:
+            if quantity_shipped == 0:
+                return "Unshipped"
+            elif quantity_shipped == quantity_ordered:
+                return "Shipped"
+            else:
+                return "PartiallyShipped"
+        
+        order_status = order_details.get('order_status', 'Shipped')
+        shipment_status = order_details.get('shipment_status', 'Pending')
+        
+        if quantity_shipped == 0:
+            if order_status in ["Canceled", "Unfulfillable"]:
+                return "Cancelled"
+            else:
+                return "Unshipped"
+        elif quantity_shipped == quantity_ordered:
+            if order_status == "Shipped":
+                if shipment_status == "Delivered":
+                    return "Delivered"
+                elif shipment_status in ["Out for Delivery", "In Transit"]:
+                    return "In Transit"
+                else:
+                    return "Shipped"
+            else:
+                return "Shipped"
+        else:
+            return "PartiallyShipped"
 
     def generate_orders(self, count=350):
         """Generate orders data with proper status validation and quantity consistency"""
@@ -494,29 +657,20 @@ class AmazonComprehensiveDataGenerator:
             # Generate item counts first
             total_items = random.randint(1, 10)
             
-            # Generate status based on quantities to ensure consistency
-            if total_items == 0:
-                shipped_items = 0
-                unshipped_items = 0
-                order_status, shipment_status = "Canceled", "Cancelled"
-            else:
-                # Generate quantities based on realistic scenarios
-                if random.random() < 0.1:  # 10% unshipped
-                    shipped_items = 0
-                    unshipped_items = total_items
-                    order_status, shipment_status = "Unshipped", "Pending"
-                elif random.random() < 0.2 and total_items > 1:  # 20% partially shipped (only if more than 1 item)
-                    shipped_items = random.randint(1, total_items - 1)
-                    unshipped_items = total_items - shipped_items
-                    order_status, shipment_status = "PartiallyShipped", random.choice(["Pending", "Shipped"])
-                elif random.random() < 0.05:  # 5% canceled
-                    shipped_items = 0
-                    unshipped_items = total_items
-                    order_status, shipment_status = "Canceled", "Cancelled"
-                else:  # 65% fully shipped
-                    shipped_items = total_items
-                    unshipped_items = 0
-                    order_status, shipment_status = "Shipped", random.choice(["Shipped", "In Transit", "Out for Delivery", "Delivered"])
+            # Generate realistic order status and quantities with proper logic
+            order_status, shipment_status, shipped_items, unshipped_items = self._generate_realistic_order_status(total_items, purchase_date)
+            
+            # Store order details for later use in order_items generation
+            if not hasattr(self, 'order_details'):
+                self.order_details = {}
+            
+            self.order_details[amazon_order_id] = {
+                'total_items': total_items,
+                'shipped_items': shipped_items,
+                'unshipped_items': unshipped_items,
+                'order_status': order_status,
+                'shipment_status': shipment_status
+            }
             
             fulfillment_channel = random.choice(FULFILLMENT_CHANNELS)
             sales_channel = random.choice(SALES_CHANNELS)
@@ -620,11 +774,14 @@ class AmazonComprehensiveDataGenerator:
         return orders
     
     def generate_order_items(self, count=350):
-        """Generate order_items data with consistent ASINs"""
+        """Generate order_items data with consistent ASINs and status relationships"""
         order_items = []
         for i in range(1, count + 1):
             order_item_id = self.generate_order_item_id()
             amazon_order_id = random.choice(list(self.amazon_order_ids))
+            
+            # Get order details to ensure consistency
+            order_details = getattr(self, 'order_details', {}).get(amazon_order_id, {})
             
             # Get a random SKU from listings
             sku = random.choice(list(self.product_skus))
@@ -634,9 +791,12 @@ class AmazonComprehensiveDataGenerator:
             # Generate product info
             product_data = self.generate_product_data()
             
-            # Generate quantities
+            # Generate quantities based on order status
             quantity_ordered = random.randint(1, 5)
-            quantity_shipped = random.randint(0, quantity_ordered)
+            quantity_shipped = self._generate_item_quantity_shipped(quantity_ordered, order_details)
+            
+            # Generate item status based on quantities and order details
+            item_status = self._generate_item_status(quantity_ordered, quantity_shipped, order_details)
             
             # Generate pricing
             item_price = round(random.uniform(10.0, 500.0), 2)
@@ -653,9 +813,14 @@ class AmazonComprehensiveDataGenerator:
             condition_id = random.choice(["New", "Used", "Refurbished"])
             condition_note = f"Item in {condition_id.lower()} condition" if condition_id != "New" else None
             
-            # Generate delivery dates
-            scheduled_delivery_start = self.generate_random_date()
-            scheduled_delivery_end = self.generate_random_date(scheduled_delivery_start, days_ahead=random.randint(1, 7))
+            # Generate delivery dates based on item status
+            if item_status in ["Shipped", "In Transit", "Delivered"]:
+                scheduled_delivery_start = self.generate_random_date()
+                scheduled_delivery_end = self.generate_random_date(scheduled_delivery_start, days_ahead=random.randint(1, 7))
+            else:
+                # For unshipped items, delivery dates should be in the future
+                scheduled_delivery_start = self.generate_random_date(days_ahead=random.randint(1, 14))
+                scheduled_delivery_end = self.generate_random_date(scheduled_delivery_start, days_ahead=random.randint(1, 7))
             
             order_item = {
                 "order_item_id": order_item_id,
@@ -666,6 +831,7 @@ class AmazonComprehensiveDataGenerator:
                 "title": product_data["title"],
                 "quantity_ordered": quantity_ordered,
                 "quantity_shipped": quantity_shipped,
+                "item_status": item_status,  # New field for item-level status tracking
                 "product_info": json.dumps({"category": product_data["category"], "brand": product_data["brand"]}),
                 "points_granted": json.dumps({"points": random.randint(0, 100)}),
                 "item_price": item_price,
@@ -954,57 +1120,456 @@ class AmazonComprehensiveDataGenerator:
         return catalog_items
     
     def generate_catalog_item_searches(self, count=350):
-        """Generate catalog_item_searches data"""
+        """Generate catalog_item_searches data with natural and diverse search queries"""
         searches = []
+        
+        # Create comprehensive search query templates based on actual product data
+        search_templates = self._create_search_query_templates()
+        
         for i in range(1, count + 1):
-            search_query = random.choice([
-                "wireless headphones", "laptop stand", "phone case", "bluetooth speaker",
-                "fitness tracker", "yoga mat", "coffee maker", "kitchen knife set",
-                "running shoes", "backpack", "sunglasses", "desk organizer"
-            ])
+            # Generate natural search query
+            search_query = self._generate_natural_search_query(search_templates)
             
             marketplace_id = random.choice(MARKETPLACE_IDS)
+            
             # Use pre-loaded brand names
             if self.brands:
                 brand_names = random.sample(self.brands, min(random.randint(1, 5), len(self.brands)))
             else:
                 brand_names = ["Generic Brand"]  # Fallback if no brands in JSON
             
-            # Use a random SKU and get its consistent ASIN
-            sku = random.choice(list(self.product_skus))
-            asin = self.sku_to_asin.get(sku)
-            if not asin:
-                asin = self.generate_asin(sku)
+            # Generate realistic results based on search query
+            results, total_results = self._generate_search_results(search_query, brand_names)
             
-            results = {
-                "items": [
-                    {
-                        "asin": asin,
-                        "title": f"{random.choice(self.brands if self.brands else ['Generic Brand'])} Product",
-                        "price": round(random.uniform(10.0, 500.0), 2)
-                    }
-                    for _ in range(random.randint(1, 10))
-                ]
-            }
+            # Generate realistic classification IDs based on search query context
+            classification_ids = self._generate_classification_ids(search_query)
             
             search = {
                 "id": i,
                 "search_query": search_query,
                 "marketplace_id": marketplace_id,
                 "brand_names": json.dumps(brand_names),
-                "classification_ids": json.dumps([f"cat_{random.randint(1000, 9999)}" for _ in range(random.randint(1, 3))]),
+                "classification_ids": json.dumps(classification_ids),
                 "page_size": random.randint(10, 50),
                 "page_token": f"token_{random.randint(100000, 999999)}",
                 "keywords": json.dumps(search_query.split()),
                 "locale": random.choice(["en_US", "en_GB", "de_DE", "fr_FR", "es_ES"]),
                 "seller_id": random.choice(list(self.seller_ids)),
                 "results": json.dumps(results),
-                "total_results": random.randint(1, 1000),
+                "total_results": total_results,  # Now consistent with actual results
                 "created_at": self.generate_random_date()
             }
             searches.append(search)
         
         return searches
+    
+    def _create_search_query_templates(self):
+        """Create diverse search query templates based on actual product data"""
+        templates = {
+            # Brand-specific searches
+            "brand_specific": [
+                "{brand} {product_type}",
+                "{brand} {product_type} {color}",
+                "{brand} {product_type} {size}",
+                "best {brand} {product_type}",
+                "{brand} {product_type} review",
+                "{brand} {product_type} price"
+            ],
+            
+            # Category-based searches
+            "category_based": [
+                "{category} {product_type}",
+                "best {category} {product_type}",
+                "{category} {product_type} {color}",
+                "cheap {category} {product_type}",
+                "premium {category} {product_type}",
+                "{category} {product_type} deals"
+            ],
+            
+            # Feature-based searches
+            "feature_based": [
+                "{product_type} with {feature}",
+                "{color} {product_type}",
+                "{size} {product_type}",
+                "wireless {product_type}",
+                "bluetooth {product_type}",
+                "portable {product_type}",
+                "ergonomic {product_type}",
+                "gaming {product_type}",
+                "professional {product_type}"
+            ],
+            
+            # Natural language searches
+            "natural_language": [
+                "where to buy {product_type}",
+                "best {product_type} for {use_case}",
+                "{product_type} recommendations",
+                "top rated {product_type}",
+                "affordable {product_type}",
+                "high quality {product_type}",
+                "durable {product_type}",
+                "compact {product_type}"
+            ],
+            
+            # Comparison searches
+            "comparison": [
+                "{product_type} vs {alternative}",
+                "best {product_type} under ${price}",
+                "{product_type} comparison",
+                "cheapest {product_type}",
+                "most popular {product_type}"
+            ],
+            
+            # Problem-solving searches
+            "problem_solving": [
+                "how to choose {product_type}",
+                "{product_type} for beginners",
+                "what {product_type} should I buy",
+                "best {product_type} 2024",
+                "{product_type} buying guide"
+            ]
+        }
+        
+        # Add some common typos and variations
+        templates["typos"] = [
+            "{product_type} with typo",
+            "{product_type} misspelled",
+            "{product_type} alternative spelling"
+        ]
+        
+        return templates
+    
+    def _generate_natural_search_query(self, templates):
+        """Generate a natural search query using templates and real product data"""
+        if not self.products:
+            return random.choice([
+                "wireless headphones", "laptop stand", "phone case", "bluetooth speaker",
+                "fitness tracker", "yoga mat", "coffee maker", "kitchen knife set"
+            ])
+        
+        # Get a random product for context
+        product = random.choice(self.products)
+        brand = product.get("brand", "Generic")
+        product_type = product.get("product_type", "product").lower().replace("_", " ")
+        category = product.get("category", "items").lower()
+        color = product.get("color", "black").lower()
+        size = product.get("size", "standard").lower()
+        
+        # Choose template category
+        template_category = random.choice(list(templates.keys()))
+        template = random.choice(templates[template_category])
+        
+        # Define substitution values
+        substitutions = {
+            "brand": brand,
+            "product_type": product_type,
+            "category": category,
+            "color": color,
+            "size": size,
+            "feature": random.choice(["bluetooth", "wireless", "portable", "ergonomic", "gaming", "professional"]),
+            "use_case": random.choice(["home", "office", "gaming", "travel", "work", "studying"]),
+            "alternative": random.choice(["alternative", "competitor", "similar product"]),
+            "price": random.choice(["50", "100", "200", "500", "1000"])
+        }
+        
+        # Apply substitutions
+        query = template.format(**substitutions)
+        
+        # Add some natural variations
+        if random.random() < 0.3:  # 30% chance to add modifiers
+            modifiers = ["best", "top", "cheap", "premium", "new", "popular", "trending"]
+            query = f"{random.choice(modifiers)} {query}"
+        
+        if random.random() < 0.2:  # 20% chance to add year
+            query = f"{query} 2024"
+        
+        # Add some realistic typos occasionally
+        if random.random() < 0.1:  # 10% chance for typos
+            query = self._add_realistic_typos(query)
+        
+        return query.lower().strip()
+    
+    def _add_realistic_typos(self, query):
+        """Add realistic typos to search queries"""
+        typos_map = {
+            "bluetooth": "blutooth",
+            "wireless": "wireles",
+            "headphones": "headfones",
+            "keyboard": "keybord",
+            "monitor": "moniter",
+            "speaker": "speeker",
+            "gaming": "gaiming",
+            "professional": "profesional",
+            "ergonomic": "ergonomic",
+            "portable": "portabel"
+        }
+        
+        for correct, typo in typos_map.items():
+            if correct in query.lower():
+                query = query.replace(correct, typo)
+                break  # Only add one typo per query
+        
+        return query
+    
+    def _generate_search_results(self, search_query, brand_names):
+        """Generate realistic search results based on the search query"""
+        # Determine number of results based on query type
+        if any(word in search_query.lower() for word in ["best", "top", "popular"]):
+            num_results = random.randint(5, 15)  # Popular searches have more results
+        elif any(word in search_query.lower() for word in ["cheap", "affordable", "budget"]):
+            num_results = random.randint(8, 20)  # Price searches have many results
+        else:
+            num_results = random.randint(3, 12)  # Regular searches
+        
+        results = {
+            "items": []
+        }
+        
+        for _ in range(num_results):
+            # Use a random SKU and get its consistent ASIN
+            if self.product_skus:
+                sku = random.choice(list(self.product_skus))
+                asin = self.sku_to_asin.get(sku)
+                if not asin:
+                    asin = self.generate_asin(sku)
+            else:
+                asin = self.generate_asin("DEFAULT")
+            
+            # Generate realistic product title based on search context
+            title = self._generate_product_title(search_query, brand_names)
+            
+            # Generate realistic price based on product type
+            price = self._generate_realistic_price(search_query)
+            
+            results["items"].append({
+                "asin": asin,
+                "title": title,
+                "price": price
+            })
+        
+        return results, num_results
+    
+    def _generate_product_title(self, search_query, brand_names):
+        """Generate realistic product titles based on search query"""
+        if not self.products:
+            brand = random.choice(brand_names) if brand_names else "Generic Brand"
+            return f"{brand} Product"
+        
+        # Get a product that matches the search context
+        matching_products = []
+        query_lower = search_query.lower()
+        
+        for product in self.products:
+            if (query_lower in product.get("product_type", "").lower() or
+                query_lower in product.get("category", "").lower() or
+                any(word in product.get("product_type", "").lower() for word in query_lower.split())):
+                matching_products.append(product)
+        
+        if matching_products:
+            product = random.choice(matching_products)
+            brand = product.get("brand", random.choice(brand_names) if brand_names else "Generic Brand")
+            item_name = product.get("item_name", f"{product.get('product_type', 'Product')}")
+            return item_name
+        else:
+            # Fallback to random product
+            product = random.choice(self.products)
+            brand = product.get("brand", random.choice(brand_names) if brand_names else "Generic Brand")
+            return product.get("item_name", f"{brand} Product")
+    
+    def _generate_realistic_price(self, search_query):
+        """Generate realistic prices based on search query context"""
+        query_lower = search_query.lower()
+        
+        # Price ranges based on product type and search context
+        if any(word in query_lower for word in ["cheap", "budget", "affordable"]):
+            return round(random.uniform(5.0, 50.0), 2)
+        elif any(word in query_lower for word in ["premium", "professional", "gaming"]):
+            return round(random.uniform(100.0, 1000.0), 2)
+        elif any(word in query_lower for word in ["monitor", "laptop", "desk", "chair"]):
+            return round(random.uniform(50.0, 500.0), 2)
+        elif any(word in query_lower for word in ["headphones", "speaker", "keyboard"]):
+            return round(random.uniform(20.0, 300.0), 2)
+        else:
+            return round(random.uniform(10.0, 200.0), 2)
+    
+    def _generate_classification_ids(self, search_query):
+        """Generate realistic Amazon-style classification IDs based on search query context"""
+        # Amazon-style classification hierarchy
+        classification_hierarchy = {
+            # Electronics
+            "electronics": {
+                "base_id": "172282",
+                "subcategories": {
+                    "computers": {"id": "541966", "sub": {"laptops": "565108", "desktops": "565098", "monitors": "1292115011"}},
+                    "audio": {"id": "172282", "sub": {"headphones": "172282", "speakers": "172282", "microphones": "172282"}},
+                    "gaming": {"id": "468294", "sub": {"accessories": "468294", "keyboards": "468294", "mice": "468294", "controllers": "468294"}},
+                    "mobile": {"id": "7072561011", "sub": {"phones": "7072561011", "tablets": "7072561011", "accessories": "7072561011"}},
+                    "smart_home": {"id": "11091801", "sub": {"speakers": "11091801", "cameras": "11091801", "lighting": "11091801"}},
+                    "accessories": {"id": "172282", "sub": {"chargers": "172282", "cables": "172282", "adapters": "172282"}}
+                }
+            },
+            
+            # Furniture
+            "furniture": {
+                "base_id": "1055398",
+                "subcategories": {
+                    "office": {"id": "1063306", "sub": {"chairs": "1063306", "desks": "1063306", "storage": "1063306"}},
+                    "living": {"id": "1055398", "sub": {"sofas": "1055398", "tables": "1055398", "storage": "1055398"}},
+                    "bedroom": {"id": "1055398", "sub": {"beds": "1055398", "dressers": "1055398", "nightstands": "1055398"}},
+                    "dining": {"id": "1055398", "sub": {"tables": "1055398", "chairs": "1055398", "storage": "1055398"}}
+                }
+            },
+            
+            # Pet Supplies
+            "pet_supplies": {
+                "base_id": "2619533011",
+                "subcategories": {
+                    "dogs": {"id": "2619533011", "sub": {"toys": "2619533011", "food": "2619533011", "accessories": "2619533011"}},
+                    "cats": {"id": "2619533011", "sub": {"toys": "2619533011", "food": "2619533011", "accessories": "2619533011"}},
+                    "feeding": {"id": "2619533011", "sub": {"bowls": "2619533011", "feeders": "2619533011", "fountains": "2619533011"}},
+                    "beds": {"id": "2619533011", "sub": {"dog_beds": "2619533011", "cat_beds": "2619533011", "heated": "2619533011"}}
+                }
+            },
+            
+            # Home & Kitchen
+            "home_kitchen": {
+                "base_id": "1055398",
+                "subcategories": {
+                    "kitchen": {"id": "1055398", "sub": {"appliances": "1055398", "cookware": "1055398", "storage": "1055398"}},
+                    "home_improvement": {"id": "1055398", "sub": {"tools": "1055398", "hardware": "1055398", "lighting": "1055398"}},
+                    "decor": {"id": "1055398", "sub": {"wall_art": "1055398", "vases": "1055398", "candles": "1055398"}}
+                }
+            }
+        }
+        
+        query_lower = search_query.lower()
+        classification_ids = []
+        
+        # Determine primary category based on search query
+        primary_category = None
+        subcategory = None
+        specific_item = None
+        
+        # Electronics detection
+        if any(word in query_lower for word in ["monitor", "laptop", "computer", "keyboard", "mouse", "headphones", "speaker", "bluetooth", "wireless", "gaming", "electronics"]):
+            primary_category = "electronics"
+            if any(word in query_lower for word in ["gaming", "gamer", "rgb", "mechanical"]):
+                subcategory = "gaming"
+                if "keyboard" in query_lower:
+                    specific_item = "keyboards"
+                elif "mouse" in query_lower:
+                    specific_item = "mice"
+                elif "headphones" in query_lower or "headset" in query_lower:
+                    specific_item = "accessories"
+            elif any(word in query_lower for word in ["monitor", "display", "screen"]):
+                subcategory = "computers"
+                specific_item = "monitors"
+            elif any(word in query_lower for word in ["laptop", "notebook", "computer"]):
+                subcategory = "computers"
+                specific_item = "laptops"
+            elif any(word in query_lower for word in ["headphones", "headset", "audio"]):
+                subcategory = "audio"
+                specific_item = "headphones"
+            elif any(word in query_lower for word in ["speaker", "bluetooth", "sound"]):
+                subcategory = "audio"
+                specific_item = "speakers"
+            elif any(word in query_lower for word in ["charger", "cable", "adapter"]):
+                subcategory = "accessories"
+                specific_item = "chargers"
+        
+        # Furniture detection
+        elif any(word in query_lower for word in ["chair", "desk", "table", "furniture", "office", "sofa", "bed", "bookshelf"]):
+            primary_category = "furniture"
+            if any(word in query_lower for word in ["office", "ergonomic", "work"]):
+                subcategory = "office"
+                if "chair" in query_lower:
+                    specific_item = "chairs"
+                elif "desk" in query_lower:
+                    specific_item = "desks"
+            elif any(word in query_lower for word in ["living", "sofa", "coffee", "tv stand"]):
+                subcategory = "living"
+                if "table" in query_lower:
+                    specific_item = "tables"
+            elif any(word in query_lower for word in ["bedroom", "bed", "dresser"]):
+                subcategory = "bedroom"
+                if "bed" in query_lower:
+                    specific_item = "beds"
+        
+        # Pet supplies detection
+        elif any(word in query_lower for word in ["pet", "dog", "cat", "toy", "feeder", "bed", "fountain", "camera"]):
+            primary_category = "pet_supplies"
+            if any(word in query_lower for word in ["dog", "puppy"]):
+                subcategory = "dogs"
+                if "toy" in query_lower:
+                    specific_item = "toys"
+                elif "bed" in query_lower:
+                    specific_item = "dog_beds"
+            elif any(word in query_lower for word in ["cat", "kitten", "feline"]):
+                subcategory = "cats"
+                if "toy" in query_lower:
+                    specific_item = "toys"
+                elif "bed" in query_lower:
+                    specific_item = "cat_beds"
+            elif any(word in query_lower for word in ["feeder", "food", "bowl"]):
+                subcategory = "feeding"
+                if "feeder" in query_lower:
+                    specific_item = "feeders"
+                elif "fountain" in query_lower:
+                    specific_item = "fountains"
+        
+        # Home & Kitchen detection
+        elif any(word in query_lower for word in ["kitchen", "home", "appliance", "cookware", "decor"]):
+            primary_category = "home_kitchen"
+            if any(word in query_lower for word in ["kitchen", "cook", "appliance"]):
+                subcategory = "kitchen"
+            elif any(word in query_lower for word in ["decor", "art", "vase", "candle"]):
+                subcategory = "decor"
+        
+        # Generate classification IDs based on detected categories
+        if primary_category and primary_category in classification_hierarchy:
+            hierarchy = classification_hierarchy[primary_category]
+            
+            # Add base category ID
+            classification_ids.append(hierarchy["base_id"])
+            
+            # Add subcategory ID if found
+            if subcategory and subcategory in hierarchy["subcategories"]:
+                sub_hierarchy = hierarchy["subcategories"][subcategory]
+                classification_ids.append(sub_hierarchy["id"])
+                
+                # Add specific item ID if found
+                if specific_item and specific_item in sub_hierarchy["sub"]:
+                    classification_ids.append(sub_hierarchy["sub"][specific_item])
+        
+        # If no specific category found, use generic classifications
+        if not classification_ids:
+            # Default to electronics for tech-related searches, furniture for others
+            if any(word in query_lower for word in ["tech", "digital", "electronic", "smart"]):
+                classification_ids = ["172282", "468294"]  # Electronics, Gaming
+            else:
+                classification_ids = ["1055398", "1063306"]  # Furniture, Office
+        
+        # Add some additional related classifications for better search coverage
+        if len(classification_ids) < 3 and random.random() < 0.4:  # 40% chance to add related category
+            related_categories = {
+                "172282": ["468294", "11091801"],  # Electronics -> Gaming, Smart Home
+                "1055398": ["1063306", "2619533011"],  # Furniture -> Office, Pet Supplies
+                "2619533011": ["1055398"],  # Pet Supplies -> Furniture
+                "468294": ["172282", "11091801"]  # Gaming -> Electronics, Smart Home
+            }
+            
+            base_id = classification_ids[0] if classification_ids else "172282"
+            if base_id in related_categories:
+                related_id = random.choice(related_categories[base_id])
+                if related_id not in classification_ids:
+                    classification_ids.append(related_id)
+        
+        # Ensure we have at least 1 and at most 3 classification IDs
+        classification_ids = classification_ids[:3]
+        if not classification_ids:
+            classification_ids = ["172282"]  # Default to electronics
+        
+        return classification_ids
     
     def generate_reports(self, count=350):
         """Generate reports data"""
@@ -1024,7 +1589,7 @@ class AmazonComprehensiveDataGenerator:
             
             processing_status = random.choice(["IN_QUEUE", "IN_PROGRESS", "DONE", "CANCELLED", "FATAL"])
             
-            report_document_id = f"DOC-{random.randint(100000, 999999)}"
+            report_document_id = self.generate_report_document_id()
             report_document_url = f"https://d34o8swod1owfl.cloudfront.net/reports/{report_document_id}.tsv"
             
             report = {
@@ -1033,7 +1598,7 @@ class AmazonComprehensiveDataGenerator:
                 "marketplace_ids": json.dumps(marketplace_ids),
                 "data_start_time": data_start_time,
                 "data_end_time": data_end_time,
-                "report_schedule_id": f"SCHED-{random.randint(100000, 999999)}",
+                "report_schedule_id": self.generate_report_schedule_id(),
                 "created_time": created_time,
                 "processing_start_time": processing_start_time,
                 "processing_end_time": processing_end_time,
@@ -1050,10 +1615,10 @@ class AmazonComprehensiveDataGenerator:
         return reports
     
     def generate_report_schedules(self, count=350):
-        """Generate report_schedules data"""
+        """Generate report_schedules data with unique report_schedule_id"""
         schedules = []
         for i in range(1, count + 1):
-            report_schedule_id = f"SCHED-{random.randint(100000, 999999)}"
+            report_schedule_id = self.generate_report_schedule_id()
             report_type = random.choice(REPORT_TYPES)
             marketplace_ids = MARKETPLACE_IDS  # Use all available marketplace IDs
             
@@ -1087,10 +1652,10 @@ class AmazonComprehensiveDataGenerator:
         return schedules
     
     def generate_report_documents(self, count=350):
-        """Generate report_documents data"""
+        """Generate report_documents data with unique document IDs"""
         documents = []
         for i in range(1, count + 1):
-            report_document_id = f"DOC-{random.randint(100000, 999999)}"
+            report_document_id = self.generate_report_document_id()
             url = f"https://d34o8swod1owfl.cloudfront.net/reports/{report_document_id}.tsv"
             
             # Generate sample report content
@@ -1497,7 +2062,7 @@ def main():
     # sql_content += "\nCOMMIT;\n"
     
     # Write to file
-    with open("DB_Bhavan/amazon_penguin_comprehensive_data.sql", "w", encoding="utf-8") as f:
+    with open("dbs_output/amazon_penguin_comprehensive_data.sql", "w", encoding="utf-8") as f:
         f.write(sql_content)
     
     print("\n" + "="*50)
