@@ -15478,6 +15478,2468 @@
             "quantity_shipped": 0
           }
         ]
+      },
+      {
+        "amazon_order_id": "112-7581264-1332141",
+        "seller_order_id": "SO-256517",
+        "purchase_date": "2025-08-05 01:38:16",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "david.king@aol.com",
+        "buyer_name": "David King",
+        "buyer_county": "Chicago",
+        "shipping_address": "{\"name\": \"David King\", \"address_line_1\": \"300 E Randolph St\", \"city\": \"Chicago\", \"state\": \"IL\", \"postal_code\": \"60601\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 498.11,
+        "promised_ship_date": "2025-08-05 20:51:00",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-335630",
+            "seller_sku": "SKU-L4S1-862520-651",
+            "asin": "B7842862520",
+            "title": "Chuckit! Ultra Ball",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-501726",
+            "seller_sku": "SKU-H7J9-232245-402",
+            "asin": "B4738232245",
+            "title": "PixelView UltraWide Monitor",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-539014",
+            "seller_sku": "SKU-L2P6-884833-205",
+            "asin": "B7509884833",
+            "title": "Echo Dot Smart Speaker",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          },
+          {
+            "order_item_id": "OI-674112",
+            "seller_sku": "SKU-2R9S-552127-874",
+            "asin": "B9443552127",
+            "title": "Galaxy Tab S9",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-1251470-3821017",
+        "seller_order_id": "SO-389679",
+        "purchase_date": "2025-03-14 21:15:26",
+        "order_status": "Unshipped",
+        "shipment_status": "Pending",
+        "buyer_email": "noahbrown@outlook.com",
+        "buyer_name": "Noah Brown",
+        "buyer_county": "Houston",
+        "shipping_address": "{\"name\": \"Noah Brown\", \"address_line_1\": \"890 Willow Creek Rd\", \"city\": \"Houston\", \"state\": \"TX\", \"postal_code\": \"77002\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 628.27,
+        "promised_ship_date": "2025-03-14 12:18:57",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-2789347-7541587",
+        "seller_order_id": "SO-272734",
+        "purchase_date": "2024-08-06 05:22:48",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "daniel.perez@hotmail.com",
+        "buyer_name": "Daniel Perez",
+        "buyer_county": "Chicago",
+        "shipping_address": "{\"name\": \"Daniel Perez\", \"address_line_1\": \"2500 N Kedzie Blvd\", \"city\": \"Chicago\", \"state\": \"IL\", \"postal_code\": \"60622\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 1947.17,
+        "promised_ship_date": "2024-08-06 13:57:23",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-486895",
+            "seller_sku": "SKU-9Y7Z-101504-281",
+            "asin": "B5510101504",
+            "title": "PurrfectPouch Cat Carrier",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          },
+          {
+            "order_item_id": "OI-679591",
+            "seller_sku": "SKU-L7M9-033140-597",
+            "asin": "B3924033140",
+            "title": "Sony WH-1000XM5 Headphones",
+            "quantity_ordered": 1,
+            "quantity_shipped": 1
+          },
+          {
+            "order_item_id": "OI-685267",
+            "seller_sku": "SKU-K2L4-345890-596",
+            "asin": "B6615345890",
+            "title": "AirPods Pro",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-5062203-2691828",
+        "seller_order_id": "SO-619180",
+        "purchase_date": "2025-08-09 15:51:47",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "sofia.diaz@yahoo.com",
+        "buyer_name": "Sofia Diaz",
+        "buyer_county": "Boise",
+        "shipping_address": "{\"name\": \"Sofia Diaz\", \"address_line_1\": \"200 Main St\", \"city\": \"Boise\", \"state\": \"ID\", \"postal_code\": \"83702\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 83.52,
+        "promised_ship_date": "2025-08-11 01:07:47",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-368515",
+            "seller_sku": "SKU-L9Q4-569492-413",
+            "asin": "B6913569492",
+            "title": "TP-Link Archer AXE75 Router",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          },
+          {
+            "order_item_id": "OI-925010",
+            "seller_sku": "SKU-L1Q6-232245-743",
+            "asin": "B4738232245",
+            "title": "PixelView UltraWide Monitor",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-8462127-1559452",
+        "seller_order_id": "SO-478457",
+        "purchase_date": "2024-08-07 13:02:53",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "In Transit",
+        "buyer_email": "camila.b@gmail.com",
+        "buyer_name": "Camila Butler",
+        "buyer_county": "Philadelphia",
+        "shipping_address": "{\"name\": \"Camila Butler\", \"address_line_1\": \"1400 S St\", \"city\": \"Philadelphia\", \"state\": \"PA\", \"postal_code\": \"19147\", \"country\": \"US\"}",
+        "payment_method": "Cash on Delivery",
+        "order_total": 1533.89,
+        "promised_ship_date": "2024-08-10 18:02:14",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-458593",
+            "seller_sku": "SKU-2G9H-481043-615",
+            "asin": "B6510481043",
+            "title": "Thrustmaster T300 RS GT Edition",
+            "quantity_ordered": 2,
+            "quantity_shipped": 2
+          },
+          {
+            "order_item_id": "OI-924075",
+            "seller_sku": "SKU-H6J8-144879-466",
+            "asin": "B1658144879",
+            "title": "ChargeUp Wireless Charging Pad",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-6647389-9302400",
+        "seller_order_id": "SO-858446",
+        "purchase_date": "2025-03-04 23:33:50",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "ava.jones@aol.com",
+        "buyer_name": "Ava Jones",
+        "buyer_county": "Scottsdale",
+        "shipping_address": "{\"name\": \"Ava Jones\", \"address_line_1\": \"7000 E Camelback Rd Ste 2\", \"city\": \"Scottsdale\", \"state\": \"AZ\", \"postal_code\": \"85251\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 170.53,
+        "promised_ship_date": "2025-03-05 03:00:46",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-182027",
+            "seller_sku": "SKU-G1H3-511525-156",
+            "asin": "B4447511525",
+            "title": "Canon EOS R6 Mark II Camera",
+            "quantity_ordered": 1,
+            "quantity_shipped": 1
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-4973449-3393421",
+        "seller_order_id": "SO-349255",
+        "purchase_date": "2024-01-26 01:43:56",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "chris.adams@gmail.com",
+        "buyer_name": "Christopher Adams",
+        "buyer_county": "Tempe",
+        "shipping_address": "{\"name\": \"Christopher Adams\", \"address_line_1\": \"2000 E Rio Salado Pkwy\", \"city\": \"Tempe\", \"state\": \"AZ\", \"postal_code\": \"85281\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 1387.1,
+        "promised_ship_date": "2024-01-27 13:18:15",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-142790",
+            "seller_sku": "SKU-9Y7Z-862520-170",
+            "asin": "B7842862520",
+            "title": "Chuckit! Ultra Ball",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-898332",
+            "seller_sku": "SKU-7W5X-552127-328",
+            "asin": "B9443552127",
+            "title": "Galaxy Tab S9",
+            "quantity_ordered": 2,
+            "quantity_shipped": 2
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-2821653-1224176",
+        "seller_order_id": "SO-642366",
+        "purchase_date": "2024-09-09 13:26:19",
+        "order_status": "InvoiceUnconfirmed",
+        "shipment_status": "Pending",
+        "buyer_email": "gianna.r@gmail.com",
+        "buyer_name": "Gianna Ross",
+        "buyer_county": "San Jose",
+        "shipping_address": "{\"name\": \"Gianna Ross\", \"address_line_1\": \"301 S Market St\", \"city\": \"San Jose\", \"state\": \"CA\", \"postal_code\": \"95113\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 487.3,
+        "promised_ship_date": "2024-09-26 17:31:28",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-6798288-2023313",
+        "seller_order_id": "SO-984179",
+        "purchase_date": "2024-10-23 10:14:36",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "hazel.w@gmail.com",
+        "buyer_name": "Hazel Watson",
+        "buyer_county": "Raleigh",
+        "shipping_address": "{\"name\": \"Hazel Watson\", \"address_line_1\": \"2 E South St\", \"city\": \"Raleigh\", \"state\": \"NC\", \"postal_code\": \"27603\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 1230.96,
+        "promised_ship_date": "2024-10-23 06:48:27",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-406539",
+            "seller_sku": "SKU-5K3L-247344-923",
+            "asin": "B5793247344",
+            "title": "LoftStyle Industrial Coffee Table",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-932604",
+            "seller_sku": "SKU-3H1J-033140-112",
+            "asin": "B3924033140",
+            "title": "Sony WH-1000XM5 Headphones",
+            "quantity_ordered": 2,
+            "quantity_shipped": 2
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-9282074-8623024",
+        "seller_order_id": "SO-631096",
+        "purchase_date": "2025-08-31 12:10:07",
+        "order_status": "Canceled",
+        "shipment_status": "Cancelled",
+        "buyer_email": "kinsley.b@hotmail.com",
+        "buyer_name": "Kinsley Bryant",
+        "buyer_county": "San Diego",
+        "shipping_address": "{\"name\": \"Kinsley Bryant\", \"address_line_1\": \"300 E St\", \"city\": \"San Diego\", \"state\": \"CA\", \"postal_code\": \"92101\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 925.44,
+        "promised_ship_date": "2025-08-31 22:10:39",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-712206",
+            "seller_sku": "SKU-6L4M-884833-712",
+            "asin": "B7509884833",
+            "title": "Echo Dot Smart Speaker",
+            "quantity_ordered": 4,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-1562530-5248756",
+        "seller_order_id": "SO-972374",
+        "purchase_date": "2024-10-01 00:21:03",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "violet.c@gmail.com",
+        "buyer_name": "Violet Cooper",
+        "buyer_county": "New York",
+        "shipping_address": "{\"name\": \"Violet Cooper\", \"address_line_1\": \"200 Park Ave\", \"city\": \"New York\", \"state\": \"NY\", \"postal_code\": \"10154\", \"country\": \"US\"}",
+        "payment_method": "Cash on Delivery",
+        "order_total": 1723.84,
+        "promised_ship_date": "2024-10-02 01:21:20",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-296396",
+            "seller_sku": "SKU-4C2D-346364-408",
+            "asin": "B7848346364",
+            "title": "Blue Buffalo Wilderness Cat Food",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          },
+          {
+            "order_item_id": "OI-885433",
+            "seller_sku": "SKU-9Y7Z-874934-864",
+            "asin": "B1547874934",
+            "title": "HyperX QuadCast S Microphone",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-5850824-9767669",
+        "seller_order_id": "SO-400347",
+        "purchase_date": "2025-02-23 00:33:01",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "daniel.h@gmail.com",
+        "buyer_name": "Daniel Hughes",
+        "buyer_county": "Atlanta",
+        "shipping_address": "{\"name\": \"Daniel Hughes\", \"address_line_1\": \"100 Centennial Olympic Park Dr NW\", \"city\": \"Atlanta\", \"state\": \"GA\", \"postal_code\": \"30313\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 241.66,
+        "promised_ship_date": "2025-02-24 05:26:26",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-759884",
+            "seller_sku": "SKU-L3N6-371582-483",
+            "asin": "B6370371582",
+            "title": "ViperGlide Gaming Mousepad",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3785457-2861173",
+        "seller_order_id": "SO-100297",
+        "purchase_date": "2025-01-03 21:28:27",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "isaiah.rivera@yahoo.com",
+        "buyer_name": "Isaiah Rivera",
+        "buyer_county": "Denver",
+        "shipping_address": "{\"name\": \"Isaiah Rivera\", \"address_line_1\": \"1437 Bannock St\", \"city\": \"Denver\", \"state\": \"CO\", \"postal_code\": \"80202\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 173.77,
+        "promised_ship_date": "2025-01-05 09:31:58",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-776803",
+            "seller_sku": "SKU-H5J7-236907-581",
+            "asin": "B9957236907",
+            "title": "Razer BlackWidow V4 Pro",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-6359094-6822501",
+        "seller_order_id": "SO-139555",
+        "purchase_date": "2024-05-15 00:06:53",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "aria.foster@gmail.com",
+        "buyer_name": "Aria Foster",
+        "buyer_county": "Oakland",
+        "shipping_address": "{\"name\": \"Aria Foster\", \"address_line_1\": \"1000 Broadway\", \"city\": \"Oakland\", \"state\": \"CA\", \"postal_code\": \"94607\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 721.02,
+        "promised_ship_date": "2024-05-15 20:51:49",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-382572",
+            "seller_sku": "SKU-L3Q8-656811-720",
+            "asin": "B2989656811",
+            "title": "Logitech G Pro Wireless Mouse",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-954524",
+            "seller_sku": "SKU-L5S2-345890-192",
+            "asin": "B6615345890",
+            "title": "AirPods Pro",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-5660216-1268511",
+        "seller_order_id": "SO-896061",
+        "purchase_date": "2025-05-27 23:06:28",
+        "order_status": "InvoiceUnconfirmed",
+        "shipment_status": "Pending",
+        "buyer_email": "robert.barnes@hotmail.com",
+        "buyer_name": "Robert Barnes",
+        "buyer_county": "Los Angeles",
+        "shipping_address": "{\"name\": \"Robert Barnes\", \"address_line_1\": \"5905 Wilshire Blvd\", \"city\": \"Los Angeles\", \"state\": \"CA\", \"postal_code\": \"90049\", \"country\": \"US\"}",
+        "payment_method": "Credit Card",
+        "order_total": 996.89,
+        "promised_ship_date": "2025-05-28 14:00:04",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-275663",
+            "seller_sku": "SKU-L5P9-146200-591",
+            "asin": "B5849146200",
+            "title": "Floating Wall Shelves",
+            "quantity_ordered": 5,
+            "quantity_shipped": 0
+          },
+          {
+            "order_item_id": "OI-630172",
+            "seller_sku": "SKU-L3R9-315478-285",
+            "asin": "B4081315478",
+            "title": "ZINUS Shalini Upholstered Bed Frame",
+            "quantity_ordered": 3,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-5026709-4523208",
+        "seller_order_id": "SO-273950",
+        "purchase_date": "2024-07-20 19:11:32",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "Pending",
+        "buyer_email": "addison.m@hotmail.com",
+        "buyer_name": "Addison Morgan",
+        "buyer_county": "Green Bay",
+        "shipping_address": "{\"name\": \"Addison Morgan\", \"address_line_1\": \"211 N Broadway\", \"city\": \"Green Bay\", \"state\": \"WI\", \"postal_code\": \"54304\", \"country\": \"US\"}",
+        "payment_method": "Gift Card",
+        "order_total": 985.27,
+        "promised_ship_date": "2024-07-20 09:10:04",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-5478307-9417609",
+        "seller_order_id": "SO-153888",
+        "purchase_date": "2025-05-22 03:01:46",
+        "order_status": "Unshipped",
+        "shipment_status": "Pending",
+        "buyer_email": "leo.jenkins@yahoo.com",
+        "buyer_name": "Leo Jenkins",
+        "buyer_county": "New York",
+        "shipping_address": "{\"name\": \"Leo Jenkins\", \"address_line_1\": \"1 Penn Plz\", \"city\": \"New York\", \"state\": \"NY\", \"postal_code\": \"10121\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 855.87,
+        "promised_ship_date": "2025-05-23 08:50:29",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-4498654-5027555",
+        "seller_order_id": "SO-819631",
+        "purchase_date": "2025-08-17 14:42:54",
+        "order_status": "Unshipped",
+        "shipment_status": "Pending",
+        "buyer_email": "elijahdavis@protonmail.com",
+        "buyer_name": "Elijah Davis",
+        "buyer_county": "Washington",
+        "shipping_address": "{\"name\": \"Elijah Davis\", \"address_line_1\": \"2201 C St NW\", \"city\": \"Washington\", \"state\": \"DC\", \"postal_code\": \"20003\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 1706.85,
+        "promised_ship_date": "2025-08-18 01:39:24",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-302769",
+            "seller_sku": "SKU-L9P3-095569-872",
+            "asin": "B4192095569",
+            "title": "SoundSphere Bluetooth Speaker",
+            "quantity_ordered": 2,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-4713995-5005140",
+        "seller_order_id": "SO-863020",
+        "purchase_date": "2025-08-01 14:34:48",
+        "order_status": "InvoiceUnconfirmed",
+        "shipment_status": "Pending",
+        "buyer_email": "daniel.h@gmail.com",
+        "buyer_name": "Daniel Hughes",
+        "buyer_county": "Atlanta",
+        "shipping_address": "{\"name\": \"Daniel Hughes\", \"address_line_1\": \"1 AMB Dr NW\", \"city\": \"Atlanta\", \"state\": \"GA\", \"postal_code\": \"30313\", \"country\": \"US\"}",
+        "payment_method": "Gift Card",
+        "order_total": 1679.21,
+        "promised_ship_date": "2025-08-02 23:23:28",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-150623",
+            "seller_sku": "SKU-L5P9-695624-843",
+            "asin": "B2372695624",
+            "title": "Bose QuietComfort Earbuds II",
+            "quantity_ordered": 2,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3028495-3342660",
+        "seller_order_id": "SO-356946",
+        "purchase_date": "2025-05-17 13:06:19",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "harper.j@outlook.com",
+        "buyer_name": "Harper Jackson",
+        "buyer_county": "Philadelphia",
+        "shipping_address": "{\"name\": \"Harper Jackson\", \"address_line_1\": \"2600 Benjamin Franklin Pkwy\", \"city\": \"Philadelphia\", \"state\": \"PA\", \"postal_code\": \"19102\", \"country\": \"US\"}",
+        "payment_method": "Gift Card",
+        "order_total": 1776.7,
+        "promised_ship_date": "2025-05-17 08:33:05",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-9087883-9276268",
+        "seller_order_id": "SO-341070",
+        "purchase_date": "2025-03-26 18:17:22",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "noahbrown@outlook.com",
+        "buyer_name": "Noah Brown",
+        "buyer_county": "Houston",
+        "shipping_address": "{\"name\": \"Noah Brown\", \"address_line_1\": \"890 Willow Creek Rd\", \"city\": \"Houston\", \"state\": \"TX\", \"postal_code\": \"77002\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1084.1,
+        "promised_ship_date": "2025-03-27 08:27:30",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-969566",
+            "seller_sku": "SKU-5D3E-039827-468",
+            "asin": "B5463039827",
+            "title": "Nintendo Switch Pro Controller",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-7056279-9247080",
+        "seller_order_id": "SO-309768",
+        "purchase_date": "2025-03-17 07:37:27",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "willow.price@aol.com",
+        "buyer_name": "Willow Price",
+        "buyer_county": "Saint Louis",
+        "shipping_address": "{\"name\": \"Willow Price\", \"address_line_1\": \"611 N 7th St\", \"city\": \"Saint Louis\", \"state\": \"MO\", \"postal_code\": \"63101\", \"country\": \"US\"}",
+        "payment_method": "Credit Card",
+        "order_total": 1355.61,
+        "promised_ship_date": "2025-03-17 12:07:18",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-373681",
+            "seller_sku": "SKU-F6G9-862520-518",
+            "asin": "B7842862520",
+            "title": "Chuckit! Ultra Ball",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-411045",
+            "seller_sku": "SKU-2G9H-730679-987",
+            "asin": "B6327730679",
+            "title": "LG C3 Series OLED TV",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          },
+          {
+            "order_item_id": "OI-612060",
+            "seller_sku": "SKU-F7G1-386189-680",
+            "asin": "B1678386189",
+            "title": "Rustic Farmhouse Dining Table",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-4202972-6549742",
+        "seller_order_id": "SO-327227",
+        "purchase_date": "2025-09-01 16:37:22",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "luke.collins@outlook.com",
+        "buyer_name": "Luke Collins",
+        "buyer_county": "Cincinnati",
+        "shipping_address": "{\"name\": \"Luke Collins\", \"address_line_1\": \"300 W 5th St\", \"city\": \"Cincinnati\", \"state\": \"OH\", \"postal_code\": \"45202\", \"country\": \"US\"}",
+        "payment_method": "Credit Card",
+        "order_total": 1327.15,
+        "promised_ship_date": "2025-09-01 04:02:54",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-119652",
+            "seller_sku": "SKU-F6G7-240653-931",
+            "asin": "B1041240653",
+            "title": "La-Z-Boy Pinnacle Rocking Recliner",
+            "quantity_ordered": 1,
+            "quantity_shipped": 1
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-5779623-5309504",
+        "seller_order_id": "SO-511272",
+        "purchase_date": "2024-02-10 16:55:01",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "julian.bell@yahoo.com",
+        "buyer_name": "Julian Bell",
+        "buyer_county": "Bronx",
+        "shipping_address": "{\"name\": \"Julian Bell\", \"address_line_1\": \"8 E 161st St\", \"city\": \"Bronx\", \"state\": \"NY\", \"postal_code\": \"10451\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 418.37,
+        "promised_ship_date": "2024-02-10 06:20:34",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-6713910-4838966",
+        "seller_order_id": "SO-868816",
+        "purchase_date": "2024-12-02 23:24:53",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "isaiah.rivera@yahoo.com",
+        "buyer_name": "Isaiah Rivera",
+        "buyer_county": "Denver",
+        "shipping_address": "{\"name\": \"Isaiah Rivera\", \"address_line_1\": \"100 W 14th Ave Pkwy\", \"city\": \"Denver\", \"state\": \"CO\", \"postal_code\": \"80202\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1597.67,
+        "promised_ship_date": "2024-12-02 18:40:55",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-981579",
+            "seller_sku": "SKU-F6G9-552127-711",
+            "asin": "B9443552127",
+            "title": "Galaxy Tab S9",
+            "quantity_ordered": 2,
+            "quantity_shipped": 2
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-7559901-4322022",
+        "seller_order_id": "SO-672175",
+        "purchase_date": "2024-09-01 13:48:24",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "kinsley.b@hotmail.com",
+        "buyer_name": "Kinsley Bryant",
+        "buyer_county": "San Diego",
+        "shipping_address": "{\"name\": \"Kinsley Bryant\", \"address_line_1\": \"100 E St\", \"city\": \"San Diego\", \"state\": \"CA\", \"postal_code\": \"92101\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 1579.23,
+        "promised_ship_date": "2024-09-02 20:33:23",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-216969",
+            "seller_sku": "SKU-L3N6-715495-925",
+            "asin": "B4282715495",
+            "title": "Wondercide Flea & Tick Spray",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-320246",
+            "seller_sku": "SKU-4C2D-569492-109",
+            "asin": "B6913569492",
+            "title": "TP-Link Archer AXE75 Router",
+            "quantity_ordered": 1,
+            "quantity_shipped": 1
+          },
+          {
+            "order_item_id": "OI-519916",
+            "seller_sku": "SKU-K2L4-345890-596",
+            "asin": "B6615345890",
+            "title": "AirPods Pro",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-4990641-9978418",
+        "seller_order_id": "SO-662425",
+        "purchase_date": "2025-09-04 06:11:20",
+        "order_status": "Unshipped",
+        "shipment_status": "Pending",
+        "buyer_email": "sofia.diaz@yahoo.com",
+        "buyer_name": "Sofia Diaz",
+        "buyer_county": "Boise",
+        "shipping_address": "{\"name\": \"Sofia Diaz\", \"address_line_1\": \"200 Main St\", \"city\": \"Boise\", \"state\": \"ID\", \"postal_code\": \"83702\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1871.7,
+        "promised_ship_date": "2025-09-07 22:44:28",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-4931528-3935034",
+        "seller_order_id": "SO-520698",
+        "purchase_date": "2025-09-04 17:20:19",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "aurora.gray@gmail.com",
+        "buyer_name": "Aurora Gray",
+        "buyer_county": "New Orleans",
+        "shipping_address": "{\"name\": \"Aurora Gray\", \"address_line_1\": \"6000 Magazine St\", \"city\": \"New Orleans\", \"state\": \"LA\", \"postal_code\": \"70124\", \"country\": \"US\"}",
+        "payment_method": "Debit Card",
+        "order_total": 535.2,
+        "promised_ship_date": "2025-09-04 00:32:10",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-250314",
+            "seller_sku": "SKU-L6R2-010545-541",
+            "asin": "B1888010545",
+            "title": "Secretlab TITAN Evo Gaming Chair",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-7511203-7766375",
+        "seller_order_id": "SO-704618",
+        "purchase_date": "2024-06-30 06:08:40",
+        "order_status": "Canceled",
+        "shipment_status": "Cancelled",
+        "buyer_email": "ethan.clark@gmail.com",
+        "buyer_name": "Ethan Clark",
+        "buyer_county": "Las Vegas",
+        "shipping_address": "{\"name\": \"Ethan Clark\", \"address_line_1\": \"3600 S Las Vegas Blvd\", \"city\": \"Las Vegas\", \"state\": \"NV\", \"postal_code\": \"89109\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 498.62,
+        "promised_ship_date": "2024-07-04 00:37:47",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-963828",
+            "seller_sku": "SKU-6V4W-011508-994",
+            "asin": "B2124011508",
+            "title": "Frontline Plus for Dogs",
+            "quantity_ordered": 2,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-6609353-8506982",
+        "seller_order_id": "SO-205865",
+        "purchase_date": "2025-04-20 02:27:41",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "In Transit",
+        "buyer_email": "sophia.rodriguez@gmail.com",
+        "buyer_name": "Sophia Rodriguez",
+        "buyer_county": "Santa Monica",
+        "shipping_address": "{\"name\": \"Sophia Rodriguez\", \"address_line_1\": \"727 N Broadway\", \"city\": \"Santa Monica\", \"state\": \"CA\", \"postal_code\": \"90401\", \"country\": \"US\"}",
+        "payment_method": "Debit Card",
+        "order_total": 408.63,
+        "promised_ship_date": "2025-04-20 00:17:03",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-7585783-8002286",
+        "seller_order_id": "SO-354827",
+        "purchase_date": "2025-03-19 05:13:50",
+        "order_status": "Canceled",
+        "shipment_status": "Cancelled",
+        "buyer_email": "theo.h@outlook.com",
+        "buyer_name": "Theodore Henderson",
+        "buyer_county": "National Harbor",
+        "shipping_address": "{\"name\": \"Theodore Henderson\", \"address_line_1\": \"150 National Plz\", \"city\": \"National Harbor\", \"state\": \"MD\", \"postal_code\": \"20745\", \"country\": \"US\"}",
+        "payment_method": "Gift Card",
+        "order_total": 312.02,
+        "promised_ship_date": "2025-03-26 05:07:08",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-133997",
+            "seller_sku": "SKU-K2L4-162426-193",
+            "asin": "B9691162426",
+            "title": "PlayStation 5 DualSense Controller",
+            "quantity_ordered": 2,
+            "quantity_shipped": 0
+          },
+          {
+            "order_item_id": "OI-528454",
+            "seller_sku": "SKU-L5P9-024457-215",
+            "asin": "B9165024457",
+            "title": "PrecisionPoint Gaming Mouse",
+            "quantity_ordered": 2,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-7335001-2774687",
+        "seller_order_id": "SO-340417",
+        "purchase_date": "2025-03-14 06:09:24",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "will.griffin@gmail.com",
+        "buyer_name": "William Griffin",
+        "buyer_county": "Jacksonville",
+        "shipping_address": "{\"name\": \"William Griffin\", \"address_line_1\": \"200 S St\", \"city\": \"Jacksonville\", \"state\": \"FL\", \"postal_code\": \"32202\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 590.7,
+        "promised_ship_date": "2025-03-15 22:11:10",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-215818",
+            "seller_sku": "SKU-4C2D-486104-981",
+            "asin": "B2112486104",
+            "title": "Hertzko Self-Cleaning Slicker Brush",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          },
+          {
+            "order_item_id": "OI-736300",
+            "seller_sku": "SKU-6V4W-346364-215",
+            "asin": "B7848346364",
+            "title": "Blue Buffalo Wilderness Cat Food",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          },
+          {
+            "order_item_id": "OI-873847",
+            "seller_sku": "SKU-L3N6-367068-673",
+            "asin": "B9197367068",
+            "title": "StealthStrike Mechanical Keyboard",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-4345257-9331386",
+        "seller_order_id": "SO-252906",
+        "purchase_date": "2025-06-09 00:57:37",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "sam.scott@yahoo.com",
+        "buyer_name": "Samuel Scott",
+        "buyer_county": "Milwaukee",
+        "shipping_address": "{\"name\": \"Samuel Scott\", \"address_line_1\": \"100 E Wisconsin Ave\", \"city\": \"Milwaukee\", \"state\": \"WI\", \"postal_code\": \"53202\", \"country\": \"US\"}",
+        "payment_method": "Cash on Delivery",
+        "order_total": 335.72,
+        "promised_ship_date": "2025-06-15 22:12:31",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-224901",
+            "seller_sku": "SKU-L2R8-558273-288",
+            "asin": "B7739558273",
+            "title": "ToughChew Dog Toy Bone",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-503752",
+            "seller_sku": "SKU-9Y7Z-101504-281",
+            "asin": "B5510101504",
+            "title": "PurrfectPouch Cat Carrier",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          },
+          {
+            "order_item_id": "OI-539687",
+            "seller_sku": "SKU-L2N5-533103-267",
+            "asin": "B1393533103",
+            "title": "GamerGrip Pro Controller Grips",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-7256559-3880763",
+        "seller_order_id": "SO-781780",
+        "purchase_date": "2024-08-03 03:47:41",
+        "order_status": "InvoiceUnconfirmed",
+        "shipment_status": "Pending",
+        "buyer_email": "liam.j@yahoo.com",
+        "buyer_name": "Liam Johnson",
+        "buyer_county": "Los Angeles",
+        "shipping_address": "{\"name\": \"Liam Johnson\", \"address_line_1\": \"210 Sunset Blvd\", \"city\": \"Los Angeles\", \"state\": \"CA\", \"postal_code\": \"90069\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 224.06,
+        "promised_ship_date": "2024-08-12 18:31:24",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-3204507-2729106",
+        "seller_order_id": "SO-795268",
+        "purchase_date": "2025-01-24 21:30:26",
+        "order_status": "Unshipped",
+        "shipment_status": "Pending",
+        "buyer_email": "noahbrown@outlook.com",
+        "buyer_name": "Noah Brown",
+        "buyer_county": "Houston",
+        "shipping_address": "{\"name\": \"Noah Brown\", \"address_line_1\": \"123 Main St\", \"city\": \"Houston\", \"state\": \"TX\", \"postal_code\": \"77002\", \"country\": \"US\"}",
+        "payment_method": "Credit Card",
+        "order_total": 90.84,
+        "promised_ship_date": "2025-02-09 20:45:55",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-986439",
+            "seller_sku": "SKU-F7G1-386189-680",
+            "asin": "B1678386189",
+            "title": "Rustic Farmhouse Dining Table",
+            "quantity_ordered": 3,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3031431-8539204",
+        "seller_order_id": "SO-116323",
+        "purchase_date": "2024-09-13 12:14:00",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "ethan.clark@gmail.com",
+        "buyer_name": "Ethan Clark",
+        "buyer_county": "Las Vegas",
+        "shipping_address": "{\"name\": \"Ethan Clark\", \"address_line_1\": \"3600 S Las Vegas Blvd\", \"city\": \"Las Vegas\", \"state\": \"NV\", \"postal_code\": \"89109\", \"country\": \"US\"}",
+        "payment_method": "Cash on Delivery",
+        "order_total": 312.73,
+        "promised_ship_date": "2024-09-17 00:34:06",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-1977377-8718797",
+        "seller_order_id": "SO-856823",
+        "purchase_date": "2024-02-24 07:34:44",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "kinsley.b@hotmail.com",
+        "buyer_name": "Kinsley Bryant",
+        "buyer_county": "San Diego",
+        "shipping_address": "{\"name\": \"Kinsley Bryant\", \"address_line_1\": \"300 E St\", \"city\": \"San Diego\", \"state\": \"CA\", \"postal_code\": \"92101\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 748.72,
+        "promised_ship_date": "2024-02-26 11:01:42",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-2758143-9488024",
+        "seller_order_id": "SO-199491",
+        "purchase_date": "2025-01-16 06:40:09",
+        "order_status": "Unshipped",
+        "shipment_status": "Pending",
+        "buyer_email": "andrew.perez@gmail.com",
+        "buyer_name": "Andrew Perez",
+        "buyer_county": "Seattle",
+        "shipping_address": "{\"name\": \"Andrew Perez\", \"address_line_1\": \"800 Occidental Ave S\", \"city\": \"Seattle\", \"state\": \"WA\", \"postal_code\": \"98134\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 532.45,
+        "promised_ship_date": "2025-01-21 19:59:14",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-8129728-5645801",
+        "seller_order_id": "SO-330758",
+        "purchase_date": "2025-09-05 19:04:51",
+        "order_status": "Shipped",
+        "shipment_status": "In Transit",
+        "buyer_email": "emma.williams@hotmail.com",
+        "buyer_name": "Emma Williams",
+        "buyer_county": "New York",
+        "shipping_address": "{\"name\": \"Emma Williams\", \"address_line_1\": \"1776 Liberty St\", \"city\": \"New York\", \"state\": \"NY\", \"postal_code\": \"10007\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 502.92,
+        "promised_ship_date": "2025-09-07 15:29:22",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-6762059-4971067",
+        "seller_order_id": "SO-915874",
+        "purchase_date": "2024-09-08 19:56:41",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "charlotte.hdz@outlook.com",
+        "buyer_name": "Charlotte Hernandez",
+        "buyer_county": "Boston",
+        "shipping_address": "{\"name\": \"Charlotte Hernandez\", \"address_line_1\": \"888 Boylston St\", \"city\": \"Boston\", \"state\": \"MA\", \"postal_code\": \"02111\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 552.57,
+        "promised_ship_date": "2024-09-08 02:01:01",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-607393",
+            "seller_sku": "SKU-F6G9-486104-396",
+            "asin": "B2112486104",
+            "title": "Hertzko Self-Cleaning Slicker Brush",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-958891",
+            "seller_sku": "SKU-K2L4-162426-193",
+            "asin": "B9691162426",
+            "title": "PlayStation 5 DualSense Controller",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-7839285-3165141",
+        "seller_order_id": "SO-906468",
+        "purchase_date": "2024-06-27 02:10:20",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "sadie.torres@yahoo.com",
+        "buyer_name": "Sadie Torres",
+        "buyer_county": "Louisville",
+        "shipping_address": "{\"name\": \"Sadie Torres\", \"address_line_1\": \"150 S 5th St\", \"city\": \"Louisville\", \"state\": \"KY\", \"postal_code\": \"40202\", \"country\": \"US\"}",
+        "payment_method": "Debit Card",
+        "order_total": 620.57,
+        "promised_ship_date": "2024-06-27 08:19:29",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-269520",
+            "seller_sku": "SKU-L3P7-486104-205",
+            "asin": "B2112486104",
+            "title": "Hertzko Self-Cleaning Slicker Brush",
+            "quantity_ordered": 1,
+            "quantity_shipped": 1
+          },
+          {
+            "order_item_id": "OI-427831",
+            "seller_sku": "SKU-K2L4-565378-917",
+            "asin": "B9920565378",
+            "title": "Orion Leather Recliner",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-572767",
+            "seller_sku": "SKU-L5P9-146200-591",
+            "asin": "B5849146200",
+            "title": "Floating Wall Shelves",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          },
+          {
+            "order_item_id": "OI-642769",
+            "seller_sku": "SKU-H6J8-144879-466",
+            "asin": "B1658144879",
+            "title": "ChargeUp Wireless Charging Pad",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3034097-5268660",
+        "seller_order_id": "SO-100812",
+        "purchase_date": "2024-11-18 13:40:26",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "sophia.rodriguez@gmail.com",
+        "buyer_name": "Sophia Rodriguez",
+        "buyer_county": "Santa Monica",
+        "shipping_address": "{\"name\": \"Sophia Rodriguez\", \"address_line_1\": \"727 N Broadway\", \"city\": \"Santa Monica\", \"state\": \"CA\", \"postal_code\": \"90401\", \"country\": \"US\"}",
+        "payment_method": "Gift Card",
+        "order_total": 1627.13,
+        "promised_ship_date": "2024-11-18 22:44:43",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-481071",
+            "seller_sku": "SKU-1Z8A-272038-364",
+            "asin": "B4817272038",
+            "title": "AquaPaws Pet Water Fountain",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          },
+          {
+            "order_item_id": "OI-911418",
+            "seller_sku": "SKU-F6G9-751210-913",
+            "asin": "B4140751210",
+            "title": "RetractaLeash Dog Leash",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-9292237-5121922",
+        "seller_order_id": "SO-261861",
+        "purchase_date": "2025-02-25 14:52:54",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "addison.m@hotmail.com",
+        "buyer_name": "Addison Morgan",
+        "buyer_county": "Green Bay",
+        "shipping_address": "{\"name\": \"Addison Morgan\", \"address_line_1\": \"400 S Washington St\", \"city\": \"Green Bay\", \"state\": \"WI\", \"postal_code\": \"54304\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1450.4,
+        "promised_ship_date": "2025-02-27 01:06:13",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-444502",
+            "seller_sku": "SKU-F6G9-751210-913",
+            "asin": "B4140751210",
+            "title": "RetractaLeash Dog Leash",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-8428038-8605849",
+        "seller_order_id": "SO-919318",
+        "purchase_date": "2025-05-02 00:28:55",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "kinsley.b@hotmail.com",
+        "buyer_name": "Kinsley Bryant",
+        "buyer_county": "San Diego",
+        "shipping_address": "{\"name\": \"Kinsley Bryant\", \"address_line_1\": \"200 E St\", \"city\": \"San Diego\", \"state\": \"CA\", \"postal_code\": \"92101\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1784.51,
+        "promised_ship_date": "2025-05-02 12:08:51",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-585741",
+            "seller_sku": "SKU-F6G9-486104-396",
+            "asin": "B2112486104",
+            "title": "Hertzko Self-Cleaning Slicker Brush",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-9899008-9918769",
+        "seller_order_id": "SO-479187",
+        "purchase_date": "2024-06-23 06:33:44",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "theo.h@outlook.com",
+        "buyer_name": "Theodore Henderson",
+        "buyer_county": "National Harbor",
+        "shipping_address": "{\"name\": \"Theodore Henderson\", \"address_line_1\": \"150 National Plz\", \"city\": \"National Harbor\", \"state\": \"MD\", \"postal_code\": \"20745\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 405.68,
+        "promised_ship_date": "2024-06-23 02:07:25",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-7314333-7941769",
+        "seller_order_id": "SO-253370",
+        "purchase_date": "2025-07-14 00:19:00",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "madelyn.r@outlook.com",
+        "buyer_name": "Madelyn Russell",
+        "buyer_county": "Reno",
+        "shipping_address": "{\"name\": \"Madelyn Russell\", \"address_line_1\": \"300 W St\", \"city\": \"Reno\", \"state\": \"NV\", \"postal_code\": \"89501\", \"country\": \"US\"}",
+        "payment_method": "Credit Card",
+        "order_total": 866.03,
+        "promised_ship_date": "2025-07-14 20:06:04",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-783447",
+            "seller_sku": "SKU-H9K2-037096-459",
+            "asin": "B4665037096",
+            "title": "NovaBook Air Laptop",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-7978920-1045832",
+        "seller_order_id": "SO-581147",
+        "purchase_date": "2023-11-04 00:31:07",
+        "order_status": "Canceled",
+        "shipment_status": "Cancelled",
+        "buyer_email": "naomi.f@yahoo.com",
+        "buyer_name": "Naomi Flores",
+        "buyer_county": "Cincinnati",
+        "shipping_address": "{\"name\": \"Naomi Flores\", \"address_line_1\": \"201 E 5th St\", \"city\": \"Cincinnati\", \"state\": \"OH\", \"postal_code\": \"45202\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 901.8,
+        "promised_ship_date": "2023-11-18 05:33:18",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-238411",
+            "seller_sku": "SKU-L3Q8-475701-482",
+            "asin": "B6929475701",
+            "title": "WhiskerFun Cat Tree",
+            "quantity_ordered": 1,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-7686950-9223299",
+        "seller_order_id": "SO-169261",
+        "purchase_date": "2024-07-19 08:46:23",
+        "order_status": "InvoiceUnconfirmed",
+        "shipment_status": "Pending",
+        "buyer_email": "elias.b@gmail.com",
+        "buyer_name": "Elias Bennett",
+        "buyer_county": "Saint Louis",
+        "shipping_address": "{\"name\": \"Elias Bennett\", \"address_line_1\": \"700 Clark Ave\", \"city\": \"Saint Louis\", \"state\": \"MO\", \"postal_code\": \"63102\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 761.42,
+        "promised_ship_date": "2024-08-03 19:42:52",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-5067847-2105651",
+        "seller_order_id": "SO-302766",
+        "purchase_date": "2024-10-22 05:15:07",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "oliverg@gmail.com",
+        "buyer_name": "Oliver Garcia",
+        "buyer_county": "Miami Beach",
+        "shipping_address": "{\"name\": \"Oliver Garcia\", \"address_line_1\": \"1 Ocean Dr\", \"city\": \"Miami Beach\", \"state\": \"FL\", \"postal_code\": \"33139\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 80.72,
+        "promised_ship_date": "2024-10-22 09:07:59",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-720844",
+            "seller_sku": "SKU-9Y7Z-101504-281",
+            "asin": "B5510101504",
+            "title": "PurrfectPouch Cat Carrier",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-4491261-1502004",
+        "seller_order_id": "SO-378007",
+        "purchase_date": "2025-07-17 20:59:30",
+        "order_status": "Unshipped",
+        "shipment_status": "Pending",
+        "buyer_email": "caleb.e@gmail.com",
+        "buyer_name": "Caleb Evans",
+        "buyer_county": "New Orleans",
+        "shipping_address": "{\"name\": \"Caleb Evans\", \"address_line_1\": \"600 Decatur St\", \"city\": \"New Orleans\", \"state\": \"LA\", \"postal_code\": \"70112\", \"country\": \"US\"}",
+        "payment_method": "Credit Card",
+        "order_total": 908.17,
+        "promised_ship_date": "2025-07-24 12:12:54",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-271570",
+            "seller_sku": "SKU-F6G9-552127-711",
+            "asin": "B9443552127",
+            "title": "Galaxy Tab S9",
+            "quantity_ordered": 5,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3268713-6848650",
+        "seller_order_id": "SO-874525",
+        "purchase_date": "2025-05-07 08:25:22",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "hunter.cook@outlook.com",
+        "buyer_name": "Hunter Cook",
+        "buyer_county": "Minneapolis",
+        "shipping_address": "{\"name\": \"Hunter Cook\", \"address_line_1\": \"100 Washington Ave S\", \"city\": \"Minneapolis\", \"state\": \"MN\", \"postal_code\": \"55401\", \"country\": \"US\"}",
+        "payment_method": "Debit Card",
+        "order_total": 516.25,
+        "promised_ship_date": "2025-05-07 15:01:09",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-7014852-4290639",
+        "seller_order_id": "SO-166263",
+        "purchase_date": "2025-06-22 10:54:11",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "aria.foster@gmail.com",
+        "buyer_name": "Aria Foster",
+        "buyer_county": "Oakland",
+        "shipping_address": "{\"name\": \"Aria Foster\", \"address_line_1\": \"1200 Broadway\", \"city\": \"Oakland\", \"state\": \"CA\", \"postal_code\": \"94607\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 970.48,
+        "promised_ship_date": "2025-06-22 23:52:24",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-9508569-6369930",
+        "seller_order_id": "SO-858741",
+        "purchase_date": "2025-03-15 21:43:16",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "josh.t@icloud.com",
+        "buyer_name": "Joshua Turner",
+        "buyer_county": "San Francisco",
+        "shipping_address": "{\"name\": \"Joshua Turner\", \"address_line_1\": \"1 Warriors Way\", \"city\": \"San Francisco\", \"state\": \"CA\", \"postal_code\": \"94158\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 728.02,
+        "promised_ship_date": "2025-03-15 08:22:59",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-288798",
+            "seller_sku": "SKU-H7J9-862520-924",
+            "asin": "B7842862520",
+            "title": "Chuckit! Ultra Ball",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3271856-6536434",
+        "seller_order_id": "SO-236862",
+        "purchase_date": "2025-03-02 11:38:27",
+        "order_status": "Canceled",
+        "shipment_status": "Cancelled",
+        "buyer_email": "mateo.p@gmail.com",
+        "buyer_name": "Mateo Powell",
+        "buyer_county": "Lincoln",
+        "shipping_address": "{\"name\": \"Mateo Powell\", \"address_line_1\": \"1100 S St\", \"city\": \"Lincoln\", \"state\": \"NE\", \"postal_code\": \"68508\", \"country\": \"US\"}",
+        "payment_method": "Debit Card",
+        "order_total": 1574.85,
+        "promised_ship_date": "2025-03-04 02:22:48",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-901381",
+            "seller_sku": "SKU-6V4W-011508-994",
+            "asin": "B2124011508",
+            "title": "Frontline Plus for Dogs",
+            "quantity_ordered": 2,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3223911-6400449",
+        "seller_order_id": "SO-446493",
+        "purchase_date": "2024-03-10 07:11:55",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "scarlett.w@yahoo.com",
+        "buyer_name": "Scarlett Walker",
+        "buyer_county": "Saint Louis",
+        "shipping_address": "{\"name\": \"Scarlett Walker\", \"address_line_1\": \"1 S Broadway\", \"city\": \"Saint Louis\", \"state\": \"MO\", \"postal_code\": \"63103\", \"country\": \"US\"}",
+        "payment_method": "Debit Card",
+        "order_total": 642.5,
+        "promised_ship_date": "2024-03-10 19:04:25",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-591025",
+            "seller_sku": "SKU-L5P9-024457-215",
+            "asin": "B9165024457",
+            "title": "PrecisionPoint Gaming Mouse",
+            "quantity_ordered": 1,
+            "quantity_shipped": 1
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-5866208-6986159",
+        "seller_order_id": "SO-182498",
+        "purchase_date": "2025-03-23 22:16:08",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "hazel.w@gmail.com",
+        "buyer_name": "Hazel Watson",
+        "buyer_county": "Raleigh",
+        "shipping_address": "{\"name\": \"Hazel Watson\", \"address_line_1\": \"2 E South St\", \"city\": \"Raleigh\", \"state\": \"NC\", \"postal_code\": \"27603\", \"country\": \"US\"}",
+        "payment_method": "Credit Card",
+        "order_total": 1624.34,
+        "promised_ship_date": "2025-03-23 13:12:27",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-883760",
+            "seller_sku": "SKU-L9N2-005440-931",
+            "asin": "B9100005440",
+            "title": "Wellness Complete Health Dog Food",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-1453325-1075511",
+        "seller_order_id": "SO-811922",
+        "purchase_date": "2025-06-06 19:02:35",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "nora.s@gmail.com",
+        "buyer_name": "Nora Stewart",
+        "buyer_county": "Philadelphia",
+        "shipping_address": "{\"name\": \"Nora Stewart\", \"address_line_1\": \"520 Chestnut St\", \"city\": \"Philadelphia\", \"state\": \"PA\", \"postal_code\": \"19106\", \"country\": \"US\"}",
+        "payment_method": "Debit Card",
+        "order_total": 1023.15,
+        "promised_ship_date": "2025-06-09 10:08:45",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-350484",
+            "seller_sku": "SKU-H6J8-144879-466",
+            "asin": "B1658144879",
+            "title": "ChargeUp Wireless Charging Pad",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-656566",
+            "seller_sku": "SKU-L2P6-884833-205",
+            "asin": "B7509884833",
+            "title": "Echo Dot Smart Speaker",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-4852260-8615451",
+        "seller_order_id": "SO-303517",
+        "purchase_date": "2024-09-21 14:19:05",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "stella.murphy@gmail.com",
+        "buyer_name": "Stella Murphy",
+        "buyer_county": "Washington",
+        "shipping_address": "{\"name\": \"Stella Murphy\", \"address_line_1\": \"1500 3rd St SE\", \"city\": \"Washington\", \"state\": \"DC\", \"postal_code\": \"20003\", \"country\": \"US\"}",
+        "payment_method": "Cash on Delivery",
+        "order_total": 1058.56,
+        "promised_ship_date": "2024-09-21 10:52:41",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-7306614-5995495",
+        "seller_order_id": "SO-237077",
+        "purchase_date": "2025-09-05 07:19:12",
+        "order_status": "Unshipped",
+        "shipment_status": "Pending",
+        "buyer_email": "jon.brooks@yahoo.com",
+        "buyer_name": "Jonathan Brooks",
+        "buyer_county": "East Rutherford",
+        "shipping_address": "{\"name\": \"Jonathan Brooks\", \"address_line_1\": \"1 MetLife Stadium Dr\", \"city\": \"East Rutherford\", \"state\": \"NJ\", \"postal_code\": \"07073\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 458.11,
+        "promised_ship_date": "2025-09-08 05:16:18",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-4133219-4024060",
+        "seller_order_id": "SO-434070",
+        "purchase_date": "2025-08-18 05:10:36",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "joseph.young@hotmail.com",
+        "buyer_name": "Joseph Young",
+        "buyer_county": "Waco",
+        "shipping_address": "{\"name\": \"Joseph Young\", \"address_line_1\": \"215 S University Parks Dr\", \"city\": \"Waco\", \"state\": \"TX\", \"postal_code\": \"76706\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1658.65,
+        "promised_ship_date": "2025-08-23 15:19:16",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-955492",
+            "seller_sku": "SKU-L3Q8-656811-720",
+            "asin": "B2989656811",
+            "title": "Logitech G Pro Wireless Mouse",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-9825158-7816870",
+        "seller_order_id": "SO-938424",
+        "purchase_date": "2024-08-29 19:36:56",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "hannah.m@yahoo.com",
+        "buyer_name": "Hannah Morris",
+        "buyer_county": "Denver",
+        "shipping_address": "{\"name\": \"Hannah Morris\", \"address_line_1\": \"1000 Chopper Cir\", \"city\": \"Denver\", \"state\": \"CO\", \"postal_code\": \"80204\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1834.94,
+        "promised_ship_date": "2024-08-31 05:03:32",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-876634",
+            "seller_sku": "SKU-F5G8-191940-203",
+            "asin": "B8967191940",
+            "title": "QuantumLeap QL-4K Gaming Monitor",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-6229515-2540156",
+        "seller_order_id": "SO-145973",
+        "purchase_date": "2024-10-16 01:43:43",
+        "order_status": "InvoiceUnconfirmed",
+        "shipment_status": "Pending",
+        "buyer_email": "jeremiah.s@gmail.com",
+        "buyer_name": "Jeremiah Sanders",
+        "buyer_county": "Boston",
+        "shipping_address": "{\"name\": \"Jeremiah Sanders\", \"address_line_1\": \"100 Legends Way\", \"city\": \"Boston\", \"state\": \"MA\", \"postal_code\": \"02114\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1298.04,
+        "promised_ship_date": "2024-10-26 01:07:01",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-7673341-1004361",
+        "seller_order_id": "SO-716365",
+        "purchase_date": "2024-02-17 16:07:25",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "robert.barnes@hotmail.com",
+        "buyer_name": "Robert Barnes",
+        "buyer_county": "Los Angeles",
+        "shipping_address": "{\"name\": \"Robert Barnes\", \"address_line_1\": \"5905 Wilshire Blvd\", \"city\": \"Los Angeles\", \"state\": \"CA\", \"postal_code\": \"90049\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1465.91,
+        "promised_ship_date": "2024-02-17 05:31:38",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-8425968-1741258",
+        "seller_order_id": "SO-759973",
+        "purchase_date": "2025-02-24 02:09:59",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "andrew.perez@gmail.com",
+        "buyer_name": "Andrew Perez",
+        "buyer_county": "Seattle",
+        "shipping_address": "{\"name\": \"Andrew Perez\", \"address_line_1\": \"800 Occidental Ave S\", \"city\": \"Seattle\", \"state\": \"WA\", \"postal_code\": \"98134\", \"country\": \"US\"}",
+        "payment_method": "Gift Card",
+        "order_total": 1536.37,
+        "promised_ship_date": "2025-02-24 17:12:45",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-122811",
+            "seller_sku": "SKU-L4M6-547578-267",
+            "asin": "B4515547578",
+            "title": "FreshFlow Litter Box",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          },
+          {
+            "order_item_id": "OI-432019",
+            "seller_sku": "SKU-8N6P-599991-326",
+            "asin": "B9361599991",
+            "title": "PetSafe ScoopFree Litter Box",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3075810-4889555",
+        "seller_order_id": "SO-729902",
+        "purchase_date": "2025-01-26 07:03:11",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "oliverg@gmail.com",
+        "buyer_name": "Oliver Garcia",
+        "buyer_county": "Miami Beach",
+        "shipping_address": "{\"name\": \"Oliver Garcia\", \"address_line_1\": \"1500 Collins Ave\", \"city\": \"Miami Beach\", \"state\": \"FL\", \"postal_code\": \"33139\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1627.26,
+        "promised_ship_date": "2025-01-27 12:44:52",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-807627",
+            "seller_sku": "SKU-W5Z8-414224-183",
+            "asin": "B5405414224",
+            "title": "Xbox Elite Series 2 Controller",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-2594813-3054517",
+        "seller_order_id": "SO-315498",
+        "purchase_date": "2025-06-28 20:00:11",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "julian.bell@yahoo.com",
+        "buyer_name": "Julian Bell",
+        "buyer_county": "Bronx",
+        "shipping_address": "{\"name\": \"Julian Bell\", \"address_line_1\": \"1 E 161st St\", \"city\": \"Bronx\", \"state\": \"NY\", \"postal_code\": \"10451\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 356.2,
+        "promised_ship_date": "2025-06-28 03:00:19",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-689679",
+            "seller_sku": "SKU-L3R9-191940-991",
+            "asin": "B8967191940",
+            "title": "QuantumLeap QL-4K Gaming Monitor",
+            "quantity_ordered": 1,
+            "quantity_shipped": 1
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-9574526-1907354",
+        "seller_order_id": "SO-767447",
+        "purchase_date": "2025-01-15 12:28:04",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "Pending",
+        "buyer_email": "wyatt.g@yahoo.com",
+        "buyer_name": "Wyatt Gonzales",
+        "buyer_county": "Austin",
+        "shipping_address": "{\"name\": \"Wyatt Gonzales\", \"address_line_1\": \"200 S St\", \"city\": \"Austin\", \"state\": \"TX\", \"postal_code\": \"78704\", \"country\": \"US\"}",
+        "payment_method": "Credit Card",
+        "order_total": 1371.64,
+        "promised_ship_date": "2025-01-17 05:33:48",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-2375089-7846405",
+        "seller_order_id": "SO-890560",
+        "purchase_date": "2025-07-11 23:56:15",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "Pending",
+        "buyer_email": "mateo.p@gmail.com",
+        "buyer_name": "Mateo Powell",
+        "buyer_county": "Lincoln",
+        "shipping_address": "{\"name\": \"Mateo Powell\", \"address_line_1\": \"1100 S St\", \"city\": \"Lincoln\", \"state\": \"NE\", \"postal_code\": \"68508\", \"country\": \"US\"}",
+        "payment_method": "Credit Card",
+        "order_total": 1630.53,
+        "promised_ship_date": "2025-07-12 08:16:30",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-963499",
+            "seller_sku": "SKU-L8P2-976636-188",
+            "asin": "B5323976636",
+            "title": "Metro Modern TV Stand",
+            "quantity_ordered": 1,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-4926435-4522339",
+        "seller_order_id": "SO-506415",
+        "purchase_date": "2025-04-02 03:47:52",
+        "order_status": "Unfulfillable",
+        "shipment_status": "Cancelled",
+        "buyer_email": "chris.adams@gmail.com",
+        "buyer_name": "Christopher Adams",
+        "buyer_county": "Tempe",
+        "shipping_address": "{\"name\": \"Christopher Adams\", \"address_line_1\": \"2000 E Rio Salado Pkwy\", \"city\": \"Tempe\", \"state\": \"AZ\", \"postal_code\": \"85281\", \"country\": \"US\"}",
+        "payment_method": "Credit Card",
+        "order_total": 1631.32,
+        "promised_ship_date": "2025-04-15 21:01:36",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-536757",
+            "seller_sku": "SKU-L5S2-544515-450",
+            "asin": "B6703544515",
+            "title": "CozyCat Heated Cat Bed",
+            "quantity_ordered": 2,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-8728264-1574151",
+        "seller_order_id": "SO-476564",
+        "purchase_date": "2025-03-07 18:18:52",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "nova.wood@yahoo.com",
+        "buyer_name": "Nova Wood",
+        "buyer_county": "Orlando",
+        "shipping_address": "{\"name\": \"Nova Wood\", \"address_line_1\": \"1000 Universal Studios Plz\", \"city\": \"Orlando\", \"state\": \"FL\", \"postal_code\": \"32819\", \"country\": \"US\"}",
+        "payment_method": "Cash on Delivery",
+        "order_total": 423.05,
+        "promised_ship_date": "2025-03-11 17:22:17",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-6344970-6527116",
+        "seller_order_id": "SO-315968",
+        "purchase_date": "2025-02-27 07:52:01",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "Shipped",
+        "buyer_email": "olivia.smith@gmail.com",
+        "buyer_name": "Olivia Smith",
+        "buyer_county": "Chicago",
+        "shipping_address": "{\"name\": \"Olivia Smith\", \"address_line_1\": \"789 Maple St\", \"city\": \"Chicago\", \"state\": \"IL\", \"postal_code\": \"60611\", \"country\": \"US\"}",
+        "payment_method": "Gift Card",
+        "order_total": 1586.37,
+        "promised_ship_date": "2025-02-27 12:57:12",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-5633131-6950100",
+        "seller_order_id": "SO-527917",
+        "purchase_date": "2025-04-15 05:27:02",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "Pending",
+        "buyer_email": "camila.b@gmail.com",
+        "buyer_name": "Camila Butler",
+        "buyer_county": "Philadelphia",
+        "shipping_address": "{\"name\": \"Camila Butler\", \"address_line_1\": \"1200 S St\", \"city\": \"Philadelphia\", \"state\": \"PA\", \"postal_code\": \"19147\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 539.5,
+        "promised_ship_date": "2025-04-17 08:00:54",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-234120",
+            "seller_sku": "SKU-L5S2-345890-192",
+            "asin": "B6615345890",
+            "title": "AirPods Pro",
+            "quantity_ordered": 1,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-8993301-7254099",
+        "seller_order_id": "SO-131547",
+        "purchase_date": "2025-05-28 23:40:41",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "Pending",
+        "buyer_email": "maddy.harris@yahoo.com",
+        "buyer_name": "Madison Harris",
+        "buyer_county": "Austin",
+        "shipping_address": "{\"name\": \"Madison Harris\", \"address_line_1\": \"200 E 6th St\", \"city\": \"Austin\", \"state\": \"TX\", \"postal_code\": \"78701\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 1608.7,
+        "promised_ship_date": "2025-05-31 05:39:58",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-2094325-8318303",
+        "seller_order_id": "SO-156438",
+        "purchase_date": "2025-08-27 14:51:17",
+        "order_status": "InvoiceUnconfirmed",
+        "shipment_status": "Pending",
+        "buyer_email": "will.griffin@gmail.com",
+        "buyer_name": "William Griffin",
+        "buyer_county": "Jacksonville",
+        "shipping_address": "{\"name\": \"William Griffin\", \"address_line_1\": \"300 S St\", \"city\": \"Jacksonville\", \"state\": \"FL\", \"postal_code\": \"32202\", \"country\": \"US\"}",
+        "payment_method": "Cash on Delivery",
+        "order_total": 159.63,
+        "promised_ship_date": "2025-09-04 06:01:44",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-8461101-9301221",
+        "seller_order_id": "SO-883562",
+        "purchase_date": "2025-05-10 07:50:50",
+        "order_status": "InvoiceUnconfirmed",
+        "shipment_status": "Pending",
+        "buyer_email": "isla.perry@hotmail.com",
+        "buyer_name": "Isla Perry",
+        "buyer_county": "Minneapolis",
+        "shipping_address": "{\"name\": \"Isla Perry\", \"address_line_1\": \"111 N 5th St\", \"city\": \"Minneapolis\", \"state\": \"MN\", \"postal_code\": \"55403\", \"country\": \"US\"}",
+        "payment_method": "Gift Card",
+        "order_total": 163.49,
+        "promised_ship_date": "2025-05-14 14:46:06",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-9835325-5603236",
+        "seller_order_id": "SO-156180",
+        "purchase_date": "2025-02-03 03:06:19",
+        "order_status": "Canceled",
+        "shipment_status": "Cancelled",
+        "buyer_email": "noahbrown@outlook.com",
+        "buyer_name": "Noah Brown",
+        "buyer_county": "Houston",
+        "shipping_address": "{\"name\": \"Noah Brown\", \"address_line_1\": \"123 Main St\", \"city\": \"Houston\", \"state\": \"TX\", \"postal_code\": \"77002\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1513.43,
+        "promised_ship_date": "2025-02-17 17:49:25",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-785674",
+            "seller_sku": "SKU-L5P9-024457-215",
+            "asin": "B9165024457",
+            "title": "PrecisionPoint Gaming Mouse",
+            "quantity_ordered": 3,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-9624606-1373734",
+        "seller_order_id": "SO-882044",
+        "purchase_date": "2025-03-17 18:53:58",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "Pending",
+        "buyer_email": "sofia.diaz@yahoo.com",
+        "buyer_name": "Sofia Diaz",
+        "buyer_county": "Boise",
+        "shipping_address": "{\"name\": \"Sofia Diaz\", \"address_line_1\": \"300 Main St\", \"city\": \"Boise\", \"state\": \"ID\", \"postal_code\": \"83702\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1394.62,
+        "promised_ship_date": "2025-03-19 03:34:13",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-426673",
+            "seller_sku": "SKU-L9N2-166194-351",
+            "asin": "B6837166194",
+            "title": "Velvet Tufted Sofa",
+            "quantity_ordered": 4,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-7744739-9818755",
+        "seller_order_id": "SO-954809",
+        "purchase_date": "2024-01-22 14:38:53",
+        "order_status": "Unshipped",
+        "shipment_status": "Pending",
+        "buyer_email": "caleb.e@gmail.com",
+        "buyer_name": "Caleb Evans",
+        "buyer_county": "New Orleans",
+        "shipping_address": "{\"name\": \"Caleb Evans\", \"address_line_1\": \"1500 Sugar Bowl Dr\", \"city\": \"New Orleans\", \"state\": \"LA\", \"postal_code\": \"70112\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1574.17,
+        "promised_ship_date": "2024-01-31 04:46:59",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-9117577-1111378",
+        "seller_order_id": "SO-868122",
+        "purchase_date": "2025-03-10 15:32:21",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "Pending",
+        "buyer_email": "chris.adams@gmail.com",
+        "buyer_name": "Christopher Adams",
+        "buyer_county": "Tempe",
+        "shipping_address": "{\"name\": \"Christopher Adams\", \"address_line_1\": \"1701 W Alameda Dr\", \"city\": \"Tempe\", \"state\": \"AZ\", \"postal_code\": \"85281\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 631.76,
+        "promised_ship_date": "2025-03-10 00:30:47",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-4626338-9845546",
+        "seller_order_id": "SO-846322",
+        "purchase_date": "2025-01-21 10:17:02",
+        "order_status": "Canceled",
+        "shipment_status": "Cancelled",
+        "buyer_email": "claire.h@outlook.com",
+        "buyer_name": "Claire Howard",
+        "buyer_county": "Dallas",
+        "shipping_address": "{\"name\": \"Claire Howard\", \"address_line_1\": \"650 S Griffin St\", \"city\": \"Dallas\", \"state\": \"TX\", \"postal_code\": \"75202\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 44.99,
+        "promised_ship_date": "2025-01-25 23:00:02",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-172495",
+            "seller_sku": "SKU-L2R8-033140-712",
+            "asin": "B3924033140",
+            "title": "Sony WH-1000XM5 Headphones",
+            "quantity_ordered": 4,
+            "quantity_shipped": 0
+          },
+          {
+            "order_item_id": "OI-760423",
+            "seller_sku": "SKU-L1P5-754665-385",
+            "asin": "B4484754665",
+            "title": "Kindle Paperwhite",
+            "quantity_ordered": 1,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3363332-5666450",
+        "seller_order_id": "SO-127121",
+        "purchase_date": "2024-08-09 02:59:40",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "aubrey.roberts@gmail.com",
+        "buyer_name": "Aubrey Roberts",
+        "buyer_county": "Miami",
+        "shipping_address": "{\"name\": \"Aubrey Roberts\", \"address_line_1\": \"200 S Biscayne Blvd\", \"city\": \"Miami\", \"state\": \"FL\", \"postal_code\": \"33131\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1234.82,
+        "promised_ship_date": "2024-08-10 05:09:13",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-412894",
+            "seller_sku": "SKU-2A9B-162426-906",
+            "asin": "B9691162426",
+            "title": "PlayStation 5 DualSense Controller",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-8407760-9718642",
+        "seller_order_id": "SO-199317",
+        "purchase_date": "2024-08-25 03:13:14",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "ethan.clark@gmail.com",
+        "buyer_name": "Ethan Clark",
+        "buyer_county": "Las Vegas",
+        "shipping_address": "{\"name\": \"Ethan Clark\", \"address_line_1\": \"3600 S Las Vegas Blvd\", \"city\": \"Las Vegas\", \"state\": \"NV\", \"postal_code\": \"89109\", \"country\": \"US\"}",
+        "payment_method": "Bank Transfer",
+        "order_total": 419.54,
+        "promised_ship_date": "2024-08-25 22:12:13",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-2542668-9798776",
+        "seller_order_id": "SO-564841",
+        "purchase_date": "2025-07-19 12:47:59",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "In Transit",
+        "buyer_email": "ryan.campbell@gmail.com",
+        "buyer_name": "Ryan Campbell",
+        "buyer_county": "Boston",
+        "shipping_address": "{\"name\": \"Ryan Campbell\", \"address_line_1\": \"100 Federal St\", \"city\": \"Boston\", \"state\": \"MA\", \"postal_code\": \"02109\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 1857.76,
+        "promised_ship_date": "2025-07-22 22:47:53",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-110439",
+            "seller_sku": "SKU-L5R1-776204-447",
+            "asin": "B2355776204",
+            "title": "JBL Flip 6",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-6031006-9313083",
+        "seller_order_id": "SO-976364",
+        "purchase_date": "2024-01-18 13:02:34",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "Pending",
+        "buyer_email": "oliverg@gmail.com",
+        "buyer_name": "Oliver Garcia",
+        "buyer_county": "Miami Beach",
+        "shipping_address": "{\"name\": \"Oliver Garcia\", \"address_line_1\": \"555 Lincoln Rd\", \"city\": \"Miami Beach\", \"state\": \"FL\", \"postal_code\": \"33139\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 1952.98,
+        "promised_ship_date": "2024-01-22 04:36:49",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-3644317-9240424",
+        "seller_order_id": "SO-506647",
+        "purchase_date": "2025-01-05 16:28:35",
+        "order_status": "PartiallyShipped",
+        "shipment_status": "Pending",
+        "buyer_email": "madelyn.r@outlook.com",
+        "buyer_name": "Madelyn Russell",
+        "buyer_county": "Reno",
+        "shipping_address": "{\"name\": \"Madelyn Russell\", \"address_line_1\": \"100 W St\", \"city\": \"Reno\", \"state\": \"NV\", \"postal_code\": \"89501\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 605.75,
+        "promised_ship_date": "2025-01-09 01:25:41",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-718905",
+            "seller_sku": "SKU-L4N7-011508-248",
+            "asin": "B2124011508",
+            "title": "Frontline Plus for Dogs",
+            "quantity_ordered": 4,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-8448789-6287120",
+        "seller_order_id": "SO-687037",
+        "purchase_date": "2024-01-09 09:12:30",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "owen.w@hotmail.com",
+        "buyer_name": "Owen Washington",
+        "buyer_county": "Lexington",
+        "shipping_address": "{\"name\": \"Owen Washington\", \"address_line_1\": \"100 S Main St\", \"city\": \"Lexington\", \"state\": \"SC\", \"postal_code\": \"29072\", \"country\": \"US\"}",
+        "payment_method": "Cash on Delivery",
+        "order_total": 1915.78,
+        "promised_ship_date": "2024-01-09 23:51:39",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-8881516-8359601",
+        "seller_order_id": "SO-591590",
+        "purchase_date": "2025-02-19 18:16:31",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "jeremiah.s@gmail.com",
+        "buyer_name": "Jeremiah Sanders",
+        "buyer_county": "Boston",
+        "shipping_address": "{\"name\": \"Jeremiah Sanders\", \"address_line_1\": \"100 Legends Way\", \"city\": \"Boston\", \"state\": \"MA\", \"postal_code\": \"02114\", \"country\": \"US\"}",
+        "payment_method": "Debit Card",
+        "order_total": 861.44,
+        "promised_ship_date": "2025-02-19 22:59:55",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-628335",
+            "seller_sku": "SKU-H8K1-776204-481",
+            "asin": "B2355776204",
+            "title": "JBL Flip 6",
+            "quantity_ordered": 1,
+            "quantity_shipped": 1
+          },
+          {
+            "order_item_id": "OI-755131",
+            "seller_sku": "SKU-L5M7-964787-209",
+            "asin": "B4803964787",
+            "title": "FlexScan Office Monitor",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-4385169-4431037",
+        "seller_order_id": "SO-397035",
+        "purchase_date": "2024-11-04 16:10:11",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "zoe_green@hotmail.com",
+        "buyer_name": "Zoe Green",
+        "buyer_county": "Nashville",
+        "shipping_address": "{\"name\": \"Zoe Green\", \"address_line_1\": \"201 5th Ave S\", \"city\": \"Nashville\", \"state\": \"TN\", \"postal_code\": \"37203\", \"country\": \"US\"}",
+        "payment_method": "Cash on Delivery",
+        "order_total": 925.54,
+        "promised_ship_date": "2024-11-04 15:42:37",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-7206090-1223841",
+        "seller_order_id": "SO-122654",
+        "purchase_date": "2025-08-04 19:01:03",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "ava.jones@aol.com",
+        "buyer_name": "Ava Jones",
+        "buyer_county": "Scottsdale",
+        "shipping_address": "{\"name\": \"Ava Jones\", \"address_line_1\": \"7000 E Camelback Rd Ste 2\", \"city\": \"Scottsdale\", \"state\": \"AZ\", \"postal_code\": \"85251\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 1826.11,
+        "promised_ship_date": "2025-08-05 12:45:33",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-254071",
+            "seller_sku": "SKU-L1R7-751210-140",
+            "asin": "B4140751210",
+            "title": "RetractaLeash Dog Leash",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          },
+          {
+            "order_item_id": "OI-342515",
+            "seller_sku": "SKU-L3R9-191940-991",
+            "asin": "B8967191940",
+            "title": "QuantumLeap QL-4K Gaming Monitor",
+            "quantity_ordered": 2,
+            "quantity_shipped": 2
+          },
+          {
+            "order_item_id": "OI-606817",
+            "seller_sku": "SKU-L4N7-232245-244",
+            "asin": "B4738232245",
+            "title": "PixelView UltraWide Monitor",
+            "quantity_ordered": 4,
+            "quantity_shipped": 4
+          },
+          {
+            "order_item_id": "OI-812186",
+            "seller_sku": "SKU-L9N2-533103-578",
+            "asin": "B1393533103",
+            "title": "GamerGrip Pro Controller Grips",
+            "quantity_ordered": 5,
+            "quantity_shipped": 5
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3297486-1896557",
+        "seller_order_id": "SO-379292",
+        "purchase_date": "2025-05-10 00:54:30",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "jeremiah.s@gmail.com",
+        "buyer_name": "Jeremiah Sanders",
+        "buyer_county": "Boston",
+        "shipping_address": "{\"name\": \"Jeremiah Sanders\", \"address_line_1\": \"100 Legends Way\", \"city\": \"Boston\", \"state\": \"MA\", \"postal_code\": \"02114\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 1110.04,
+        "promised_ship_date": "2025-05-11 02:11:49",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-1376232-8375844",
+        "seller_order_id": "SO-183766",
+        "purchase_date": "2024-11-09 22:15:02",
+        "order_status": "Unshipped",
+        "shipment_status": "Pending",
+        "buyer_email": "levi.bailey@protonmail.com",
+        "buyer_name": "Levi Bailey",
+        "buyer_county": "Los Angeles",
+        "shipping_address": "{\"name\": \"Levi Bailey\", \"address_line_1\": \"135 N Grand Ave\", \"city\": \"Los Angeles\", \"state\": \"CA\", \"postal_code\": \"90012\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 460.63,
+        "promised_ship_date": "2024-11-12 03:45:58",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-163363",
+            "seller_sku": "SKU-2R9S-166194-891",
+            "asin": "B6837166194",
+            "title": "Velvet Tufted Sofa",
+            "quantity_ordered": 3,
+            "quantity_shipped": 0
+          },
+          {
+            "order_item_id": "OI-304291",
+            "seller_sku": "SKU-5U3V-333963-666",
+            "asin": "B1929333963",
+            "title": "Ashley Furniture Signature Design Dresser",
+            "quantity_ordered": 4,
+            "quantity_shipped": 0
+          },
+          {
+            "order_item_id": "OI-462022",
+            "seller_sku": "SKU-7M5N-939528-468",
+            "asin": "B7126939528",
+            "title": "Fitbit Charge 6",
+            "quantity_ordered": 5,
+            "quantity_shipped": 0
+          },
+          {
+            "order_item_id": "OI-749962",
+            "seller_sku": "SKU-H8K1-037096-645",
+            "asin": "B4665037096",
+            "title": "NovaBook Air Laptop",
+            "quantity_ordered": 3,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3482659-3024354",
+        "seller_order_id": "SO-982104",
+        "purchase_date": "2023-10-04 16:21:33",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "christian.rogers@gmail.com",
+        "buyer_name": "Christian Rogers",
+        "buyer_county": "Saint Louis",
+        "shipping_address": "{\"name\": \"Christian Rogers\", \"address_line_1\": \"314 N Broadway\", \"city\": \"Saint Louis\", \"state\": \"MO\", \"postal_code\": \"63102\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 729.63,
+        "promised_ship_date": "2023-10-04 10:15:21",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-856037",
+            "seller_sku": "SKU-L3N6-367068-673",
+            "asin": "B9197367068",
+            "title": "StealthStrike Mechanical Keyboard",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-9736143-8314601",
+        "seller_order_id": "SO-229796",
+        "purchase_date": "2024-11-26 00:29:28",
+        "order_status": "Unshipped",
+        "shipment_status": "Pending",
+        "buyer_email": "asher.a@gmail.com",
+        "buyer_name": "Asher Alexander",
+        "buyer_county": "Indianapolis",
+        "shipping_address": "{\"name\": \"Asher Alexander\", \"address_line_1\": \"100 N St\", \"city\": \"Indianapolis\", \"state\": \"IN\", \"postal_code\": \"46204\", \"country\": \"US\"}",
+        "payment_method": "Cash on Delivery",
+        "order_total": 1393.21,
+        "promised_ship_date": "2024-12-03 12:40:49",
+        "verification_requires_merchant_action": true,
+        "order_items": [
+          {
+            "order_item_id": "OI-866662",
+            "seller_sku": "SKU-W5Z8-862520-360",
+            "asin": "B7842862520",
+            "title": "Chuckit! Ultra Ball",
+            "quantity_ordered": 4,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-1440093-1617338",
+        "seller_order_id": "SO-430532",
+        "purchase_date": "2025-07-04 20:36:30",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "everly.c@gmail.com",
+        "buyer_name": "Everly Coleman",
+        "buyer_county": "Kansas City",
+        "shipping_address": "{\"name\": \"Everly Coleman\", \"address_line_1\": \"1701 Main St\", \"city\": \"Kansas City\", \"state\": \"MO\", \"postal_code\": \"64108\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 406.29,
+        "promised_ship_date": "2025-07-04 06:23:04",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-744997",
+            "seller_sku": "SKU-K2L4-395544-939",
+            "asin": "B9814395544",
+            "title": "ComfyCloud Ergonomic Office Chair",
+            "quantity_ordered": 2,
+            "quantity_shipped": 2
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-8280373-2237562",
+        "seller_order_id": "SO-667938",
+        "purchase_date": "2025-09-02 23:12:06",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "robert.barnes@hotmail.com",
+        "buyer_name": "Robert Barnes",
+        "buyer_county": "Los Angeles",
+        "shipping_address": "{\"name\": \"Robert Barnes\", \"address_line_1\": \"5905 Wilshire Blvd\", \"city\": \"Los Angeles\", \"state\": \"CA\", \"postal_code\": \"90049\", \"country\": \"US\"}",
+        "payment_method": "Gift Card",
+        "order_total": 1669.07,
+        "promised_ship_date": "2025-09-02 08:53:50",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-1858663-2747535",
+        "seller_order_id": "SO-185507",
+        "purchase_date": "2025-07-09 08:59:48",
+        "order_status": "Canceled",
+        "shipment_status": "Cancelled",
+        "buyer_email": "josh.t@icloud.com",
+        "buyer_name": "Joshua Turner",
+        "buyer_county": "San Francisco",
+        "shipping_address": "{\"name\": \"Joshua Turner\", \"address_line_1\": \"1777 4th St\", \"city\": \"San Francisco\", \"state\": \"CA\", \"postal_code\": \"94158\", \"country\": \"US\"}",
+        "payment_method": "Credit Card",
+        "order_total": 1973.2,
+        "promised_ship_date": "2025-07-24 03:44:11",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-126144",
+            "seller_sku": "SKU-F7G1-436733-426",
+            "asin": "B5160436733",
+            "title": "Elgato Wave:3 Microphone",
+            "quantity_ordered": 2,
+            "quantity_shipped": 0
+          },
+          {
+            "order_item_id": "OI-166256",
+            "seller_sku": "SKU-8N6P-730679-666",
+            "asin": "B6327730679",
+            "title": "LG C3 Series OLED TV",
+            "quantity_ordered": 2,
+            "quantity_shipped": 0
+          },
+          {
+            "order_item_id": "OI-815810",
+            "seller_sku": "SKU-L2N5-386189-807",
+            "asin": "B1678386189",
+            "title": "Rustic Farmhouse Dining Table",
+            "quantity_ordered": 5,
+            "quantity_shipped": 0
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-3084726-3523829",
+        "seller_order_id": "SO-271513",
+        "purchase_date": "2025-02-08 19:33:59",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "jmartinez88@hotmail.com",
+        "buyer_name": "James Martinez",
+        "buyer_county": "Dallas",
+        "shipping_address": "{\"name\": \"James Martinez\", \"address_line_1\": \"1313 Mockingbird Ln\", \"city\": \"Dallas\", \"state\": \"TX\", \"postal_code\": \"75206\", \"country\": \"US\"}",
+        "payment_method": "PayPal",
+        "order_total": 145.25,
+        "promised_ship_date": "2025-02-12 21:27:48",
+        "verification_requires_merchant_action": true,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-5380247-9604343",
+        "seller_order_id": "SO-516466",
+        "purchase_date": "2024-07-27 02:23:53",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "eleanor.r@gmail.com",
+        "buyer_name": "Eleanor Reed",
+        "buyer_county": "Indianapolis",
+        "shipping_address": "{\"name\": \"Eleanor Reed\", \"address_line_1\": \"400 W South St\", \"city\": \"Indianapolis\", \"state\": \"IN\", \"postal_code\": \"46225\", \"country\": \"US\"}",
+        "payment_method": "Cash on Delivery",
+        "order_total": 1265.02,
+        "promised_ship_date": "2024-07-29 00:19:44",
+        "verification_requires_merchant_action": false,
+        "order_items": []
+      },
+      {
+        "amazon_order_id": "112-4036614-3961534",
+        "seller_order_id": "SO-371866",
+        "purchase_date": "2024-02-10 02:03:54",
+        "order_status": "Shipped",
+        "shipment_status": "Delivered",
+        "buyer_email": "abbylee@yahoo.com",
+        "buyer_name": "Abigail Lee",
+        "buyer_county": "Los Angeles",
+        "shipping_address": "{\"name\": \"Abigail Lee\", \"address_line_1\": \"800 W Olympic Blvd\", \"city\": \"Los Angeles\", \"state\": \"CA\", \"postal_code\": \"90015\", \"country\": \"US\"}",
+        "payment_method": "Amazon Pay",
+        "order_total": 1314.43,
+        "promised_ship_date": "2024-02-11 06:06:00",
+        "verification_requires_merchant_action": false,
+        "order_items": [
+          {
+            "order_item_id": "OI-987178",
+            "seller_sku": "SKU-H5J7-236907-581",
+            "asin": "B9957236907",
+            "title": "Razer BlackWidow V4 Pro",
+            "quantity_ordered": 3,
+            "quantity_shipped": 3
+          }
+        ]
+      },
+      {
+        "amazon_order_id": "112-6210549-4277046",
+        "seller_order_id": "SO-522785",
+        "purchase_date": "2025-01-12 14:31:12",
+        "order_status": "Shipped",
+        "shipment_status": "Out for Delivery",
+        "buyer_email": "maddy.harris@yahoo.com",
+        "buyer_name": "Madison Harris",
+        "buyer_county": "Austin",
+        "shipping_address": "{\"name\": \"Madison Harris\", \"address_line_1\": \"500 E 4th St\", \"city\": \"Austin\", \"state\": \"TX\", \"postal_code\": \"78701\", \"country\": \"US\"}",
+        "payment_method": "Gift Card",
+        "order_total": 1177.6,
+        "promised_ship_date": "2025-01-12 07:50:20",
+        "verification_requires_merchant_action": true,
+        "order_items": []
       }
     ]
   },

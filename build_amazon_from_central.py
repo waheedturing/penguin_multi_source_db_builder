@@ -71,8 +71,11 @@ class AmazonComprehensiveDataGenerator:
         
         # Track relationships
         self.sku_to_seller = {}  # sku -> seller_id
-        self.order_to_items = {}  # amazon_order_id -> [order_item_ids]
         self.sku_to_asin = {}  # sku -> asin
+        self.seller_asin_to_sku = {}  # (seller_id, asin) -> sku (unique SKU per seller+ASIN combination)
+        self.order_to_items = {}  # amazon_order_id -> [order_item_ids]
+        self.product_to_asin = {}  # product_key -> asin (unique ASIN per product)
+        self.asin_to_product = {}  # asin -> product_data (reverse mapping)
         
         # Track used data to avoid duplicates
         self.used_products = set()
@@ -81,7 +84,49 @@ class AmazonComprehensiveDataGenerator:
         # Initialize data indices for faster access
         self.product_index = 0
         self.seller_index = 0
+        
+        # Create product-to-ASIN mapping
+        self._create_product_asin_mapping()
     
+    def _create_product_asin_mapping(self):
+        """Create unique ASIN for each product in the JSON data"""
+        for index, product in enumerate(self.products, 1):
+            # Create a unique key for each product based on its characteristics with index
+            product_key = self._create_product_key(product)
+            
+            # Generate unique ASIN for this product
+            asin = self._generate_unique_asin()
+            
+            # Store the mapping
+            self.product_to_asin[product_key] = asin
+            self.asin_to_product[asin] = product
+            self.asins.add(asin)
+    
+    def _create_product_key(self, product):
+        """Create a unique key for a product based on its characteristics"""
+        # Use multiple fields to create a more unique key
+        item_name = product.get("item_name", "").strip()
+        brand = product.get("brand", "").strip()
+        product_type = product.get("product_type", "").strip()
+        color = product.get("color", "").strip()
+        size = product.get("size", "").strip()
+        manufacturer = product.get("manufacturer", "").strip()
+        category = product.get("category", "").strip()
+        
+        # Create a more comprehensive normalized key
+        key_parts = [item_name, brand, product_type, color, size, manufacturer, category]
+        # Remove empty parts and normalize
+        key_parts = [part.lower().replace(" ", "_") for part in key_parts if part]
+        
+        return "|".join(key_parts)
+    
+    def _generate_unique_asin(self):
+        """Generate a unique ASIN that hasn't been used yet"""
+        while True:
+            asin = f"B{random.randint(1000000000, 9999999999)}"
+            if asin not in self.asins:
+                return asin
+
     def load_json_data(self, file_path):
         """Load JSON data from file"""
         try:
@@ -99,6 +144,15 @@ class AmazonComprehensiveDataGenerator:
         if not self.products:
             return None
         return random.choice(self.products)
+    
+    def get_product_by_asin(self, asin):
+        """Get product data by ASIN"""
+        return self.asin_to_product.get(asin)
+    
+    def get_asin_by_product(self, product):
+        """Get ASIN for a specific product"""
+        product_key = self._create_product_key(product)
+        return self.product_to_asin.get(product_key)
     
     def get_random_seller(self):
         """Get a random seller from pre-loaded JSON data (users in JSON are Amazon sellers)"""
@@ -165,28 +219,48 @@ class AmazonComprehensiveDataGenerator:
                 self.seller_ids.add(seller_id)
                 return seller_id
     
-    def generate_sku(self, seller_id=None):
-        """Generate realistic Amazon SKU"""
+    def generate_sku(self, seller_id, asin):
+        """Generate realistic Amazon SKU based on seller_id + ASIN combination"""
+        # Create a unique key for this seller+ASIN combination
+        key = (seller_id, asin)
+        
+        # If we already have a SKU for this combination, return it
+        if key in self.seller_asin_to_sku:
+            return self.seller_asin_to_sku[key]
+        
+        # Generate a new SKU for this combination
+        # Use seller_id and ASIN to create a deterministic but unique SKU
+        seller_suffix = seller_id[-4:] if len(seller_id) >= 4 else seller_id
+        asin_suffix = asin[-6:] if len(asin) >= 6 else asin
+        
+        # Create SKU with format: SKU-{seller_suffix}-{asin_suffix}-{random}
         while True:
-            sku = f"SKU-{random.randint(100000, 999999)}-{random.randint(100, 999)}"
+            random_suffix = random.randint(100, 999)
+            sku = f"SKU-{seller_suffix}-{asin_suffix}-{random_suffix}"
             if sku not in self.product_skus:
                 self.product_skus.add(sku)
-                if seller_id:
-                    self.sku_to_seller[sku] = seller_id
+                self.seller_asin_to_sku[key] = sku
+                self.sku_to_seller[sku] = seller_id
+                self.sku_to_asin[sku] = asin
                 return sku
     
-    def generate_asin(self, sku=None):
-        """Generate realistic Amazon ASIN - same ASIN for same SKU"""
-        if sku and sku in self.sku_to_asin:
-            return self.sku_to_asin[sku]
+    def get_sku_by_seller_asin(self, seller_id, asin):
+        """Get SKU for a specific seller+ASIN combination"""
+        key = (seller_id, asin)
+        return self.seller_asin_to_sku.get(key)
+    
+    def generate_asin(self, product=None):
+        """Generate realistic Amazon ASIN - same ASIN for same product"""
+        # If we have a product, get its ASIN from the mapping
+        if product:
+            product_key = self._create_product_key(product)
+            if product_key in self.product_to_asin:
+                return self.product_to_asin[product_key]
         
-        while True:
-            asin = f"B{random.randint(1000000000, 9999999999)}"
-            if asin not in self.asins:
-                self.asins.add(asin)
-                if sku:
-                    self.sku_to_asin[sku] = asin
-                return asin
+        # Fallback: generate a new unique ASIN
+        asin = self._generate_unique_asin()
+        self.asins.add(asin)
+        return asin
     
     def generate_amazon_order_id(self):
         """Generate realistic Amazon order ID"""
@@ -302,9 +376,10 @@ class AmazonComprehensiveDataGenerator:
             "country": "US"
         }
     
-    def generate_product_data(self):
+    def generate_product_data(self, product=None):
         """Generate realistic product information from JSON data"""
-        product = self.get_random_product()
+        if not product:
+            product = self.get_random_product()
         
         if product:
             # Use real product data from JSON
@@ -336,7 +411,8 @@ class AmazonComprehensiveDataGenerator:
                 "product_type": product_type,
                 "color": color,
                 "size": size,
-                "manufacturer": manufacturer
+                "manufacturer": manufacturer,
+                "original_product": product  # Keep reference to original product data
             }
         else:
             # Fallback if no JSON data available
@@ -361,7 +437,11 @@ class AmazonComprehensiveDataGenerator:
                 "description": description,
                 "category": category,
                 "brand": brand,
-                "product_type": product_type
+                "product_type": product_type,
+                "color": "Standard",
+                "size": "Standard",
+                "manufacturer": brand,
+                "original_product": None
             }
     
     def generate_random_date(self, start_date=None, days_ahead=None):
@@ -418,6 +498,9 @@ class AmazonComprehensiveDataGenerator:
         """Generate listings_items data by looping through each seller from central_data users"""
         listings = []
         
+        # Track which products each seller has already been assigned to avoid duplicates
+        seller_assigned_products = {}
+        
         # Loop through each seller from central_data users instead of random generation
         listing_id = 1
         for seller in self.sellers:
@@ -425,12 +508,43 @@ class AmazonComprehensiveDataGenerator:
             seller_id = seller.get("seller_id", self.generate_seller_id())
             company_name = seller.get("seller_name", "Unknown Company")
             
+            # Initialize tracking for this seller
+            if seller_id not in seller_assigned_products:
+                seller_assigned_products[seller_id] = set()
+            
             # Each seller gets 1-5 products (70% of sellers have 2-5 products)
             products_per_seller = random.randint(1, 5) if random.random() < 0.7 else 1
             
-            for _ in range(products_per_seller):
-                sku = self.generate_sku(seller_id)
-                product_data = self.generate_product_data()
+            # Keep track of attempts to avoid infinite loops
+            max_attempts = len(self.products) * 2
+            attempts = 0
+            
+            while len(seller_assigned_products[seller_id]) < products_per_seller and attempts < max_attempts:
+                attempts += 1
+                
+                # Get a random product from the JSON data
+                product = self.get_random_product()
+                if not product:
+                    continue
+                
+                # Create product key to check for duplicates
+                product_key = self._create_product_key(product)
+                
+                # Skip if this seller already has this product
+                if product_key in seller_assigned_products[seller_id]:
+                    continue
+                
+                # Mark this product as assigned to this seller
+                seller_assigned_products[seller_id].add(product_key)
+                
+                # Get the ASIN for this specific product
+                asin = self.generate_asin(product)
+                
+                # Generate SKU for this seller+ASIN combination
+                sku = self.generate_sku(seller_id, asin)
+                
+                # Generate product data from the actual product
+                product_data = self.generate_product_data(product)
                 
                 # Generate realistic pricing
                 base_price = random.uniform(10.0, 1000.0)
@@ -453,6 +567,7 @@ class AmazonComprehensiveDataGenerator:
                     "seller_id": seller_id,
                     "seller_name": company_name,
                     "sku": sku,
+                    "asin": asin,  # Add ASIN to listing
                     "title": product_data["title"],
                     "description": product_data["description"],
                     "price": price,
@@ -785,11 +900,23 @@ class AmazonComprehensiveDataGenerator:
             
             # Get a random SKU from listings
             sku = random.choice(list(self.product_skus))
-            # Use consistent ASIN for this SKU
-            asin = self.generate_asin(sku)
             
-            # Generate product info
-            product_data = self.generate_product_data()
+            # Get the ASIN and seller associated with this SKU
+            asin = self.sku_to_asin.get(sku)
+            seller_id = self.sku_to_seller.get(sku)
+            
+            if asin:
+                # Get the product data for this ASIN
+                product = self.get_product_by_asin(asin)
+                if product:
+                    product_data = self.generate_product_data(product)
+                else:
+                    # Fallback if product not found
+                    product_data = self.generate_product_data()
+            else:
+                # Fallback if no ASIN mapping found
+                product_data = self.generate_product_data()
+                asin = "UNKNOWN"
             
             # Generate quantities based on order status
             quantity_ordered = random.randint(1, 5)
@@ -872,9 +999,16 @@ class AmazonComprehensiveDataGenerator:
             company_name = seller.get("seller_name", "Unknown Company")
             
             # Each seller gets exactly one inventory summary with unique SKU
-            # Generate SKU and ASIN for this seller's product
-            sku = self.generate_sku(seller_id)
-            asin = self.generate_asin(sku)
+            # Get a random product for this seller
+            product = self.get_random_product()
+            if not product:
+                continue
+            
+            # Get the ASIN for this specific product
+            asin = self.generate_asin(product)
+            
+            # Generate SKU for this seller+ASIN combination
+            sku = self.generate_sku(seller_id, asin)
             fn_sku = f"FN-{random.randint(100000, 999999)}"
             
             # Generate inventory details
@@ -942,10 +1076,20 @@ class AmazonComprehensiveDataGenerator:
         
         # Loop through each product from central_data instead of random generation
         for i, product in enumerate(self.products, 1):
-            # Generate a unique SKU for this product
-            sku = self.generate_sku()
-            # Generate ASIN for this SKU
-            asin = self.generate_asin(sku)
+            # Get the ASIN for this specific product
+            asin = self.get_asin_by_product(product)
+            if not asin:
+                continue
+            
+            # For pricing, we need a seller context - use a random seller
+            seller = self.get_random_seller()
+            if not seller:
+                continue
+            
+            seller_id = seller.get("seller_id", self.generate_seller_id())
+            
+            # Generate SKU for this seller+ASIN combination
+            sku = self.generate_sku(seller_id, asin)
             marketplace_id = random.choice(MARKETPLACE_IDS)
             item_condition = random.choice(["New", "Used", "Refurbished"])
             
@@ -993,9 +1137,16 @@ class AmazonComprehensiveDataGenerator:
             seller_id = seller.get("seller_id", self.generate_seller_id())
             
             # Each seller gets exactly one competitive pricing entry with unique SKU
-            # Generate SKU and ASIN for this seller's product
-            sku = self.generate_sku(seller_id)
-            asin = self.generate_asin(sku)
+            # Get a random product for this seller
+            product = self.get_random_product()
+            if not product:
+                continue
+            
+            # Get the ASIN for this specific product
+            asin = self.generate_asin(product)
+            
+            # Generate SKU for this seller+ASIN combination
+            sku = self.generate_sku(seller_id, asin)
             marketplace_id = random.choice(MARKETPLACE_IDS)
             
             # Generate competitive pricing data
@@ -1034,10 +1185,20 @@ class AmazonComprehensiveDataGenerator:
         
         # Loop through each product from central_data instead of random generation
         for i, product in enumerate(self.products, 1):
-            # Generate a unique SKU for this product
-            sku = self.generate_sku()
-            # Generate ASIN for this SKU
-            asin = self.generate_asin(sku)
+            # Get the ASIN for this specific product (with fallback generation)
+            asin = self.generate_asin(product)
+            if not asin:
+                continue
+            
+            # For catalog items, we need a seller context - use a random seller
+            seller = self.get_random_seller()
+            if not seller:
+                continue
+            
+            seller_id = seller.get("seller_id", self.generate_seller_id())
+            
+            # Generate SKU for this seller+ASIN combination
+            sku = self.generate_sku(seller_id, asin)
             marketplace_id = random.choice(MARKETPLACE_IDS)
             
             # Use real product data from JSON
@@ -1331,9 +1492,19 @@ class AmazonComprehensiveDataGenerator:
                 sku = random.choice(list(self.product_skus))
                 asin = self.sku_to_asin.get(sku)
                 if not asin:
-                    asin = self.generate_asin(sku)
+                    # Fallback: get a random product and its ASIN
+                    product = self.get_random_product()
+                    if product:
+                        asin = self.generate_asin(product)
+                    else:
+                        asin = "UNKNOWN"
             else:
-                asin = self.generate_asin("DEFAULT")
+                # Fallback: get a random product and its ASIN
+                product = self.get_random_product()
+                if product:
+                    asin = self.generate_asin(product)
+                else:
+                    asin = "UNKNOWN"
             
             # Generate realistic product title based on search context
             title = self._generate_product_title(search_query, brand_names)
@@ -1663,8 +1834,13 @@ class AmazonComprehensiveDataGenerator:
             for _ in range(random.randint(10, 100)):
                 sku = random.choice(list(self.product_skus))
                 asin = self.sku_to_asin.get(sku)
-            if not asin:
-                asin = self.generate_asin(sku)
+                if not asin:
+                    # Fallback: get a random product and its ASIN
+                    product = self.get_random_product()
+                    if product:
+                        asin = self.generate_asin(product)
+                    else:
+                        asin = "UNKNOWN"
                 content += f"{random.randint(100000, 999999)}\t{random.choice(list(self.seller_ids))}\t{sku}\t{asin}\t{round(random.uniform(10.0, 500.0), 2)}\t{random.randint(1, 100)}\n"
             
             document = {
@@ -1770,7 +1946,12 @@ class AmazonComprehensiveDataGenerator:
             sku = random.choice(list(self.product_skus))
             asin = self.sku_to_asin.get(sku)
             if not asin:
-                asin = self.generate_asin(sku)
+                # Fallback: get a random product and its ASIN
+                product = self.get_random_product()
+                if product:
+                    asin = self.generate_asin(product)
+                else:
+                    asin = "UNKNOWN"
             
             notification_payload = {
                 "notification_type": notification_type,
