@@ -1968,8 +1968,8 @@
           },
           "size": {
             "name": "size",
-            "type": "VARCHAR",
-            "python_type": "str",
+            "type": "INTEGER",
+            "python_type": "int",
             "nullable": false,
             "primary_key": false,
             "autoincrement": "auto",
