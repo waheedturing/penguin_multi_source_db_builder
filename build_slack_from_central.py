@@ -5,13 +5,13 @@ Schema-aware Slack Seed Data Generator (SQLite)
 - Uses users from catalog (which came from synthetic_users.csv)
 - Fills current-year timestamps and no NULLs
 - Never writes "column-name" as a value; generates realistic text instead
-- Maps channel_id, user_id, app_id, api_app_id, enterprise_id, team_id, created_by, updated_by, creator,
-  bot_id and many other ID fields even when FKs are missing
+- Maps channel_id, user_id, app_id, enterprise_id, team_id, created_by, updated_by, creator even if FKs are missing
 - Derives enterprise_name consistently from linked enterprise/team when that column exists
 - Ensures any *url*/*uri* field is a valid https URL
 - Ensures any *email*/*emails* field contains realistic personal email(s)
 - Explicitly normalizes slack_shared_invites records and fills missing attributes
-- Backfills many table-specific fields called out in QA (see bottom of file)
+- Fixes: is_email_confirmed stays boolean, proper app/user/channel mappings, numeric icon sizes,
+         sensible message username/inviter/topic, epoch dates in user_groups, and created_at <= updated_at everywhere.
 
 USAGE:
   python build_slack_from_central.py \
@@ -26,7 +26,7 @@ import json
 import random
 import argparse
 import datetime as dt
-from typing import Optional, List, Dict, Any
+from typing import Optional
 from decimal import Decimal
 from collections import defaultdict, deque
 
@@ -87,6 +87,25 @@ def sql_date_current_year() -> str:
     s, e = _current_year_bounds()
     return rand_dt_between(s, e).strftime('%Y-%m-%d')
 
+def parse_dt(value: str) -> Optional[dt.datetime]:
+    if not isinstance(value, str):
+        return None
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d"):
+        try:
+            return dt.datetime.strptime(value, fmt)
+        except Exception:
+            pass
+    return None
+
+def random_ipv4() -> str:
+    return ".".join(str(random.randint(1, 254)) for _ in range(4))
+
+def epoch_this_year(offset_days_min: int = 0, offset_days_max: int = 180) -> int:
+    start, end = _current_year_bounds()
+    base = rand_dt_between(start + dt.timedelta(days=offset_days_min),
+                           start + dt.timedelta(days=offset_days_max))
+    return int(base.timestamp())
+
 def sql_literal(v):
     # never NULL
     if v is None:
@@ -118,11 +137,9 @@ def slack_id(prefix: str, k: int = 11) -> str:
 def username_from_name(name: str) -> str:
     return re.sub(r'[^a-z0-9]+', '.', name.strip().lower()).strip('.') or "user"
 
-def random_ipv4() -> str:
-    return ".".join(str(random.randint(1, 254)) for _ in range(4))
-
 # -------- URL & Email utilities --------
 EMAIL_PROVIDERS = ["gmail.com", "outlook.com", "yahoo.com", "icloud.com", "proton.me"]
+TOKEN_TYPES = ["bot", "user", "workspace", "app", "installation", "refresh"]
 
 def make_url(host: Optional[str] = None, path: Optional[str] = None) -> str:
     """Return a valid https URL using a known Slack-like host when possible."""
@@ -252,7 +269,6 @@ DEV_TYPES = ["internal", "public", "partner"]
 HTTP_METHODS = ["GET", "POST", "PUT", "DELETE", "PATCH"]
 STATUSES = ["active", "inactive", "pending", "enabled", "disabled"]
 TRIGGERS = ["event", "schedule", "shortcut", "webhook", "link", "form"]
-TOKEN_TYPES = ["bot", "user", "app", "workspace"]
 
 def _hosts_from_enterprises():
     ents = ROWS.get('slack_enterprises', [])
@@ -281,7 +297,7 @@ def string_value_for(table_name: str, col: str) -> str:
     if "url" in col_l or "uri" in col_l:
         return make_url(host)
 
-    # Emails (TEXT): single vs. plural (comma-separated) when schema type isn't known here
+    # Emails (TEXT): single vs. plural (comma-separated)
     if col_l.endswith("_email") or col_l == "email":
         pool = get_catalog_emails()
         return (random.choice(pool) if pool else random_personal_email())
@@ -344,6 +360,8 @@ def default_value_for(col_name: str, col_type: str, table_name: str):
 
     # Email-aware defaults
     if "email" in cn:
+        if t == "BOOLEAN":
+            return bool(random.getrandbits(1))  # guard against strings in is_email_confirmed
         if t == "JSON":
             if "emails" in cn or cn.endswith("_emails"):
                 return emails_for_field(random.randint(2, 3))
@@ -386,6 +404,18 @@ def fit_row_for_table(row: dict, t: Table) -> dict:
 
 def add_row(t: Table, row: dict):
     ROWS[t.name].append(fit_row_for_table(row, t))
+
+def get_ids_for(table_name: str, variants=None) -> list:
+    rows = ROWS.get(table_name, [])
+    if not rows:
+        return []
+    cols = variants or ["id"]
+    out = []
+    for r in rows:
+        for c in cols:
+            if r.get(c):
+                out.append(r[c]); break
+    return out
 
 # -------- Targeted generators --------
 def gen_enterprises(t: Table, n: int):
@@ -438,7 +468,6 @@ def gen_users(t: Table, n: int):
         for i, u in enumerate(users):
             team = teams[i % len(teams)] if teams else None
             uname = u.get("username") or username_from_name(u.get("name","User"))
-            # personal email providers (NOT Slack domain)
             email = u.get("email") or f"{uname}@{random.choice(EMAIL_PROVIDERS)}"
             tz = u.get("timezone") or random.choice(['America/New_York','America/Chicago','America/Denver','America/Los_Angeles'])
             row = {
@@ -450,7 +479,7 @@ def gen_users(t: Table, n: int):
                 'team_id': team['id'] if team else slack_id('T'),
                 'deleted': False,
                 'color': random.choice(['3f7a9e','6b4c9a','c13a5f','e07a3f']),
-                'is_email_confirmed': True,
+                'is_email_confirmed': True,  # boolean
                 'tz': tz,
                 'tz_label': tz,
                 'tz_offset': 0,
@@ -571,6 +600,7 @@ def gen_messages(t: Table, n: int):
         ch = chans[i % len(chans)] if chans else None
         u = users[i % len(users)] if users else None
         ts_val = f"{(dt.datetime.now()).timestamp():.6f}"
+        # Base row
         row = {
             'ts': ts_val,
             'channel': ch['id'] if ch else slack_id('C'),
@@ -591,10 +621,10 @@ def gen_messages(t: Table, n: int):
             'hidden': False,
             'deleted': False,
             'upload': False,
-            'user_profile': {'real_name': u.get('real_name') if u else 'User'},
+            'user_profile': {'real_name': (u.get('real_name') if u else 'User')},
             'edited': {},
             'bot_id': '',
-            'app_id': '',   # filled later if needed
+            'app_id': '',
             'bot_profile': {},
             'team': ch.get('context_team_id', '') if ch else '',
             'source_team': ch.get('context_team_id', '') if ch else '',
@@ -603,6 +633,24 @@ def gen_messages(t: Table, n: int):
             'created_at': sql_datetime_current_year(),
             'updated_at': sql_datetime_current_year()
         }
+        # Fill message-centric optional columns if present
+        cols = t.columns.keys()
+        if "username" in cols:
+            # Prefer user's display/real name
+            display = None
+            if u:
+                pd = u.get("profile_data") or {}
+                display = pd.get("display_name") or u.get("real_name") or u.get("name")
+            row["username"] = display or "user"
+        if "inviter" in cols:
+            # If schema expects a user id string
+            row["inviter"] = (ch.get("creator") if ch and ch.get("creator") else (u.get("id") if u else slack_id("U")))
+        if "topic" in cols:
+            # Use current channel topic text if available
+            topic_val = None
+            if ch and isinstance(ch.get("topic"), dict):
+                topic_val = (ch["topic"].get("value"))
+            row["topic"] = topic_val or "discussion"
         add_row(t, row)
 
 def gen_generic(t: Table, n: int):
@@ -613,7 +661,7 @@ def gen_generic(t: Table, n: int):
             row[cname] = default_value_for(cname, cmeta.get('type', 'TEXT'), t.name)
         add_row(t, row)
 
-# -------- Driver main generators --------
+# -------- Driver --------
 def generate_data(tables: dict):
     order = topo_order(tables)
     counts = {name: ROW_HINTS.get(name, 40) for name in order}
@@ -637,7 +685,6 @@ def generate_data(tables: dict):
             gen_generic(t, counts[name])
     return order
 
-# -------- Backfills --------
 def backfill_foreign_keys(tables: dict):
     for name, t in tables.items():
         if not t.fks or not ROWS[name]:
@@ -655,20 +702,10 @@ def backfill_foreign_keys(tables: dict):
                     if parents:
                         row[col] = parents[0].get(parent_col) or parents[0].get('id') or "X"
 
-def get_ids_for(table: str, prefer_cols: Optional[List[str]] = None) -> List[str]:
-    prefer_cols = prefer_cols or ["id"]
-    rows = ROWS.get(table, [])
-    ids = []
-    for r in rows:
-        for c in prefer_cols:
-            if c in r and r.get(c):
-                ids.append(r[c]); break
-    return [x for x in ids if isinstance(x, str) and x]
-
 def map_common_id_columns(tables: dict) -> None:
     """
-    Map app_id, api_app_id, enterprise_id, team_id (ANY column containing 'team_id'), user/channel IDs,
-    bot_id, and enterprise_name even when schema omitted explicit FKs. Also normalize email/url-ish columns.
+    Map app_id, enterprise_id, team_id (ANY column containing 'team_id'), user/channel IDs,
+    and enterprise_name even when schema omitted explicit FKs. Also normalize email/url-ish columns.
     """
     ent_rows = ROWS.get("slack_enterprises", [])
     team_rows = ROWS.get("slack_teams", [])
@@ -676,7 +713,6 @@ def map_common_id_columns(tables: dict) -> None:
     chan_rows = ROWS.get("slack_channels", [])
     app_rows  = ROWS.get("slack_apps", [])
     ug_rows   = ROWS.get("slack_user_groups", [])
-    bot_rows  = ROWS.get("slack_bots", [])
 
     ent_ids = [r["id"] for r in ent_rows if r.get("id")]
     team_ids = [r["id"] for r in team_rows if r.get("id")]
@@ -695,15 +731,6 @@ def map_common_id_columns(tables: dict) -> None:
     ug_ids = [r["id"] for r in ug_rows if r.get("id")]
     ug_names_by_id = {r["id"]: r.get("name", "") for r in ug_rows if r.get("id")}
 
-    # bot ids: prefer slack_bots table; else derive a pool based on apps or create synthetic
-    bot_ids_pool = []
-    if bot_rows:
-        bot_ids_pool = [r.get("bot_id") or r.get("id") for r in bot_rows if r.get("bot_id") or r.get("id")]
-    if not bot_ids_pool:
-        # one bot per approved app (deterministic-ish via SEED)
-        for _ in (app_ids_approved or range(12)):
-            bot_ids_pool.append(slack_id("B"))
-
     for tname, table in tables.items():
         rows = ROWS.get(tname, [])
         if not rows:
@@ -718,7 +745,6 @@ def map_common_id_columns(tables: dict) -> None:
                     cur = row.get(col)
                     if not cur or cur not in team_ids:
                         row[col] = team_ids[(hash(tname + col) + i) % len(team_ids)]
-                # Also plain 'team'
                 if cn == "team" and team_ids:
                     cur = row.get(col)
                     if not cur or cur not in team_ids:
@@ -741,17 +767,12 @@ def map_common_id_columns(tables: dict) -> None:
                 cur = row.get("app_id")
                 if not cur or cur not in app_ids_all:
                     row["app_id"] = app_ids_approved[i % len(app_ids_approved)]
-            if "api_app_id" in table.columns and app_ids_all:
-                cur = row.get("api_app_id")
-                if not cur or cur not in app_ids_all:
-                    row["api_app_id"] = app_ids_all[i % len(app_ids_all)]
 
             # users (generic)
             for user_col in ("user_id","user","created_by","updated_by","deleted_by","creator",
                              "owner_id","requested_by","approved_by","invited_by",
                              "actor_user_id","requester_user_id","source_user_id","target_user_id",
-                             "inviter_id","approver_user_id","installer_user_id","creator_id",
-                             "last_resolved_by_actor_id"):
+                             "inviter_id","approver_user_id","installer_user_id"):
                 if user_col in table.columns and user_ids:
                     cur = row.get(user_col)
                     if not cur or cur not in user_ids:
@@ -764,30 +785,32 @@ def map_common_id_columns(tables: dict) -> None:
                     if not cur or cur not in chan_ids:
                         row[ch_col] = chan_ids[(hash(tname + ch_col) + i) % len(chan_ids)]
 
-            # usergroups (generic primary + explicit usergroup_id & group_id)
+            # usergroup primary/name
             if "primary_usergroup_id" in table.columns and ug_ids:
                 cur = row.get("primary_usergroup_id")
                 pid = cur if cur in ug_ids else ug_ids[i % len(ug_ids)]
                 row["primary_usergroup_id"] = pid
                 if "primary_usergroup_name" in table.columns:
                     row["primary_usergroup_name"] = ug_names_by_id.get(pid, "usergroup")
-            for ug_col in ("usergroup_id","group_id"):
-                if ug_col in table.columns and ug_ids:
-                    cur = row.get(ug_col)
-                    if not cur or cur not in ug_ids:
-                        row[ug_col] = ug_ids[(hash(tname + ug_col) + i) % len(ug_ids)]
 
-            # bot_id
-            if "bot_id" in table.columns and bot_ids_pool:
-                cur = row.get("bot_id")
-                if not cur:
-                    row["bot_id"] = bot_ids_pool[(hash(tname) + i) % len(bot_ids_pool)]
+            # arrays of usergroups
+            if "barriered_from_usergroup_ids" in table.columns:
+                picks = random.sample(ug_ids, min(2, len(ug_ids))) if ug_ids else []
+                row["barriered_from_usergroup_ids"] = picks
+                if "barriered_from_usergroup_names" in table.columns:
+                    row["barriered_from_usergroup_names"] = [ug_names_by_id.get(x, "") for x in picks]
 
             # Normalize email/url fields post-hoc (handles JSON vs TEXT & singular vs plural)
             for col in table.columns:
                 cn = col.lower()
                 t = coltypes.get(col, "TEXT")
                 val = row.get(col)
+
+                # Skip boolean flags like is_email_confirmed
+                if "email" in cn and t == "BOOLEAN":
+                    continue
+                if cn in ("is_email_confirmed", "email_confirmed"):
+                    continue
 
                 if "email" in cn:
                     if "emails" in cn or cn.endswith("_emails"):
@@ -803,7 +826,6 @@ def map_common_id_columns(tables: dict) -> None:
                                 row[col] = {"value": random_personal_email()}
                         else:
                             if not isinstance(val, str) or "@" not in val:
-                                # try user-profile email if present
                                 possible = None
                                 if "user" in row and isinstance(row.get("user"), str):
                                     u = next((uu for uu in ROWS.get("slack_users", []) if uu.get("id")==row["user"]), None)
@@ -844,8 +866,9 @@ def normalize_shared_invites(tables: dict) -> None:
 
     for i, row in enumerate(rows):
         # invite_id (or id)
-        if "invite_id" in table.columns and not row.get("invite_id"):
-            row["invite_id"] = slack_id("I")
+        if "invite_id" in table.columns:
+            if not row.get("invite_id"):
+                row["invite_id"] = slack_id("I")
         if "id" in table.columns and not row.get("id"):
             row["id"] = slack_id("I")
 
@@ -860,7 +883,7 @@ def normalize_shared_invites(tables: dict) -> None:
                 if not row.get(ucol) or row[ucol] not in user_ids:
                     row[ucol] = user_ids[(hash(ucol) + i) % len(user_ids)]
 
-        # team mapping: any *team_id* column (covers target_team_id, etc.)
+        # team mapping: any *team_id* column
         for col in table.columns:
             cn = col.lower()
             if "team_id" in cn and team_ids:
@@ -901,7 +924,7 @@ def normalize_shared_invites(tables: dict) -> None:
             if ucol in table.columns:
                 cur = row.get(ucol)
                 if not isinstance(cur, str) or not cur.startswith("http"):
-                    row[ucol] = make_url(path=f"join/{slack_id('')}")
+                    row[ucol] = make_url(path=f"join/{slack_id('')}".lower())
 
         # timestamps and flags
         now = dt.datetime.now()
@@ -926,7 +949,6 @@ def normalize_shared_invites(tables: dict) -> None:
             if ncol in table.columns and not isinstance(row.get(ncol), int):
                 row[ncol] = random.randint(1, 50)
 
-# -------- Additional table-specific cleanups --------
 def fill_special_cases(tables: dict) -> None:
     """Address specific fields reported as empty/invalid across several tables."""
     user_ids = get_ids_for("slack_users")
@@ -941,7 +963,7 @@ def fill_special_cases(tables: dict) -> None:
     function_ids = get_ids_for("slack_functions", ["function_id","id"])
     workflow_ids = get_ids_for("slack_workflows", ["workflow_id","id"])
 
-    # slack_users: bot_id, api_app_id
+    # slack_users: bot_id, api_app_id (and ensure is_email_confirmed remains boolean)
     if "slack_users" in tables:
         rows = ROWS.get("slack_users", [])
         for i, r in enumerate(rows):
@@ -951,20 +973,35 @@ def fill_special_cases(tables: dict) -> None:
             if "bot_id" in tables["slack_users"].columns:
                 if not r.get("bot_id"):
                     r["bot_id"] = slack_id("B")
+            if "is_email_confirmed" in tables["slack_users"].columns:
+                v = r.get("is_email_confirmed")
+                r["is_email_confirmed"] = bool(v) if isinstance(v, (bool, int)) else True
 
-    # slack_user_groups: user_ids array should not be empty
+    # slack_user_groups: user_ids array and epoch dates
     if "slack_user_groups" in tables:
         t = tables["slack_user_groups"]
         rows = ROWS.get("slack_user_groups", [])
         for i, r in enumerate(rows):
             if "user_ids" in t.columns:
                 val = r.get("user_ids")
-                # JSON array expected; fill with 3–8 users
                 if not isinstance(val, list) or len(val) == 0 or any(not isinstance(x, str) for x in val):
                     k = min(len(user_ids), max(3, random.randint(3, 8)))
                     r["user_ids"] = random.sample(user_ids, k) if user_ids else []
+            # Normalize date_create/date_update to epoch seconds with ordering
+            dc_col, du_col = "date_create", "date_update"
+            if dc_col in t.columns:
+                dc = r.get(dc_col)
+                if not isinstance(dc, int) or dc < 1_000_000_000:
+                    r[dc_col] = epoch_this_year(0, 120)
+            if du_col in t.columns:
+                du = r.get(du_col)
+                if not isinstance(du, int) or du < 1_000_000_000:
+                    r[du_col] = r.get(dc_col, epoch_this_year(0, 120)) + random.randint(60, 7*24*3600)
+                # ensure ordering
+                if r[du_col] < r.get(dc_col, r[du_col]):
+                    r[du_col] = r.get(dc_col) + random.randint(60, 7*24*3600)
 
-    # slack_messages: bot_id must not be empty (also app_id is filled earlier)
+    # slack_messages: bot_id must not be empty
     if "slack_messages" in tables:
         rows = ROWS.get("slack_messages", [])
         for i, r in enumerate(rows):
@@ -994,8 +1031,6 @@ def fill_special_cases(tables: dict) -> None:
                 if not r.get("usergroup_id") or r["usergroup_id"] not in ug_ids:
                     r["usergroup_id"] = ug_ids[i % len(ug_ids)]
 
-    # slack_shared_invites handled by normalize_shared_invites()
-
     # slack_audit_logs: event_id, target_id, ip_address format
     if "slack_audit_logs" in tables:
         rows = ROWS.get("slack_audit_logs", [])
@@ -1003,7 +1038,6 @@ def fill_special_cases(tables: dict) -> None:
             if not r.get("event_id"):
                 r["event_id"] = f"EVT-{slack_id('')}"
             if not r.get("target_id"):
-                # prefer channel/user/team ids
                 pool = (chan_ids or []) + (user_ids or []) + (team_ids or [])
                 r["target_id"] = pool[(i % len(pool))] if pool else slack_id("X")
             if "ip_address" in tables["slack_audit_logs"].columns:
@@ -1019,12 +1053,10 @@ def fill_special_cases(tables: dict) -> None:
             if "triggers" in t.columns:
                 v = r.get("triggers")
                 if not isinstance(v, list) or len(v) == 0:
-                    # store simple trigger types
                     r["triggers"] = random.sample(TRIGGERS, k=min(3, len(TRIGGERS)))
             if "permissions" in t.columns:
                 v = r.get("permissions")
                 if not isinstance(v, dict) or not v:
-                    # permit by usergroups/teams if available
                     r["permissions"] = {
                         "allowed_usergroups": random.sample(ug_ids, k=min(2, len(ug_ids))) if ug_ids else [],
                         "allowed_teams": random.sample(team_ids, k=min(2, len(team_ids))) if team_ids else []
@@ -1101,9 +1133,10 @@ def fill_special_cases(tables: dict) -> None:
         rows = ROWS.get("slack_invite_request_channels", [])
         for i, r in enumerate(rows):
             if "invite_request_id" in t.columns:
-                if invite_request_ids:
-                    if not r.get("invite_request_id") or r["invite_request_id"] not in invite_request_ids:
-                        r["invite_request_id"] = invite_request_ids[i % len(invite_request_ids)]
+                pool = invite_request_ids or get_ids_for("slack_invite_requests", ["id","invite_request_id"])
+                if pool:
+                    if not r.get("invite_request_id") or r["invite_request_id"] not in pool:
+                        r["invite_request_id"] = pool[i % len(pool)]
                 else:
                     r["invite_request_id"] = f"IR-{slack_id('')}"
             if "channel_id" in t.columns and chan_ids:
@@ -1212,7 +1245,63 @@ def fill_special_cases(tables: dict) -> None:
                     else:
                         r["workflow_id"] = f"WF-{slack_id('')}"
 
-# -------- Writer --------
+    # slack_app_icons: ensure numeric size and valid url/app_id
+    if "slack_app_icons" in tables:
+        t = tables["slack_app_icons"]
+        rows = ROWS.get("slack_app_icons", [])
+        valid_sizes = [16, 24, 32, 48, 64, 72, 96, 128, 192, 256, 512]
+        app_ids_pool = [r.get("id") for r in ROWS.get("slack_apps", []) if r.get("id")]
+        for i, r in enumerate(rows):
+            if "size" in t.columns:
+                val = r.get("size")
+                num = None
+                if isinstance(val, int):
+                    num = val
+                elif isinstance(val, float):
+                    num = int(val)
+                elif isinstance(val, str):
+                    m = re.findall(r"\d+", val)
+                    if m:
+                        num = int(m[0])
+                if not num or num <= 0:
+                    num = valid_sizes[i % len(valid_sizes)]
+                if num not in valid_sizes:
+                    num = min(valid_sizes, key=lambda x: abs(x - num))
+                r["size"] = num
+            if "url" in t.columns:
+                u = r.get("url")
+                if not isinstance(u, str) or not u.startswith("http"):
+                    r["url"] = make_url(path=f"apps/icons/{slack_id('')}.png")
+            if "app_id" in t.columns and app_ids_pool:
+                if not r.get("app_id") or r["app_id"] not in app_ids_pool:
+                    r["app_id"] = app_ids_pool[i % len(app_ids_pool)]
+
+def enforce_temporal_consistency(tables: dict) -> None:
+    """
+    Ensure created_at <= updated_at for all tables where both exist.
+    Also fix any other *created*/*updated* pairs that are strings in our standard formats.
+    """
+    for tname, table in tables.items():
+        rows = ROWS.get(tname, [])
+        if not rows:
+            continue
+        for r in rows:
+            # Handle created_at/updated_at
+            if "created_at" in table.columns and "updated_at" in table.columns:
+                c, u = parse_dt(r.get("created_at")), parse_dt(r.get("updated_at"))
+                if c and u and u < c:
+                    # push updated_at to be >= created_at by up to 5 days
+                    u_fix = c + dt.timedelta(days=random.randint(0, 5), seconds=random.randint(0, 86399))
+                    r["updated_at"] = u_fix.strftime('%Y-%m-%d %H:%M:%S')
+            # Generic *_created_at / *_updated_at
+            for ck, uk in (("created", "updated"),):
+                ckey = f"{ck}_at"
+                ukey = f"{uk}_at"
+                if ckey in table.columns and ukey in table.columns:
+                    c, u = parse_dt(r.get(ckey)), parse_dt(r.get(ukey))
+                    if c and u and u < c:
+                        r[ukey] = (c + dt.timedelta(minutes=random.randint(1, 720))).strftime('%Y-%m-%d %H:%M:%S')
+
 def write_sql(tables: dict, order: list, out_path: str):
     d = os.path.dirname(out_path)
     if d:
@@ -1261,7 +1350,9 @@ def main():
     backfill_foreign_keys(tables)
     map_common_id_columns(tables)
     normalize_shared_invites(tables)   # explicit pass for slack_shared_invites
-    fill_special_cases(tables)         # table-specific fixes requested
+    fill_special_cases(tables)         # targeted fixes (ids, arrays, token types, icons, etc.)
+    enforce_temporal_consistency(tables)  # created_at <= updated_at
+
     write_sql(tables, order, args.out)
 
     total = sum(len(ROWS[n]) for n in order)
