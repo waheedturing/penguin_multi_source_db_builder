@@ -1,0 +1,740 @@
+{
+  "workflows": [
+    {
+      "id": "WF-1001",
+      "title": "Expedite delayed shipment escalation",
+      "domain": "retail",
+      "trigger": {
+        "kind": "order_status",
+        "value": "returned",
+        "category": "Pets"
+      },
+      "participants": [
+        {
+          "name": "Jackson Anderson",
+          "username": "jackson.anderson",
+          "email": "jackson.anderson@icloud.com"
+        },
+        {
+          "name": "Liam Rodriguez",
+          "username": "liam.rodriguez",
+          "email": "liam.rodriguez@outlook.com"
+        },
+        {
+          "name": "Mia Williams",
+          "username": "mia.williams",
+          "email": "mia.williams@icloud.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-311250",
+        "maybe_issue_id": "ISS-37125",
+        "team_base": "Support",
+        "channel_base": "support"
+      },
+      "storyline": "Workflow handles order SO-311250 in Pets, coordinates Slack, inventory updates, and Jira tracking.",
+      "steps": [
+        {
+          "step": 1,
+          "type": "check_recent_orders",
+          "order_id": "SO-311250",
+          "status": "returned",
+          "category": "Pets",
+          "items_count": 1,
+          "qty_total": 2
+        },
+        {
+          "step": 2,
+          "type": "slack_notify",
+          "team_base": "Support",
+          "channel_base": "support",
+          "message": "Numbers look stable today"
+        },
+        {
+          "step": 3,
+          "type": "update_inventory",
+          "adjustments": [
+            {
+              "product_id": "P0034",
+              "sku": "PET-0034",
+              "delta": -2
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "type": "jira_link_issue",
+          "issue_id": "ISS-37125",
+          "project_key": "OPS",
+          "summary": "Shipment delay for SO-945106 (Pets)"
+        },
+        {
+          "step": 5,
+          "type": "generate_report",
+          "report_type": "demand_snapshot",
+          "category": "Pets",
+          "orders_considered": 25,
+          "destination_channel_base": "sales"
+        },
+        {
+          "step": 6,
+          "type": "slack_notify",
+          "team_base": "Sales",
+          "channel_base": "sales",
+          "message": "Numbers look stable today"
+        }
+      ]
+    },
+    {
+      "id": "WF-1002",
+      "title": "Investigate inventory mismatch alert",
+      "domain": "retail",
+      "trigger": {
+        "kind": "order_status",
+        "value": "delivered",
+        "category": "Fitness"
+      },
+      "participants": [
+        {
+          "name": "Sophia Martin",
+          "username": "sophia.martin",
+          "email": "sophia.martin@proton.me"
+        },
+        {
+          "name": "Olivia Garcia",
+          "username": "olivia.garcia",
+          "email": "olivia.garcia@icloud.com"
+        },
+        {
+          "name": "Michael Brown",
+          "username": "michael.brown",
+          "email": "michael.brown@yahoo.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-185847",
+        "maybe_issue_id": "ISS-17019",
+        "team_base": "Ops",
+        "channel_base": "ops"
+      },
+      "storyline": "Workflow handles order SO-185847 in Fitness, coordinates Slack, inventory updates, and Jira tracking.",
+      "steps": [
+        {
+          "step": 1,
+          "type": "check_recent_orders",
+          "order_id": "SO-185847",
+          "status": "delivered",
+          "category": "Fitness",
+          "items_count": 3,
+          "qty_total": 5
+        },
+        {
+          "step": 2,
+          "type": "slack_notify",
+          "team_base": "Ops",
+          "channel_base": "ops",
+          "message": "On it, will circle back"
+        },
+        {
+          "step": 3,
+          "type": "update_inventory",
+          "adjustments": [
+            {
+              "product_id": "P0052",
+              "sku": "ELE-0052",
+              "delta": -3
+            },
+            {
+              "product_id": "P0053",
+              "sku": "FIT-0053",
+              "delta": -1
+            },
+            {
+              "product_id": "P0049",
+              "sku": "HOM-0049",
+              "delta": -1
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "type": "jira_link_issue",
+          "issue_id": "ISS-17019",
+          "project_key": "OPS",
+          "summary": "Inventory mismatch for SO-287974 (Fitness)"
+        },
+        {
+          "step": 5,
+          "type": "generate_report",
+          "report_type": "demand_snapshot",
+          "category": "Fitness",
+          "orders_considered": 25,
+          "destination_channel_base": "sales"
+        },
+        {
+          "step": 6,
+          "type": "slack_notify",
+          "team_base": "Sales",
+          "channel_base": "sales",
+          "message": "Pushed a fix, redeploying now"
+        }
+      ]
+    },
+    {
+      "id": "WF-1003",
+      "title": "Refund review and customer follow-up",
+      "domain": "retail",
+      "trigger": {
+        "kind": "order_status",
+        "value": "packed",
+        "category": "Groceries"
+      },
+      "participants": [
+        {
+          "name": "Benjamin Clark",
+          "username": "benjamin.clark",
+          "email": "benjamin.clark@yahoo.com"
+        },
+        {
+          "name": "Lucas Hernandez",
+          "username": "lucas.hernandez",
+          "email": "lucas.hernandez@icloud.com"
+        },
+        {
+          "name": "Logan Brown",
+          "username": "logan.brown",
+          "email": "logan.brown@gmail.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-162804",
+        "maybe_issue_id": "ISS-58418",
+        "team_base": "Ops",
+        "channel_base": "support"
+      },
+      "storyline": "Workflow handles order SO-162804 in Groceries, coordinates Slack, inventory updates, and Jira tracking.",
+      "steps": [
+        {
+          "step": 1,
+          "type": "check_recent_orders",
+          "order_id": "SO-162804",
+          "status": "packed",
+          "category": "Groceries",
+          "items_count": 3,
+          "qty_total": 6
+        },
+        {
+          "step": 2,
+          "type": "slack_notify",
+          "team_base": "Ops",
+          "channel_base": "support",
+          "message": "Pushed a fix, redeploying now"
+        },
+        {
+          "step": 3,
+          "type": "update_inventory",
+          "adjustments": [
+            {
+              "product_id": "P0025",
+              "sku": "TOY-0025",
+              "delta": -3
+            },
+            {
+              "product_id": "P0047",
+              "sku": "BEA-0047",
+              "delta": -2
+            },
+            {
+              "product_id": "P0007",
+              "sku": "GRO-0007",
+              "delta": -1
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "type": "jira_link_issue",
+          "issue_id": "ISS-58418",
+          "project_key": "OPS",
+          "summary": "Damaged on arrival for SO-451291 (Groceries)"
+        },
+        {
+          "step": 5,
+          "type": "generate_report",
+          "report_type": "demand_snapshot",
+          "category": "Groceries",
+          "orders_considered": 25,
+          "destination_channel_base": "sales"
+        },
+        {
+          "step": 6,
+          "type": "slack_notify",
+          "team_base": "Sales",
+          "channel_base": "sales",
+          "message": "Numbers look stable today"
+        }
+      ]
+    },
+    {
+      "id": "WF-1004",
+      "title": "Replenish high-demand product stock",
+      "domain": "retail",
+      "trigger": {
+        "kind": "order_status",
+        "value": "returned",
+        "category": "Home"
+      },
+      "participants": [
+        {
+          "name": "Elijah Jackson",
+          "username": "elijah.jackson",
+          "email": "elijah.jackson@outlook.com"
+        },
+        {
+          "name": "Scarlett Thomas",
+          "username": "scarlett.thomas",
+          "email": "scarlett.thomas@outlook.com"
+        },
+        {
+          "name": "Michael Brown",
+          "username": "michael.brown",
+          "email": "michael.brown@outlook.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-690984",
+        "maybe_issue_id": "ISS-82628",
+        "team_base": "Support",
+        "channel_base": "support"
+      },
+      "storyline": "Workflow handles order SO-690984 in Home, coordinates Slack, inventory updates, and Jira tracking.",
+      "steps": [
+        {
+          "step": 1,
+          "type": "check_recent_orders",
+          "order_id": "SO-690984",
+          "status": "returned",
+          "category": "Home",
+          "items_count": 3,
+          "qty_total": 8
+        },
+        {
+          "step": 2,
+          "type": "slack_notify",
+          "team_base": "Support",
+          "channel_base": "support",
+          "message": "Docs updated with examples"
+        },
+        {
+          "step": 3,
+          "type": "update_inventory",
+          "adjustments": [
+            {
+              "product_id": "P0045",
+              "sku": "PET-0045",
+              "delta": -2
+            },
+            {
+              "product_id": "P0059",
+              "sku": "HOM-0059",
+              "delta": -3
+            },
+            {
+              "product_id": "P0002",
+              "sku": "HOM-0002",
+              "delta": -3
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "type": "jira_link_issue",
+          "issue_id": "ISS-82628",
+          "project_key": "SAL",
+          "summary": "Damaged on arrival for SO-693127 (Home)"
+        },
+        {
+          "step": 5,
+          "type": "generate_report",
+          "report_type": "demand_snapshot",
+          "category": "Home",
+          "orders_considered": 25,
+          "destination_channel_base": "sales"
+        },
+        {
+          "step": 6,
+          "type": "slack_notify",
+          "team_base": "Sales",
+          "channel_base": "sales",
+          "message": "ETA twenty minutes tops"
+        }
+      ]
+    },
+    {
+      "id": "WF-1005",
+      "title": "Bulk order spike response plan",
+      "domain": "retail",
+      "trigger": {
+        "kind": "order_status",
+        "value": "processing",
+        "category": "Pets"
+      },
+      "participants": [
+        {
+          "name": "James Thomas",
+          "username": "james.thomas",
+          "email": "james.thomas@proton.me"
+        },
+        {
+          "name": "Elijah Jackson",
+          "username": "elijah.jackson",
+          "email": "elijah.jackson@outlook.com"
+        },
+        {
+          "name": "Ava Davis",
+          "username": "ava.davis",
+          "email": "ava.davis@gmail.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-832614",
+        "maybe_issue_id": "ISS-37125",
+        "team_base": "Support",
+        "channel_base": "support"
+      },
+      "storyline": "Workflow handles order SO-832614 in Pets, coordinates Slack, inventory updates, and Jira tracking.",
+      "steps": [
+        {
+          "step": 1,
+          "type": "check_recent_orders",
+          "order_id": "SO-832614",
+          "status": "processing",
+          "category": "Pets",
+          "items_count": 2,
+          "qty_total": 6
+        },
+        {
+          "step": 2,
+          "type": "slack_notify",
+          "team_base": "Support",
+          "channel_base": "support",
+          "message": "Spec added to the doc"
+        },
+        {
+          "step": 3,
+          "type": "update_inventory",
+          "adjustments": [
+            {
+              "product_id": "P0026",
+              "sku": "ELE-0026",
+              "delta": -3
+            },
+            {
+              "product_id": "P0041",
+              "sku": "PET-0041",
+              "delta": -3
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "type": "jira_link_issue",
+          "issue_id": "ISS-37125",
+          "project_key": "OPS",
+          "summary": "Shipment delay for SO-945106 (Pets)"
+        },
+        {
+          "step": 5,
+          "type": "generate_report",
+          "report_type": "demand_snapshot",
+          "category": "Pets",
+          "orders_considered": 25,
+          "destination_channel_base": "sales"
+        },
+        {
+          "step": 6,
+          "type": "slack_notify",
+          "team_base": "Sales",
+          "channel_base": "sales",
+          "message": "Agree to punt this"
+        }
+      ]
+    },
+    {
+      "id": "WF-1006",
+      "title": "Courier handoff coordination",
+      "domain": "retail",
+      "trigger": {
+        "kind": "order_status",
+        "value": "returned",
+        "category": "Groceries"
+      },
+      "participants": [
+        {
+          "name": "Abigail Taylor",
+          "username": "abigail.taylor",
+          "email": "abigail.taylor@outlook.com"
+        },
+        {
+          "name": "James Miller",
+          "username": "james.miller",
+          "email": "james.miller@proton.me"
+        },
+        {
+          "name": "Michael Clark",
+          "username": "michael.clark",
+          "email": "michael.clark@yahoo.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-908475",
+        "maybe_issue_id": "ISS-58418",
+        "team_base": "Support",
+        "channel_base": "support"
+      },
+      "storyline": "Workflow handles order SO-908475 in Groceries, coordinates Slack, inventory updates, and Jira tracking.",
+      "steps": [
+        {
+          "step": 1,
+          "type": "check_recent_orders",
+          "order_id": "SO-908475",
+          "status": "returned",
+          "category": "Groceries",
+          "items_count": 2,
+          "qty_total": 4
+        },
+        {
+          "step": 2,
+          "type": "slack_notify",
+          "team_base": "Support",
+          "channel_base": "support",
+          "message": "Queued for tonight's batch"
+        },
+        {
+          "step": 3,
+          "type": "update_inventory",
+          "adjustments": [
+            {
+              "product_id": "P0054",
+              "sku": "GRO-0054",
+              "delta": -3
+            },
+            {
+              "product_id": "P0003",
+              "sku": "ELE-0003",
+              "delta": -1
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "type": "jira_link_issue",
+          "issue_id": "ISS-58418",
+          "project_key": "OPS",
+          "summary": "Damaged on arrival for SO-451291 (Groceries)"
+        },
+        {
+          "step": 5,
+          "type": "generate_report",
+          "report_type": "demand_snapshot",
+          "category": "Groceries",
+          "orders_considered": 25,
+          "destination_channel_base": "sales"
+        },
+        {
+          "step": 6,
+          "type": "slack_notify",
+          "team_base": "Sales",
+          "channel_base": "sales",
+          "message": "Charts updated in dashboard"
+        }
+      ]
+    },
+    {
+      "id": "WF-1007",
+      "title": "Return inspection and restock loop",
+      "domain": "retail",
+      "trigger": {
+        "kind": "order_status",
+        "value": "returned",
+        "category": "Toys"
+      },
+      "participants": [
+        {
+          "name": "Logan Brown",
+          "username": "logan.brown",
+          "email": "logan.brown@gmail.com"
+        },
+        {
+          "name": "Ethan Lee",
+          "username": "ethan.lee",
+          "email": "ethan.lee@proton.me"
+        },
+        {
+          "name": "Scarlett Thomas",
+          "username": "scarlett.thomas",
+          "email": "scarlett.thomas@outlook.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-172371",
+        "maybe_issue_id": "ISS-34232",
+        "team_base": "Support",
+        "channel_base": "support"
+      },
+      "storyline": "Workflow handles order SO-172371 in Toys, coordinates Slack, inventory updates, and Jira tracking.",
+      "steps": [
+        {
+          "step": 1,
+          "type": "check_recent_orders",
+          "order_id": "SO-172371",
+          "status": "returned",
+          "category": "Toys",
+          "items_count": 3,
+          "qty_total": 4
+        },
+        {
+          "step": 2,
+          "type": "slack_notify",
+          "team_base": "Support",
+          "channel_base": "support",
+          "message": "Retry succeeded on second attempt"
+        },
+        {
+          "step": 3,
+          "type": "update_inventory",
+          "adjustments": [
+            {
+              "product_id": "P0005",
+              "sku": "TOO-0005",
+              "delta": -1
+            },
+            {
+              "product_id": "P0028",
+              "sku": "TOY-0028",
+              "delta": -2
+            },
+            {
+              "product_id": "P0045",
+              "sku": "PET-0045",
+              "delta": -1
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "type": "jira_link_issue",
+          "issue_id": "ISS-34232",
+          "project_key": "INV",
+          "summary": "Damaged on arrival for SO-336290 (Toys)"
+        },
+        {
+          "step": 5,
+          "type": "generate_report",
+          "report_type": "demand_snapshot",
+          "category": "Toys",
+          "orders_considered": 25,
+          "destination_channel_base": "sales"
+        },
+        {
+          "step": 6,
+          "type": "slack_notify",
+          "team_base": "Sales",
+          "channel_base": "sales",
+          "message": "Backfill is halfway done"
+        }
+      ]
+    },
+    {
+      "id": "WF-1008",
+      "title": "Weekend surge staffing response",
+      "domain": "retail",
+      "trigger": {
+        "kind": "order_status",
+        "value": "shipped",
+        "category": "Outdoors"
+      },
+      "participants": [
+        {
+          "name": "Harper Martinez",
+          "username": "harper.martinez",
+          "email": "harper.martinez@outlook.com"
+        },
+        {
+          "name": "Harper Lee",
+          "username": "harper.lee",
+          "email": "harper.lee@outlook.com"
+        },
+        {
+          "name": "Scarlett Lopez",
+          "username": "scarlett.lopez",
+          "email": "scarlett.lopez@gmail.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-480959",
+        "maybe_issue_id": "ISS-54295",
+        "team_base": "Ops",
+        "channel_base": "ops"
+      },
+      "storyline": "Workflow handles order SO-480959 in Outdoors, coordinates Slack, inventory updates, and Jira tracking.",
+      "steps": [
+        {
+          "step": 1,
+          "type": "check_recent_orders",
+          "order_id": "SO-480959",
+          "status": "shipped",
+          "category": "Outdoors",
+          "items_count": 2,
+          "qty_total": 4
+        },
+        {
+          "step": 2,
+          "type": "slack_notify",
+          "team_base": "Ops",
+          "channel_base": "ops",
+          "message": "Drafting the rollout plan"
+        },
+        {
+          "step": 3,
+          "type": "update_inventory",
+          "adjustments": [
+            {
+              "product_id": "P0018",
+              "sku": "OUT-0018",
+              "delta": -3
+            },
+            {
+              "product_id": "P0051",
+              "sku": "OUT-0051",
+              "delta": -1
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "type": "jira_link_issue",
+          "issue_id": "ISS-54295",
+          "project_key": "SAL",
+          "summary": "Shipment delay for SO-913894 (Outdoors)"
+        },
+        {
+          "step": 5,
+          "type": "generate_report",
+          "report_type": "demand_snapshot",
+          "category": "Outdoors",
+          "orders_considered": 25,
+          "destination_channel_base": "sales"
+        },
+        {
+          "step": 6,
+          "type": "slack_notify",
+          "team_base": "Sales",
+          "channel_base": "sales",
+          "message": "Perf drop ~6% after patch"
+        }
+      ]
+    }
+  ],
+  "generated_at": "2025-09-11 22:06:02"
+}
