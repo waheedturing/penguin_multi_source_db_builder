@@ -1,0 +1,385 @@
+{
+  "workflows": [
+    {
+      "id": "WF-1001",
+      "title": "Expedite delayed shipment escalation",
+      "domain": "retail",
+      "brand": "Nike",
+      "trigger": {
+        "kind": "order_status",
+        "value": "shipped",
+        "category": "Training"
+      },
+      "participants": [
+        {
+          "name": "Isabella Johnson",
+          "username": "isabella.johnson",
+          "email": "isabella.johnson@icloud.com"
+        },
+        {
+          "name": "Isabella Wilson",
+          "username": "isabella.wilson",
+          "email": "isabella.wilson@icloud.com"
+        },
+        {
+          "name": "Benjamin Martin",
+          "username": "benjamin.martin",
+          "email": "benjamin.martin@proton.me"
+        },
+        {
+          "name": "Scarlett Thomas",
+          "username": "scarlett.thomas",
+          "email": "scarlett.thomas@outlook.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-637333",
+        "maybe_issue_id": "ISS-47002",
+        "team_base": "Ops",
+        "channel_base": "ops"
+      },
+      "storyline": "Workflow handles order SO-637333 (Training), coordinates Slack notifications, inventory updates, and Jira tracking."
+    },
+    {
+      "id": "WF-1002",
+      "title": "Weekend surge staffing response",
+      "domain": "retail",
+      "brand": "Nike",
+      "trigger": {
+        "kind": "order_status",
+        "value": "shipped",
+        "category": "Running"
+      },
+      "participants": [
+        {
+          "name": "James Davis",
+          "username": "james.davis",
+          "email": "james.davis@gmail.com"
+        },
+        {
+          "name": "Scarlett Taylor",
+          "username": "scarlett.taylor",
+          "email": "scarlett.taylor@outlook.com"
+        },
+        {
+          "name": "Ava Davis",
+          "username": "ava.davis",
+          "email": "ava.davis@gmail.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-362552",
+        "maybe_issue_id": "ISS-33507",
+        "team_base": "Ops",
+        "channel_base": "ops"
+      },
+      "storyline": "Workflow handles order SO-362552 (Running), coordinates Slack notifications, inventory updates, and Jira tracking."
+    },
+    {
+      "id": "WF-1003",
+      "title": "Return inspection and restock loop",
+      "domain": "retail",
+      "brand": "Nike",
+      "trigger": {
+        "kind": "order_status",
+        "value": "packed",
+        "category": "Training"
+      },
+      "participants": [
+        {
+          "name": "Benjamin Martin",
+          "username": "benjamin.martin",
+          "email": "benjamin.martin@proton.me"
+        },
+        {
+          "name": "Aria Jackson",
+          "username": "aria.jackson",
+          "email": "aria.jackson@outlook.com"
+        },
+        {
+          "name": "Scarlett Anderson",
+          "username": "scarlett.anderson",
+          "email": "scarlett.anderson@gmail.com"
+        },
+        {
+          "name": "Ava Martinez",
+          "username": "ava.martinez",
+          "email": "ava.martinez@proton.me"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-391865",
+        "maybe_issue_id": "ISS-47002",
+        "team_base": "Ops",
+        "channel_base": "support"
+      },
+      "storyline": "Workflow handles order SO-391865 (Training), coordinates Slack notifications, inventory updates, and Jira tracking."
+    },
+    {
+      "id": "WF-1004",
+      "title": "Replenish high-demand product stock",
+      "domain": "retail",
+      "brand": "Nike",
+      "trigger": {
+        "kind": "order_status",
+        "value": "packed",
+        "category": "Running"
+      },
+      "participants": [
+        {
+          "name": "Emma Miller",
+          "username": "emma.miller",
+          "email": "emma.miller@outlook.com"
+        },
+        {
+          "name": "Avery Lee",
+          "username": "avery.lee",
+          "email": "avery.lee@icloud.com"
+        },
+        {
+          "name": "Scarlett Martin",
+          "username": "scarlett.martin",
+          "email": "scarlett.martin@outlook.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-519902",
+        "maybe_issue_id": "ISS-33507",
+        "team_base": "Ops",
+        "channel_base": "support"
+      },
+      "storyline": "Workflow handles order SO-519902 (Running), coordinates Slack notifications, inventory updates, and Jira tracking."
+    },
+    {
+      "id": "WF-1005",
+      "title": "Bulk order spike response plan",
+      "domain": "retail",
+      "brand": "Nike",
+      "trigger": {
+        "kind": "order_status",
+        "value": "shipped",
+        "category": "Apparel"
+      },
+      "participants": [
+        {
+          "name": "Mason Garcia",
+          "username": "mason.garcia",
+          "email": "mason.garcia@proton.me"
+        },
+        {
+          "name": "Isabella Lopez",
+          "username": "isabella.lopez",
+          "email": "isabella.lopez@icloud.com"
+        },
+        {
+          "name": "Olivia Rodriguez",
+          "username": "olivia.rodriguez",
+          "email": "olivia.rodriguez@outlook.com"
+        },
+        {
+          "name": "James Miller",
+          "username": "james.miller",
+          "email": "james.miller@proton.me"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-649697",
+        "maybe_issue_id": "ISS-58270",
+        "team_base": "Ops",
+        "channel_base": "ops"
+      },
+      "storyline": "Workflow handles order SO-649697 (Apparel), coordinates Slack notifications, inventory updates, and Jira tracking."
+    },
+    {
+      "id": "WF-1006",
+      "title": "Payment failure retry outreach",
+      "domain": "retail",
+      "brand": "Nike",
+      "trigger": {
+        "kind": "order_status",
+        "value": "processing",
+        "category": "Apparel"
+      },
+      "participants": [
+        {
+          "name": "Ava Martinez",
+          "username": "ava.martinez",
+          "email": "ava.martinez@proton.me"
+        },
+        {
+          "name": "Emily Davis",
+          "username": "emily.davis",
+          "email": "emily.davis@proton.me"
+        },
+        {
+          "name": "Emily Anderson",
+          "username": "emily.anderson",
+          "email": "emily.anderson@yahoo.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-748665",
+        "maybe_issue_id": "ISS-58270",
+        "team_base": "Support",
+        "channel_base": "support"
+      },
+      "storyline": "Workflow handles order SO-748665 (Apparel), coordinates Slack notifications, inventory updates, and Jira tracking."
+    },
+    {
+      "id": "WF-1007",
+      "title": "Refund review and customer follow-up",
+      "domain": "retail",
+      "brand": "Nike",
+      "trigger": {
+        "kind": "order_status",
+        "value": "packed",
+        "category": "Running"
+      },
+      "participants": [
+        {
+          "name": "Michael Rodriguez",
+          "username": "michael.rodriguez",
+          "email": "michael.rodriguez@gmail.com"
+        },
+        {
+          "name": "Mason Garcia",
+          "username": "mason.garcia",
+          "email": "mason.garcia@proton.me"
+        },
+        {
+          "name": "Aria Martin",
+          "username": "aria.martin",
+          "email": "aria.martin@icloud.com"
+        },
+        {
+          "name": "Evelyn Garcia",
+          "username": "evelyn.garcia",
+          "email": "evelyn.garcia@icloud.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-261630",
+        "maybe_issue_id": "ISS-33507",
+        "team_base": "Ops",
+        "channel_base": "support"
+      },
+      "storyline": "Workflow handles order SO-261630 (Running), coordinates Slack notifications, inventory updates, and Jira tracking."
+    },
+    {
+      "id": "WF-1008",
+      "title": "Courier handoff coordination",
+      "domain": "retail",
+      "brand": "Nike",
+      "trigger": {
+        "kind": "order_status",
+        "value": "canceled",
+        "category": "Footwear"
+      },
+      "participants": [
+        {
+          "name": "Mia Williams",
+          "username": "mia.williams",
+          "email": "mia.williams@gmail.com"
+        },
+        {
+          "name": "Isabella Lopez",
+          "username": "isabella.lopez",
+          "email": "isabella.lopez@icloud.com"
+        },
+        {
+          "name": "Mason Lee",
+          "username": "mason.lee",
+          "email": "mason.lee@outlook.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-669691",
+        "maybe_issue_id": "ISS-84912",
+        "team_base": "Support",
+        "channel_base": "support"
+      },
+      "storyline": "Workflow handles order SO-669691 (Footwear), coordinates Slack notifications, inventory updates, and Jira tracking."
+    },
+    {
+      "id": "WF-1009",
+      "title": "Damaged-on-arrival compensation flow",
+      "domain": "retail",
+      "brand": "Nike",
+      "trigger": {
+        "kind": "order_status",
+        "value": "shipped",
+        "category": "Running"
+      },
+      "participants": [
+        {
+          "name": "Evelyn Miller",
+          "username": "evelyn.miller",
+          "email": "evelyn.miller@proton.me"
+        },
+        {
+          "name": "Mia Martinez",
+          "username": "mia.martinez",
+          "email": "mia.martinez@gmail.com"
+        },
+        {
+          "name": "Harper Martinez",
+          "username": "harper.martinez",
+          "email": "harper.martinez@icloud.com"
+        },
+        {
+          "name": "Mia Williams",
+          "username": "mia.williams",
+          "email": "mia.williams@icloud.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-977345",
+        "maybe_issue_id": "ISS-33507",
+        "team_base": "Ops",
+        "channel_base": "ops"
+      },
+      "storyline": "Workflow handles order SO-977345 (Running), coordinates Slack notifications, inventory updates, and Jira tracking."
+    },
+    {
+      "id": "WF-1010",
+      "title": "Investigate inventory mismatch alert",
+      "domain": "retail",
+      "brand": "Nike",
+      "trigger": {
+        "kind": "order_status",
+        "value": "shipped",
+        "category": "Running"
+      },
+      "participants": [
+        {
+          "name": "Emily Anderson",
+          "username": "emily.anderson",
+          "email": "emily.anderson@yahoo.com"
+        },
+        {
+          "name": "Michael Brown",
+          "username": "michael.brown",
+          "email": "michael.brown@outlook.com"
+        },
+        {
+          "name": "Michael Clark",
+          "username": "michael.clark",
+          "email": "michael.clark@yahoo.com"
+        },
+        {
+          "name": "Mia Davis",
+          "username": "mia.davis",
+          "email": "mia.davis@gmail.com"
+        }
+      ],
+      "refs": {
+        "order_id": "SO-700705",
+        "maybe_issue_id": "ISS-33507",
+        "team_base": "Ops",
+        "channel_base": "ops"
+      },
+      "storyline": "Workflow handles order SO-700705 (Running), coordinates Slack notifications, inventory updates, and Jira tracking."
+    }
+  ],
+  "generated_at": "2025-09-12 16:33:25"
+}
